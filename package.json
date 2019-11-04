@@ -1,0 +1,66 @@
+{
+  "name": "react-hoax",
+  "version": "0.0.0",
+  "description": "Idiomatic resourcefull context",
+  "license": "MIT",
+  "repository": "github:novykh/react-hoax",
+  "main": "dist/react-hoax.js",
+  "module": "src/index.js",
+  "keywords": [
+    "react",
+    "context",
+    "hooks",
+    "reducers"
+  ],
+  "authors": [
+    "Johnny Klironomos <ioannis.klironomos@gmail.com> (https://github.com/novykh)",
+    "John Apostolidis <john.apostolidi@gmail.com> (https://github.com/apostolidhs)"
+  ],
+  "unpkg": "dist/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.6.0",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "@testing-library/jest-dom": "4.2.3",
+    "@testing-library/react": "9.3.2",
+    "@testing-library/react-hooks": "3.1.1",
+    "babel-jest": "24.9.0",
+    "babel-loader": "^8.0.6",
+    "core-js": "^3.3.6",
+    "jest": "24.9.0",
+    "lodash": "^4.17.15",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-test-renderer": "^16.11.0",
+    "use-context-selector": "^1.0.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "peerDependencies": {
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0"
+  },
+  "sideEffects": false,
+  "npmName": "react-hoax",
+  "npmFileMap": [
+    {
+      "basePath": "/dist/",
+      "files": [
+        "*.js"
+      ]
+    }
+  ],
+  "scripts": {
+    "start": "webpack --watch",
+    "build": "webpack",
+    "test": "jest --config ./jest/config.js",
+    "transpile": "babel src -d dist"
+  }
+}
