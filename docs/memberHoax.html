@@ -126,6 +126,24 @@
             
 
             
+                <h3>Example</h3>
+                
+    <pre class="prettyprint"><code>import { makeMemberHoax } from "react-hoax";
+
+const initialState = {
+  name: ""
+};
+
+const UserHoax = makeMemberHoax("user", { initialState });
+const NameField = UserHoax.Field.Input({fieldKey: "name"});
+
+const UserForm = () => (
+  &lt;UserHoax.Provider>
+    &lt;NameField />
+  &lt;/UserHoax.Provider>
+);</code></pre>
+
+            
         
         </div>
     
