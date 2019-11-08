@@ -3,33 +3,79 @@
     "allowUnknownTags": true
   },
   "source": {
-    "include": ["src/", "./readme.md"]
+    "include": ["src/", "./readme.md"],
+    "excludePattern": "(node_modules/|docs)"
   },
   "plugins": ["plugins/markdown"],
   "templates": {
     "cleverLinks": false,
     "monospaceLinks": false,
-    "outputSourceFiles": true,
-    "outputSourcePath": true,
-    "systemName": "React Hoax",
-    "footer": "",
-    "copyright": "React Hoax Copyright © 2019.",
-    "navType": "inline",
-    "theme": "jekyll-theme-hacker",
     "linenums": true,
     "collapseSymbols": false,
     "inverseNav": true,
     "syntaxTheme": "dark",
-    "includeDate": false
+    "includeDate": false,
+    "default": {
+      "outputSourceFiles": true,
+      "includeDate": false,
+      "useLongnameInNav": true
+    }
   },
   "markdown": {
     "parser": "gfm",
-    "hardwrap": true
+    "hardwrap": true,
+    "idInHeadings": true
   },
   "opts": {
     "private": true,
     "recurse": true,
     "lenient": true,
-    "destination": "docs/"
+    "destination": "docs/",
+    "template": "node_modules/docdash"
+  },
+  "docdash": {
+    "static": true,
+    "sort": true,
+    "sectionOrder": [
+      "Namespaces",
+      "Classes",
+      "Modules",
+      "Externals",
+      "Events",
+      "Mixins",
+      "Tutorials",
+      "Interfaces"
+    ],
+    "disqus": "",
+    "openGraph": {
+      "title": "react-hoax",
+      "type": "website",
+      "site_name": "react-hoax",
+      "url": "http://novykh.github.io/react-hoax/"
+    },
+    "meta": {
+      "title": "react-hoax",
+      "description": "Idiomatic resourceful context.",
+      "keyword": "react, context, hooks, reducers"
+    },
+    "search": true,
+    "collapse": true,
+    "typedefs": true,
+    "removeQuotes": "none",
+    "scripts": [],
+    "menu": {
+      "Github repo": {
+        "href": "https://github.com/novykh/react-hoax",
+        "target": "_blank",
+        "class": "menu-item",
+        "id": "repository"
+      },
+      "Github issues": {
+        "href": "https://github.com/novykh/react-hoax/issues",
+        "target": "_blank",
+        "class": "menu-item",
+        "id": "issues"
+      }
+    }
   }
 }
