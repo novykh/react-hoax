@@ -10,6 +10,28 @@ import makeFields from "../makeFields";
 import makeUseSelector from "./makeUseSelector";
 import defaultInitialState from "./initialState";
 
+/** @module memberHoax.makeMemberProvider */
+
+/**
+ * @typedef {Object} MemberHoax
+ * @property {function} Provider - The member context provider
+ * @property {function} useMember - A react hook for
+ * @property {function} useCollection - A react hook for
+ * @property {function} useSelector - A react hook for
+ * @property {function} useAction - A react hook for
+ * @property {object} Field
+ */
+
+/**
+ * makeMemberProvider factory.
+ * @param {string} name - The name of the resource, will be used on the `displayName`.
+ * @param {object} [options={}] - The resource options.
+ * @param {object} options.initialState - The initialState of the resource, will be merged with the default member hoax initialState.
+ * @param {function} options.customReducer - `reducer(state, action)` An extra reducer for the resource, should return nothing on actionType mismatch, after passing through the custom reducer, it will go through the default member hoax reducer.
+ * @param {object} options.customActions - Extra actions, check the default hoax actions for member.
+ * @return {MemberHoax} MemberHoax - what is needed for a member resource
+ */
+
 const makeMemberProvider = (
   name,
   { initialState, customReducer, customActions } = {}
@@ -51,4 +73,5 @@ const makeMemberProvider = (
     Field
   };
 };
+
 export default makeMemberProvider;

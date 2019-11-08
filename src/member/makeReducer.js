@@ -3,6 +3,20 @@ import makePristine from "../makePristine";
 import { updateBatch } from "../reducerUtils";
 import * as actionTypes from "../actionTypes";
 
+/**
+ * @typedef {Object} memberHoax.ReducerWithInit
+ * @property {function} reducer - the reducer to be used along with provider
+ * @property {function} init - the function to initialize the reducer's state
+ */
+
+/**
+ *  @function memberHoax.makeReducer
+ *  @access private
+ *  @param {function} getInitialState - a function that returns the initialState
+ *  @param {function} customReducer - a custom reducer
+ *  @return {memberHoax.ReducerWithInit}
+ */
+
 export default (getInitialState, customReducer) => {
   const {
     getInitialPristineState,

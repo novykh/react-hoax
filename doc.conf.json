@@ -1,0 +1,35 @@
+{
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "source": {
+    "include": ["src/", "./readme.md"]
+  },
+  "plugins": ["plugins/markdown"],
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "outputSourceFiles": true,
+    "outputSourcePath": true,
+    "systemName": "React Hoax",
+    "footer": "",
+    "copyright": "React Hoax Copyright © 2019.",
+    "navType": "inline",
+    "theme": "jekyll-theme-hacker",
+    "linenums": true,
+    "collapseSymbols": false,
+    "inverseNav": true,
+    "syntaxTheme": "dark",
+    "includeDate": false
+  },
+  "markdown": {
+    "parser": "gfm",
+    "hardwrap": true
+  },
+  "opts": {
+    "private": true,
+    "recurse": true,
+    "lenient": true,
+    "destination": "docs/"
+  }
+}

@@ -2,6 +2,20 @@ import * as actionTypes from "../actionTypes";
 import * as resourceActionTypes from "./resource/actionTypes";
 import { updateBatch } from "../reducerUtils";
 
+/**
+ * @typedef {Object} collectionHoax.ReducerWithInit
+ * @property {function} reducer - the reducer to be used along with provider
+ * @property {function} init - the function to initialize the reducer's state
+ */
+
+/**
+ *  @function collectionHoax.makeReducer
+ *  @access private
+ *  @param {function} getInitialState - a function that returns the initialState
+ *  @param {function} customReducer - a custom reducer
+ *  @return {collectionHoax.ReducerWithInit}
+ */
+
 export default ({
   getInitialState,
   customReducer,
