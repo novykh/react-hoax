@@ -4,7 +4,7 @@
  *  @default {
       loading: true,
       loaded: false,
-      processing: true,
+      processing: false,
       byId: {},
       ids: []
     }
@@ -13,7 +13,7 @@
 export default {
   loading: true,
   loaded: false,
-  processing: true,
+  processing: false,
   byId: {},
   ids: []
 };
