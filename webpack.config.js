@@ -1,11 +1,13 @@
 const path = require("path");
 const pkg = require("./package.json");
 
+const buildFolder = !!process.env.LEGACY ? "dist" : "es";
+
 module.exports = {
   mode: "production",
   entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, buildFolder),
     filename: "react-hoax.js",
     library: "react-hoax",
     libraryTarget: "umd"
@@ -34,11 +36,5 @@ module.exports = {
         }
       }
     ]
-  },
-  resolve: {
-    alias: {
-      react: path.resolve(__dirname, "./node_modules/react"),
-      "react-dom": path.resolve(__dirname, "./node_modules/react-dom")
-    }
   }
 };

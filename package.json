@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": "github:novykh/react-hoax",
   "main": "dist/react-hoax.js",
-  "module": "src/index.js",
+  "module": "dist/react-hoax.js",
   "keywords": [
     "react",
     "context",
@@ -16,10 +16,10 @@
     "Johnny Klironomos <ioannis.klironomos@gmail.com> (https://github.com/novykh)",
     "John Apostolidis <john.apostolidi@gmail.com> (https://github.com/apostolidhs)"
   ],
-  "unpkg": "dist/index.js",
+  "unpkg": "dist/react-hoax.js",
   "files": [
     "dist",
-    "src"
+    "es"
   ],
   "devDependencies": {
     "@babel/cli": "^7.7.0",
@@ -64,11 +64,9 @@
     }
   ],
   "scripts": {
-    "start": "webpack --watch",
-    "build": "webpack",
+    "build": "webpack && LEGACY=1 webpack",
     "test": "jest --config ./jest/config.js",
-    "transpile": "babel src -d dist",
-    "prepublishOnly": "rm -rf ./dist && yarn build",
+    "prepublishOnly": "rm -rf ./dist && rm -rf ./es && yarn build",
     "publish:beta": "npm publish --tag=next"
   }
 }
