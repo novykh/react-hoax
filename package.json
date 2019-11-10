@@ -67,6 +67,8 @@
     "start": "webpack --watch",
     "build": "webpack",
     "test": "jest --config ./jest/config.js",
-    "transpile": "babel src -d dist"
+    "transpile": "babel src -d dist",
+    "prepublishOnly": "rm -rf ./dist && yarn build",
+    "publish:beta": "npm publish --tag=next"
   }
 }
