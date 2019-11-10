@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import useContextSelector from "../useContextSelector";
 import identity from "lodash/identity";
+import { makeByIdSelector } from "../collection/makeUseSelector";
 
 /**
  * @description A hook that handles the mutate operations on a state's member.
@@ -15,11 +16,11 @@ import identity from "lodash/identity";
 const defaultGetUpdate = resourceId => state =>
   resourceId ? state.updateResource : state.update;
 
-export default (StateCtx, DispatchCtx) => ({
+export default (StateCtx, DispatchCtx, useResourceSelector) => ({
   fieldKey,
   resourceId,
   getUpdate = defaultGetUpdate,
-  select = identity
+  select = resourceId ? makeByIdSelector : identity
 }) => {
   const selector = useCallback(
     state => {
