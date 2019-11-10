@@ -1,20 +1,12 @@
-const presetEnvOptions = process.env.LEGACY
-  ? {
-      modules: false,
-      useBuiltIns: "entry",
-      corejs: 3
-    }
-  : {
-      modules: false,
-      targets: {
-        esmodules: true
-      }
-    };
+const cjs = process.env.BABEL_ENV === "commonjs";
 
 module.exports = {
-  presets: [["@babel/preset-env", presetEnvOptions], "@babel/preset-react"],
+  presets: [
+    ["@babel/env", { loose: true, modules: false }],
+    "@babel/preset-react"
+  ],
   plugins: [
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-proposal-optional-chaining"
-  ]
+    cjs && ["@babel/transform-modules-commonjs", { loose: true }],
+    ["@babel/transform-runtime", { useESModules: !cjs }]
+  ].filter(Boolean)
 };

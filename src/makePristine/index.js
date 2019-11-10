@@ -37,7 +37,8 @@ const PRISTINE = "pristine";
 export default (pristineKey = PRISTINE) => {
   const getInitialState = () => ({ [pristineKey]: {} });
 
-  const hasKey = (state, key) => state[pristineKey]?.hasOwnProperty(key);
+  const hasKey = (state, key) =>
+    !!state[pristineKey] && state[pristineKey].hasOwnProperty(key);
 
   const add = (state, key) => ({
     ...state,

@@ -1,2 +1,8 @@
+node_modules/
+.tmp
+.DS_Store
+coverage/
+.idea
+.yarn.lock
 jest/
 examples/
