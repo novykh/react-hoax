@@ -79,7 +79,126 @@
 </code></pre>
 <p>This assumes that you’re using <a href="http://npmjs.com/">npm</a> package manager with a module bundler like <a href="https://webpack.js.org/">Webpack</a> or <a href="http://browserify.org/">Browserify</a> to consume <a href="https://webpack.js.org/api/module-methods/#commonjs">CommonJS modules</a>.</p>
 <p>If you don’t yet use <a href="http://npmjs.com/">npm</a> or a modern module bundler, and would rather prefer a single-file <a href="https://github.com/umdjs/umd">UMD</a> build that makes <code>react-hoax</code> available as a global object, you can grab a pre-built version from <a href="https://cdnjs.com/libraries/react-hoax">cdnjs</a>. We <em>don’t</em> recommend this approach for any serious application, as most of the libraries complementary to React Hoax are only available on <a href="http://npmjs.com/">npm</a>.</p>
-<p>Enjoy!</p>
+<h2 id="introduction">Introduction</h2>
+<p>React Hoax itself is a small state management library. It includes some opinionated patterns that help you use React context more effectively.</p>
+<p>It helps simplify a lot of common use cases in the React world, including providers setup, creating reducers and selectors.</p>
+<p>It also helps with state normalization for resources.</p>
+<h4 id="for-multiple-resources-here">For multiple resources <a href="https://novykh.github.io/react-hoax/collectionHoax.html">here</a></h4>
+<p>The <code>byId</code> pattern is persuaded, check the <a href="https://novykh.github.io/react-hoax/collectionHoax.html#.initialState">initialState</a>.</p>
+<p>Example,</p>
+<pre class="prettyprint source"><code>  import { makeCollectionHoax } from &quot;react-hoax&quot;;
+
+  const {
+    Provider,
+    useCollection,
+    useMember,
+    useSelector,
+    useAction,
+    useResourceSelector
+  } = makeCollectionHoax(&quot;myCustomResource&quot;, {
+    resourceOptions: {
+      initialState: {
+        title: &quot;&quot;,
+        description: &quot;&quot;,
+        keywords: [],
+        industry: &quot;&quot;,
+        offer: &quot;&quot;
+      }
+    }
+  });
+</code></pre>
+<p>As you can see, React Hoax provides you with the essentials to start coding right away.<br>
+This will create a Context provider, with the state:</p>
+<pre class="prettyprint source"><code>{
+  loading: true,
+  loaded: false,
+  processing: false,
+  byId: {},
+  ids: []
+}
+</code></pre>
+<p>Which works for multiple resources of the same type.<br>
+Adding a resource of <code>id=1</code>, will change the state to:</p>
+<pre class="prettyprint source"><code>{
+  loading: false,
+  loaded: true,
+  processing: false,
+  byId: {
+    1: {
+      loading: true,
+      loaded: false,
+      processing: false,
+      errors: {},
+      pristine: {},
+      
+      // plus our custom attributes needed
+      title: &quot;&quot;,
+      description: &quot;&quot;,
+      keywords: [],
+      industry: &quot;&quot;,
+      offer: &quot;&quot;
+    }
+  },
+  ids: [1]
+}
+</code></pre>
+<h4 id="for-a-single-resource-%5Bhere%5D(file%3A%2F%2F%2Fusers%2Fjohnnyklironomos%2Fprojects%2Freact-hoax%2Fdocs%2Fmemberhoax.html)">For a single resource [here](file:///Users/johnnyklironomos/Projects/react-hoax/docs/memberHoax.html)</h4>
+<p>It keeps it simple, check the <a href="https://novykh.github.io/react-hoax/memberHoax.html#.initialState">initialState</a>.</p>
+<p>Example,</p>
+<pre class="prettyprint source"><code>import { makeMemberHoax } from &quot;react-hoax&quot;;
+
+const initialState = {
+  name: &quot;&quot;
+};
+
+const UserHoax = makeMemberHoax(&quot;user&quot;, { initialState });
+const NameField = UserHoax.Field.Input({fieldKey: &quot;name&quot;});
+
+const UserForm = () => (
+  &lt;UserHoax.Provider>
+    &lt;NameField />
+  &lt;/UserHoax.Provider>
+);
+</code></pre>
+<h2 id="actions">Actions</h2>
+<p>React Hoax provides global actions for the everyday needs:</p>
+<pre class="prettyprint source"><code>initialize
+update
+updateBatch
+updateOnChange
+reset
+resetPristine
+resetPristineKey
+startFetch
+doneFetch
+failFetch
+startProcess
+doneProcess
+</code></pre>
+<p>but you can add more yourself. <em>documentation is coming soon...</em></p>
+<h2 id="reducers">Reducers</h2>
+<p>React Hoax provides opinionated reducers for member and collection resources.<br>
+They make use the global actions, but also, are extendable.</p>
+<h2 id="hooks">Hooks</h2>
+<p>Hooks provided by the React Hoax, are of two flavors.</p>
+<h4 id="selectors">Selectors</h4>
+<p>For performant retrieving part of state (or all of it) of a resource. (i.e. <code>useResourceSelector</code>, <code>useSelector</code>)<br>
+But, also, for getting the action needed for dispatch from the resource's context. (i.e. <code>useAction</code>)</p>
+<h4 id="usemember-%26-usecollection">useMember &amp; useCollection</h4>
+<p>Are you bored of passing down the components tree props and actions for simple CRUD operations on the state?<br>
+Those two selector hooks on steroids will save you the time and the sanity!</p>
+<p>Check the API of <code>useMember</code>:</p>
+<pre class="prettyprint source"><code>const [value, setValue, error, seError] = useMember({fieldKey: 'keyOnYourState'});
+</code></pre>
+<p>How fun is that?</p>
+<p>Now check the API of <code>useCollection</code> <em>(it's basically helping with values on state that are arrays)</em></p>
+<pre class="prettyprint source"><code>const {collection, setCollection, add, push, edit, remove, reorder, error, setError} = useCollection({fieldKey: 'keyOnYourState'});
+</code></pre>
+<h2 id="fields">Fields</h2>
+<p><em>COMING SOON</em></p>
+<h2 id="should-you-use-react-hoax%3F">Should You Use React Hoax?</h2>
+<p>Well yes! Just kidding, of course, <a href="https://redux.js.org/introduction/getting-started#should-you-use-redux">check Redux</a> - same applies here, more or less.<br>
+Enjoy!</p>
 <h2 id="license">License</h2>
 <p><a href="LICENSE.md">MIT</a></p></article>
     </section>
