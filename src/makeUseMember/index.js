@@ -16,7 +16,7 @@ import { makeByIdSelector } from "../collection/makeUseSelector";
 const defaultGetUpdate = resourceId => state =>
   resourceId ? state.updateResource : state.update;
 
-export default (StateCtx, DispatchCtx, useResourceSelector) => ({
+export default (StateCtx, DispatchCtx) => ({
   fieldKey,
   resourceId,
   getUpdate = defaultGetUpdate,
