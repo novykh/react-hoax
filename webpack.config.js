@@ -1,4 +1,5 @@
 const path = require("path");
+const pkg = require("./package.json");
 
 module.exports = {
   mode: "production",
@@ -9,6 +10,7 @@ module.exports = {
     library: "react-hoax",
     libraryTarget: "umd"
   },
+  externals: Object.keys(pkg.peerDependencies || {}).concat("react-dom"),
   module: {
     rules: [
       {

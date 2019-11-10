@@ -45,8 +45,13 @@
     "webpack-cli": "^3.3.10"
   },
   "peerDependencies": {
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3"
+    "lodash": "^4.0.0",
+    "react": "^16.8.3"
+  },
+  "peerDependenciesMeta": {
+    "react-dom": {
+      "optional": true
+    }
   },
   "sideEffects": false,
   "npmName": "react-hoax",
