@@ -130,7 +130,7 @@ Adding a resource of <code>id=1</code>, will change the state to:</p>
       processing: false,
       errors: {},
       pristine: {},
-      
+
       // plus our custom attributes needed
       title: &quot;&quot;,
       description: &quot;&quot;,
@@ -175,7 +175,8 @@ failFetch
 startProcess
 doneProcess
 </code></pre>
-<p>but you can add more yourself. <em>documentation is coming soon...</em></p>
+<p>but you can add more yourself.</p>
+<p><em>documentation is coming soon...</em></p>
 <h2 id="reducers">Reducers</h2>
 <p>React Hoax provides opinionated reducers for member and collection resources.<br>
 They make use the global actions, but also, are extendable.</p>
@@ -188,7 +189,7 @@ But, also, for getting the action needed for dispatch from the resource's contex
 <p>Are you bored of passing down the components tree props and actions for simple CRUD operations on the state?<br>
 Those two selector hooks on steroids will save you the time and the sanity!</p>
 <p>Check the API of <code>useMember</code>:</p>
-<pre class="prettyprint source"><code>const [value, setValue, error, seError] = useMember({fieldKey: 'keyOnYourState'});
+<pre class="prettyprint source"><code>const [value, setValue, error, setError] = useMember({fieldKey: 'keyOnYourState'});
 </code></pre>
 <p>How fun is that?</p>
 <p>Now check the API of <code>useCollection</code> <em>(it's basically helping with values on state that are arrays)</em></p>

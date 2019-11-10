@@ -23,9 +23,11 @@ It helps simplify a lot of common use cases in the React world, including provid
 It also helps with state normalization for resources.
 
 #### For multiple resources [here](https://novykh.github.io/react-hoax/collectionHoax.html)
+
 The `byId` pattern is persuaded, check the [initialState](https://novykh.github.io/react-hoax/collectionHoax.html#.initialState).
 
 Example,
+
 ```
   import { makeCollectionHoax } from "react-hoax";
 
@@ -48,8 +50,10 @@ Example,
     }
   });
 ```
+
 As you can see, React Hoax provides you with the essentials to start coding right away.
 This will create a Context provider, with the state:
+
 ```
 {
   loading: true,
@@ -59,8 +63,10 @@ This will create a Context provider, with the state:
   ids: []
 }
 ```
+
 Which works for multiple resources of the same type.
 Adding a resource of `id=1`, will change the state to:
+
 ```
 {
   loading: false,
@@ -73,7 +79,7 @@ Adding a resource of `id=1`, will change the state to:
       processing: false,
       errors: {},
       pristine: {},
-      
+
       // plus our custom attributes needed
       title: "",
       description: "",
@@ -87,9 +93,11 @@ Adding a resource of `id=1`, will change the state to:
 ```
 
 #### For a single resource [here](file:///Users/johnnyklironomos/Projects/react-hoax/docs/memberHoax.html)
+
 It keeps it simple, check the [initialState](https://novykh.github.io/react-hoax/memberHoax.html#.initialState).
 
 Example,
+
 ```
 import { makeMemberHoax } from "react-hoax";
 
@@ -110,6 +118,7 @@ const UserForm = () => (
 ## Actions
 
 React Hoax provides global actions for the everyday needs:
+
 ```
 initialize
 update
@@ -124,7 +133,10 @@ failFetch
 startProcess
 doneProcess
 ```
-but you can add more yourself. _documentation is coming soon..._
+
+but you can add more yourself.
+
+_documentation is coming soon..._
 
 ## Reducers
 
@@ -136,25 +148,31 @@ They make use the global actions, but also, are extendable.
 Hooks provided by the React Hoax, are of two flavors.
 
 #### Selectors
+
 For performant retrieving part of state (or all of it) of a resource. (i.e. `useResourceSelector`, `useSelector`)
 But, also, for getting the action needed for dispatch from the resource's context. (i.e. `useAction`)
 
 #### useMember & useCollection
+
 Are you bored of passing down the components tree props and actions for simple CRUD operations on the state?
 Those two selector hooks on steroids will save you the time and the sanity!
 
 Check the API of `useMember`:
+
 ```
-const [value, setValue, error, seError] = useMember({fieldKey: 'keyOnYourState'});
+const [value, setValue, error, setError] = useMember({fieldKey: 'keyOnYourState'});
 ```
+
 How fun is that?
 
 Now check the API of `useCollection` _(it's basically helping with values on state that are arrays)_
+
 ```
 const {collection, setCollection, add, push, edit, remove, reorder, error, setError} = useCollection({fieldKey: 'keyOnYourState'});
 ```
 
 ## Fields
+
 _COMING SOON_
 
 ## Should You Use React Hoax?
