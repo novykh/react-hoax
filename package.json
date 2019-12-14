@@ -38,11 +38,9 @@
     "core-js": "^3.3.6",
     "docdash": "^1.1.1",
     "jest": "24.9.0",
-    "lodash": "^4.17.15",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-test-renderer": "^16.8.3",
-    "use-context-selector": "^1.0.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
@@ -76,6 +74,8 @@
     "publish:beta": "npm publish --tag=next"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.2"
+    "@babel/runtime": "^7.7.2",
+    "lodash": "^4.17.15",
+    "use-context-selector": "^1.0.1"
   }
 }
