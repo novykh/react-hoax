@@ -71,7 +71,8 @@
     "build": "yarn build:commonjs && yarn build:es && yarn build:umd",
     "test": "jest --config ./jest/config.js",
     "prepublishOnly": "yarn clean && yarn build",
-    "publish:beta": "npm publish --tag=next"
+    "publish:beta": "npm publish --tag=next",
+    "docs": "jsdoc -c doc.conf.json"
   },
   "dependencies": {
     "@babel/runtime": "^7.8.3",
