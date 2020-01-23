@@ -1,5 +1,4 @@
 import { useReducer, useRef } from "react";
-import useObservers from "../useObservers";
 import identity from "lodash/identity";
 
 const connect = (action, dispatch, getState, args, extraArgument) => {
@@ -28,13 +27,11 @@ const connect = (action, dispatch, getState, args, extraArgument) => {
 
 export default (
   reducer,
-  { initialState, init = identity, actions = {}, observers, extraArgument }
+  { initialState, init = identity, actions = {}, extraArgument }
 ) => {
   const [state, dispatch] = useReducer(reducer, initialState, init);
   const stateRef = useRef();
   stateRef.current = state;
-
-  useObservers(state, observers);
 
   const dispatchRef = useRef();
   if (dispatchRef.current) return [state, dispatchRef.current];
