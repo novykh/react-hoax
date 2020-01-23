@@ -71,10 +71,11 @@ const makeCollectionProvider = (
     DispatchCtx
   );
 
-  const CollectionProvider = ({ children, extraArgument }) => {
+  const CollectionProvider = ({ children, initialState, extraArgument }) => {
     const [state, dispatches] = useReducer(reducer, {
-      actions: { ...actions, ...resourceActions, ...customActions },
+      initialState,
       init,
+      actions: { ...actions, ...resourceActions, ...customActions },
       extraArgument
     });
 

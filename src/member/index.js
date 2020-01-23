@@ -48,8 +48,9 @@ const makeMemberProvider = (
   const Field = makeFields(useMember);
   const { useSelector, useAction } = makeUseSelector(StateCtx, DispatchCtx);
 
-  const MemberProvider = ({ children, extraArgument }) => {
+  const MemberProvider = ({ children, initialState, extraArgument }) => {
     const [state, dispatches] = useReducer(reducer, {
+      initialState,
       init,
       actions: { ...actions, ...customActions },
       extraArgument
