@@ -8,5 +8,22 @@ module.exports = {
   plugins: [
     cjs && ["@babel/transform-modules-commonjs", { loose: true }],
     ["@babel/transform-runtime", { useESModules: !cjs }]
-  ].filter(Boolean)
+  ].filter(Boolean),
+  env: {
+    test: {
+      presets: [
+        [
+          "@babel/env",
+          {
+            useBuiltIns: "entry",
+            targets: {
+              node: "current"
+            },
+            corejs: 3
+          }
+        ]
+      ],
+      plugins: ["@babel/transform-runtime"]
+    }
+  }
 };
