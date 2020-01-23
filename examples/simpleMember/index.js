@@ -1,10 +1,10 @@
 import { makeMemberHoax } from "react-hoax";
 
-const initialState = {
-  name: ""
+const getInitialState = () => {
+  name: "";
 };
 
-const UserHoax = makeMemberHoax("user", { initialState });
+const UserHoax = makeMemberHoax("user", { getInitialState });
 const NameField = UserHoax.makeField("name", "text");
 
 const UserForm = () => (

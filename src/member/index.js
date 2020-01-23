@@ -34,13 +34,13 @@ import defaultInitialState from "./initialState";
 
 const makeMemberProvider = (
   name,
-  { initialState, customReducer, customActions } = {}
+  { getInitialState, customReducer, customActions } = {}
 ) => {
-  const getInitialState = makeGetInitialState({
-    initialState,
+  const initState = makeGetInitialState({
+    getInitialState,
     defaultInitialState
   });
-  const { reducer, init } = makeReducer(getInitialState, customReducer);
+  const { reducer, init } = makeReducer(initState, customReducer);
 
   const [StateCtx, DispatchCtx] = makeContext();
   const useMember = makeUseMember(StateCtx, DispatchCtx);

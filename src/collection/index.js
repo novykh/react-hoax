@@ -28,26 +28,26 @@ import makeResourceReducer from "./resource/makeReducer";
  * makeCollectionProvider factory.
  * @param {string} name - The name of the resource, will be used on the `displayName`.
  * @param {object} [options={}] - The collection options.
- * @param {object} options.initialState - The initialState of the collection, will be merged with the default collection hoax initialState.
+ * @param {object} options.getInitialState - The returned value of `getInitialState` of the collection, will be merged with the default collection hoax initialState.
  * @param {function} options.customReducer - `reducer(state, action)` An extra reducer for the collection, should return nothing on actionType mismatch, after passing through the custom reducer, it will go through the default collection hoax reducer.
  * @param {object} options.customActions - Extra actions, check the default hoax actions for collection and nested resources.
  * @param {object} options.resourceOptions - each nested resource's options
- * @param {object} options.resourceOptions.initialState - The initialState of the nested resource, will be merged with the default resource hoax initialState.
+ * @param {object} options.resourceOptions.getInitialState - The returned value of `getInitialState` of the nested resource, will be merged with the default resource hoax initialState.
  * @param {function} options.resourceOptions.reducer - `reducer(state, action)` An extra reducer for the nested resource, should return nothing on actionType mismatch, after passing through the custom reducer, it will go through the default resource reducer.
  * @return {CollectionHoax} CollectionHoax - what is needed for a collection resource
  */
 
 const makeCollectionProvider = (
   name,
-  { initialState, customReducer, customActions, resourceOptions = {} } = {}
+  { getInitialState, customReducer, customActions, resourceOptions = {} } = {}
 ) => {
-  const getInitialState = makeGetInitialState({
-    initialState,
+  const initState = makeGetInitialState({
+    getInitialState,
     defaultInitialState
   });
 
   const getInitialResourceState = makeGetInitialState({
-    initialState: resourceOptions.initialState,
+    getInitialState: resourceOptions.getInitialState,
     defaultInitialState: defaultResourceInitialState
   });
 
@@ -56,7 +56,7 @@ const makeCollectionProvider = (
     resourceOptions.reducer
   );
   const { reducer, init } = makeReducer({
-    getInitialState,
+    getInitialState: initState,
     customReducer,
     resourceReducer,
     initResource
@@ -74,7 +74,7 @@ const makeCollectionProvider = (
   const CollectionProvider = ({ children, extraArgument }) => {
     const [state, dispatches] = useReducer(reducer, {
       actions: { ...actions, ...resourceActions, ...customActions },
-      init: getInitialState,
+      init,
       extraArgument
     });
 

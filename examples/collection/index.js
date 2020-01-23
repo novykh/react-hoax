@@ -10,7 +10,7 @@ const {
   useResourceSelector
 } = makeCollectionHoax("campaigns", {
   resourceOptions: {
-    initialState: {
+    getInitialState: () => {
       title: "",
       description: "",
       keywords: [],

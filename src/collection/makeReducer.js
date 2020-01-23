@@ -101,8 +101,8 @@ export default ({
   };
 
   const reducer = (state, { type, ...payload }) => {
-    if (customReducer === "function")
-      customReducer(state, { type, ...payload });
+    if (typeof customReducer === "function")
+      state = customReducer(state, { type, ...payload });
 
     switch (type) {
       case actionTypes.update:
