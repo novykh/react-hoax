@@ -23,7 +23,6 @@ export default ({
   initResource
 }) => {
   const init = (state = {}) => ({
-    id,
     ...getInitialState(),
     ...state
   });
