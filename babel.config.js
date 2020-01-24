@@ -1,12 +1,9 @@
 const cjs = process.env.BABEL_ENV === "commonjs";
 
 module.exports = {
-  presets: [
-    ["@babel/env", { loose: true, modules: false }],
-    "@babel/preset-react"
-  ],
+  presets: [["@babel/env", { modules: false }], "@babel/preset-react"],
   plugins: [
-    cjs && ["@babel/transform-modules-commonjs", { loose: true }],
+    cjs && "@babel/transform-modules-commonjs",
     ["@babel/transform-runtime", { useESModules: !cjs }]
   ].filter(Boolean),
   env: {
