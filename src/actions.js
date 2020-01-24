@@ -1,6 +1,13 @@
 import * as actionTypes from "./actionTypes";
 
-export const initialize = values => ({ type: actionTypes.initialize, values });
+export const initialize = (values, { merge } = {}) => (dispatch, getState) => {
+  if (merge)
+    return dispatch({
+      type: actionTypes.initialize,
+      values: { ...getState(), ...values }
+    });
+  return dispatch({ type: actionTypes.initialize, values });
+};
 
 export const update = (attr, value) => ({
   type: actionTypes.update,

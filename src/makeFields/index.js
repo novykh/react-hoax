@@ -40,7 +40,7 @@ export default useMember => {
 
   const Select = ({
     Component = "select",
-    onChange = onToggle,
+    onChange = onValueChange,
     options = [],
     ...rest
   }) => {

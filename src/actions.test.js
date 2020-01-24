@@ -2,11 +2,38 @@ import { testFunctionAction, testObjectAction } from "testHelpers";
 import * as actions from "./actions";
 import * as actionTypes from "./actionTypes";
 
-it("initializes", () =>
-  testFunctionAction(actions.initialize, { foo: "bar" })({
-    expectedType: actionTypes.initialize,
-    expectedValues: { values: { foo: "bar" } }
-  }));
+it("initializes", () => {
+  const dispatch = jest.fn().mockImplementation(args => args);
+  const getState = jest.fn();
+  const dispatched = actions.initialize({ foo: "bar" })(dispatch, getState);
+  expect(dispatch).toBeCalledWith({
+    type: actionTypes.initialize,
+    values: { foo: "bar" }
+  });
+  expect(getState).not.toBeCalled();
+  expect(dispatched).toEqual({
+    type: actionTypes.initialize,
+    values: { foo: "bar" }
+  });
+});
+
+it("initializes with merge", () => {
+  const dispatch = jest.fn().mockImplementation(args => args);
+  const getState = jest.fn().mockReturnValue({ test: "test" });
+  const dispatched = actions.initialize({ foo: "bar" }, { merge: true })(
+    dispatch,
+    getState
+  );
+  expect(dispatch).toBeCalledWith({
+    type: actionTypes.initialize,
+    values: { foo: "bar", test: "test" }
+  });
+  expect(getState).toBeCalledTimes(1);
+  expect(dispatched).toEqual({
+    type: actionTypes.initialize,
+    values: { foo: "bar", test: "test" }
+  });
+});
 
 it("updates", () =>
   testFunctionAction(actions.update, "foo", "bar")({
