@@ -98,3 +98,6 @@ export { queries };
 export default MyCustomResourcesProvider;
  */
 export { default as makeCollectionHoax } from "./collection";
+
+import * as hoaxActions from "./actions";
+export { hoaxActions };
