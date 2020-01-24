@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import useContextSelector from "../useContextSelector";
 import identity from "lodash/identity";
 
@@ -17,6 +18,11 @@ import identity from "lodash/identity";
 
 export default (StateCtx, DispatchCtx) => ({
   useSelector: (selector = identity) => useContextSelector(StateCtx, selector),
-  useAction: actionKey =>
-    useContextSelector(DispatchCtx, actions => actions[actionKey])
+  useAction: actionKey => {
+    const selector = useMemo(
+      () => (actionKey ? actions => actions[actionKey] : identity),
+      [actionKey]
+    );
+    return useContextSelector(DispatchCtx, selector);
+  }
 });
