@@ -99,5 +99,8 @@ export default MyCustomResourcesProvider;
  */
 export { default as makeCollectionHoax } from "./collection";
 
-import * as hoaxActions from "./actions";
+import * as actions from "./actions";
+import * as resourceActions from "./collection/resource/actions";
+
+const hoaxActions = { ...hoaxActions, ...resourceActions };
 export { hoaxActions };
