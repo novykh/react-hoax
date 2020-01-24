@@ -58,6 +58,19 @@ export default (getInitialState, customReducer) => {
       case actionTypes.doneProcessResource:
         return { ...state, processing: false };
 
+      case actionTypes.startFetchResource:
+        return { ...state, loading: true };
+
+      case actionTypes.doneFetchResource:
+        return init({
+          ...payload.values,
+          loading: false,
+          loaded: true
+        });
+
+      case actionTypes.failFetchResource:
+        return { ...state, loading: false };
+
       default:
         return state;
     }

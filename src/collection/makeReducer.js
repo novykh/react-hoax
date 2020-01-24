@@ -133,6 +133,9 @@ export default ({
       case resourceActionTypes.resetPristineKeyResource:
       case resourceActionTypes.startProcessResource:
       case resourceActionTypes.doneProcessResource:
+      case resourceActionTypes.startFetchResource:
+      case resourceActionTypes.doneFetchResource:
+      case resourceActionTypes.failFetchResource:
         return updateResource(state, { type, ...payload });
 
       default:
