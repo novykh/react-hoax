@@ -12,7 +12,6 @@ export default useMember => {
     resourceId,
     getUpdate,
     onChange = identity,
-    options,
     ...rest
   }) => {
     const [value, setValue, error] = useMember({
@@ -35,7 +34,7 @@ export default useMember => {
           {...rest}
         />
       ),
-      [value, error, options]
+      [value, error, rest.options]
     );
   };
 
