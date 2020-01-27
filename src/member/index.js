@@ -27,14 +27,14 @@ import defaultInitialState from "./initialState";
  * @param {string} name - The name of the resource, will be used on the `displayName`.
  * @param {object} [options={}] - The resource options.
  * @param {object} options.initialState - The initialState of the resource, will be merged with the default member hoax initialState.
- * @param {function} options.customReducer - `reducer(state, action)` An extra reducer for the resource, should return nothing on actionType mismatch, after passing through the custom reducer, it will go through the default member hoax reducer.
- * @param {object} options.customActions - Extra actions, check the default hoax actions for member.
+ * @param {function} options.reducer - `reducer(state, action)` An extra reducer for the resource, should return nothing on actionType mismatch, after passing through the custom reducer, it will go through the default member hoax reducer.
+ * @param {object} options.actions - Extra actions, check the default hoax actions for member.
  * @return {MemberHoax} MemberHoax - what is needed for a member resource
  */
 
 const makeMemberProvider = (
   name,
-  { getInitialState, customReducer, customActions } = {}
+  { getInitialState, reducer: customReducer, actions: customActions } = {}
 ) => {
   const initState = makeGetInitialState({
     getInitialState,

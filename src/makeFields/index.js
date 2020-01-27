@@ -12,6 +12,7 @@ export default useMember => {
     resourceId,
     getUpdate,
     onChange = identity,
+    options,
     ...rest
   }) => {
     const [value, setValue, error] = useMember({
@@ -34,7 +35,7 @@ export default useMember => {
           {...rest}
         />
       ),
-      [value, error]
+      [value, error, options]
     );
   };
 
@@ -43,14 +44,14 @@ export default useMember => {
     onChange = onValueChange,
     options = [],
     ...rest
-  }) => {
+  }) => (
     <BaseField
       Component={Component}
       onChange={onChange}
       options={options}
       {...rest}
-    />;
-  };
+    />
+  );
 
   const Input = ({ onChange = onValueChange, ...rest }) => (
     <BaseField type="text" onChange={onChange} {...rest} />

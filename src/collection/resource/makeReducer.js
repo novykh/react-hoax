@@ -31,7 +31,7 @@ export default (getInitialState, customReducer) => {
 
   const reducer = (state, { type, id, ...payload }) => {
     if (customReducer === "function")
-      customReducer(state, { type, ...payload });
+      state = customReducer(state, { type, ...payload });
 
     switch (type) {
       case actionTypes.initializeResource:
