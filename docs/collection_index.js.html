@@ -87,8 +87,8 @@ import makeResourceReducer from "./resource/makeReducer";
  * @param {string} name - The name of the resource, will be used on the `displayName`.
  * @param {object} [options={}] - The collection options.
  * @param {object} options.getInitialState - The returned value of `getInitialState` of the collection, will be merged with the default collection hoax initialState.
- * @param {function} options.customReducer - `reducer(state, action)` An extra reducer for the collection, should return nothing on actionType mismatch, after passing through the custom reducer, it will go through the default collection hoax reducer.
- * @param {object} options.customActions - Extra actions, check the default hoax actions for collection and nested resources.
+ * @param {function} options.reducer - `reducer(state, action)` An extra reducer for the collection, should return nothing on actionType mismatch, after passing through the custom reducer, it will go through the default collection hoax reducer.
+ * @param {object} options.actions - Extra actions, check the default hoax actions for collection and nested resources.
  * @param {object} options.resourceOptions - each nested resource's options
  * @param {object} options.resourceOptions.getInitialState - The returned value of `getInitialState` of the nested resource, will be merged with the default resource hoax initialState.
  * @param {function} options.resourceOptions.reducer - `reducer(state, action)` An extra reducer for the nested resource, should return nothing on actionType mismatch, after passing through the custom reducer, it will go through the default resource reducer.
@@ -97,7 +97,12 @@ import makeResourceReducer from "./resource/makeReducer";
 
 const makeCollectionProvider = (
   name,
-  { getInitialState, customReducer, customActions, resourceOptions = {} } = {}
+  {
+    getInitialState,
+    reducer: customReducer,
+    actions: customActions,
+    resourceOptions = {}
+  } = {}
 ) => {
   const initState = makeGetInitialState({
     getInitialState,
@@ -129,10 +134,11 @@ const makeCollectionProvider = (
     DispatchCtx
   );
 
-  const CollectionProvider = ({ children, extraArgument }) => {
+  const CollectionProvider = ({ children, initialState, extraArgument }) => {
     const [state, dispatches] = useReducer(reducer, {
-      actions: { ...actions, ...resourceActions, ...customActions },
+      initialState,
       init,
+      actions: { ...actions, ...resourceActions, ...customActions },
       extraArgument
     });
 

@@ -129,6 +129,19 @@ export default (getInitialState, customReducer) => {
       case actionTypes.doneProcess:
         return { ...state, processing: false };
 
+      case actionTypes.startFetch:
+        return { ...state, loading: true };
+
+      case actionTypes.doneFetch:
+        return init({
+          ...payload.values,
+          loading: false,
+          loaded: true
+        });
+
+      case actionTypes.failFetch:
+        return { ...state, loading: false };
+
       default:
         return state;
     }
