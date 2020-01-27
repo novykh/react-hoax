@@ -62,7 +62,7 @@ export default (getInitialState, customReducer) => {
         return { ...state, loading: true };
 
       case actionTypes.doneFetchResource:
-        return init({
+        return init(id, {
           ...payload.values,
           loading: false,
           loaded: true
