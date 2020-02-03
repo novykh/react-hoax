@@ -22,10 +22,9 @@ export const makeByIdSelector = id => state => state.byId[id];
 export default (StateCtx, DispatchCtx) => ({
   useSelector: (selector = identity) => useContextSelector(StateCtx, selector),
   useResourceSelector: (id, select = identity) => {
-    const selector = useCallback(
-      state => select(makeByIdSelector(id)(state)),
-      []
-    );
+    const selector = useCallback(state => select(makeByIdSelector(id)(state)), [
+      id
+    ]);
     return useContextSelector(StateCtx, selector);
   },
   useAction: actionKey => {

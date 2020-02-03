@@ -102,5 +102,5 @@ export { default as makeCollectionHoax } from "./collection";
 import * as actions from "./actions";
 import * as resourceActions from "./collection/resource/actions";
 
-const hoaxActions = { ...hoaxActions, ...resourceActions };
+const hoaxActions = { ...actions, ...resourceActions };
 export { hoaxActions };
