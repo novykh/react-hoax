@@ -20,7 +20,8 @@ export default ({
   getInitialState,
   customReducer,
   resourceReducer,
-  initResource
+  initResource,
+  customResourceActionTypes = {}
 }) => {
   const init = (state = {}) => ({
     ...getInitialState(),
@@ -136,6 +137,7 @@ export default ({
       case resourceActionTypes.startFetchResource:
       case resourceActionTypes.doneFetchResource:
       case resourceActionTypes.failFetchResource:
+      case customResourceActionTypes[type]:
         return updateResource(state, { type, ...payload });
 
       default:

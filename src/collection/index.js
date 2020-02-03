@@ -64,6 +64,7 @@ const makeCollectionProvider = (
     getInitialState: initState,
     customReducer,
     resourceReducer,
+    customResourceActionTypes: resourceOptions.actionTypes,
     initResource
   });
 
