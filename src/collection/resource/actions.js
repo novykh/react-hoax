@@ -54,8 +54,7 @@ export const doneFetchResource = (id, payload) => ({
   values: payload
 });
 
-export const failFetchResource = (id, payload) => ({
-  ...payload,
+export const failFetchResource = id => ({
   type: actionTypes.failFetchResource,
   id
 });

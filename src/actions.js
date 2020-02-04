@@ -38,10 +38,7 @@ export const doneFetch = payload => ({
   values: payload
 });
 
-export const failFetch = payload => ({
-  ...payload,
-  type: actionTypes.failFetch
-});
+export const failFetch = { type: actionTypes.failFetch };
 
 export const startProcess = { type: actionTypes.startProcess };
 

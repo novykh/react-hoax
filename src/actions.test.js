@@ -86,9 +86,9 @@ it("success fetches", () =>
   }));
 
 it("fail fetches", () =>
-  testFunctionAction(actions.failFetch, { foo: "foo", bar: "bar" })({
+  testFunctionAction(actions.failFetch)({
     expectedType: actionTypes.failFetch,
-    expectedValues: { foo: "foo", bar: "bar" }
+    expectedValues: undefined
   }));
 
 it("starts process", () =>

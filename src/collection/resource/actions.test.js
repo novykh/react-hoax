@@ -68,12 +68,9 @@ it("success fetches resource", () =>
   }));
 
 it("fail fetches resource", () =>
-  testFunctionAction(actions.failFetchResource, "1", {
-    foo: "foo",
-    bar: "bar"
-  })({
+  testFunctionAction(actions.failFetchResource, "1")({
     expectedType: actionTypes.failFetchResource,
-    expectedValues: { id: "1", foo: "foo", bar: "bar" }
+    expectedValues: { id: "1" }
   }));
 
 it("starts process resource", () =>
