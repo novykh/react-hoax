@@ -19,14 +19,5 @@ module.exports = {
       functions: 99.5
     }
   },
-  globals: {
-    ondemandEnv: {
-      atsServerUrl: "TEST-atsServerUrl",
-      shieldUrl: "TEST-shieldUrl",
-      shieldClientId: "TEST-shieldClientId",
-      shieldClientSecret: "TEST-shieldClientSecret",
-      clearbitAutocompleteUrl: "TEST-clearbitAutocompleteUrl",
-      googleMapsClientId: "TEST-googleMapsClientId"
-    }
-  }
+  globals: {}
 };
