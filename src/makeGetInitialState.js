@@ -1,7 +1,7 @@
 export default ({ getInitialState, defaultInitialState }) => {
-  if (!getInitialState || typeof getInitialState !== "function") {
+  if (getInitialState && typeof getInitialState !== "function") {
     console.error(
-      "Hoax needs an object as initial state - empty object will be used instead"
+      "Hoax needs a function to return the initial state object - empty object will be used instead"
     );
     return () => defaultInitialState;
   }

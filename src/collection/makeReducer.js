@@ -105,6 +105,9 @@ export default ({
       state = customReducer(state, { type, ...payload });
 
     switch (type) {
+      case actionTypes.initialize:
+        return init(payload.values);
+
       case actionTypes.update:
         return update(state, payload.attr, payload.value);
 
@@ -113,6 +116,12 @@ export default ({
 
       case actionTypes.reset:
         return init();
+
+      case actionTypes.startProcess:
+        return { ...state, processing: true };
+
+      case actionTypes.doneProcess:
+        return { ...state, processing: false };
 
       case actionTypes.startFetch:
         return { ...state, loading: true };

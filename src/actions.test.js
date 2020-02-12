@@ -86,7 +86,7 @@ it("success fetches", () =>
   }));
 
 it("fail fetches", () =>
-  testFunctionAction(actions.failFetch)({
+  testObjectAction(actions.failFetch)({
     expectedType: actionTypes.failFetch,
     expectedValues: undefined
   }));
