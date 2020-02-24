@@ -90,13 +90,15 @@ export default ({
 
   const updateResource = (state, { id, ...rest }) => {
     const resource = updateOnlyResourceState(state, id, rest);
+    const ids = state.byId.hasOwnProperty(id) ? state.ids : [...state.ids, id];
 
     return {
       ...state,
       byId: {
         ...state.byId,
         [id]: resource
-      }
+      },
+      ids
     };
   };
 
