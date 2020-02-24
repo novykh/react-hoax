@@ -76,13 +76,13 @@ export default ({
   };
 
   const removeResource = (state, resourceId) => {
-    const byId = delete state.byId[resourceId];
+    delete state.byId[resourceId];
     const ids = state.ids.filter(id => id !== resourceId);
 
     return {
       ...state,
       byId: {
-        ...byId
+        ...state.byId
       },
       ids
     };
