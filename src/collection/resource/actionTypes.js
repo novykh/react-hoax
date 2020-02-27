@@ -1,6 +1,7 @@
 export const initializeResource = "initializeResource";
 export const updateResource = "updateResource";
 export const updateBatchResource = "updateBatchResource";
+export const removeResource = "removeResource";
 export const resetResource = "resetResource";
 export const resetPristineResource = "resetPristineResource";
 export const resetPristineKeyResource = "resetPristineKeyResource";

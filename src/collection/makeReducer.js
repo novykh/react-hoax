@@ -42,7 +42,7 @@ export default ({
       byId: {
         ...state.byId,
         [id]: updateOnlyResourceState(state, id, {
-          type: actionTypes.updateBatchResource,
+          type: resourceActionTypes.updateBatchResource,
           values: value
         })
       },
@@ -58,7 +58,7 @@ export default ({
       return {
         ...h,
         [resource.id]: updateOnlyResourceState(state, resource.id, {
-          type: actionTypes.initializeResource,
+          type: resourceActionTypes.initializeResource,
           values: resource
         })
       };
