@@ -1,6 +1,7 @@
 import * as actionTypes from "../actionTypes";
 import * as resourceActionTypes from "./resource/actionTypes";
 import { updateBatch } from "../reducerUtils";
+import createReducer from "../createReducer"
 
 /**
  * @typedef {Object} collectionHoax.ReducerWithInit
@@ -18,8 +19,8 @@ import { updateBatch } from "../reducerUtils";
 
 export default ({
   getInitialState,
-  customReducer,
-  resourceReducer,
+  customReducer = {},
+  resourceReducer = {},
   initResource,
   customResourceActionTypes = {}
 }) => {
@@ -76,7 +77,7 @@ export default ({
   };
 
   const removeResource = (state, resourceId) => {
-    const byId = {...state.byId};
+    const byId = { ...state.byId };
     delete byId[resourceId];
     const ids = state.ids.filter(id => id !== resourceId);
 
@@ -101,59 +102,40 @@ export default ({
     };
   };
 
-  const reducer = (state, { type, ...payload }) => {
-    if (typeof customReducer === "function")
-      state = customReducer(state, { type, ...payload });
-
-    switch (type) {
-      case actionTypes.initialize:
-        return init(payload.values);
-
-      case actionTypes.update:
-        return update(state, payload.attr, payload.value);
-
-      case actionTypes.updateBatch:
-        return updateBatch(update, state, payload.values);
-
-      case actionTypes.reset:
-        return init();
-
-      case actionTypes.startProcess:
-        return { ...state, processing: true };
-
-      case actionTypes.doneProcess:
-        return { ...state, processing: false };
-
-      case actionTypes.startFetch:
-        return { ...state, loading: true };
-
-      case actionTypes.doneFetch:
-        return doneFetch(state, payload.values);
-
-      case actionTypes.failFetch:
-        return { ...state, loading: false };
-
-      case resourceActionTypes.removeResource:
-        return removeResource(state, payload.id);
-
-      case resourceActionTypes.initializeResource:
-      case resourceActionTypes.updateResource:
-      case resourceActionTypes.updateBatchResource:
-      case resourceActionTypes.resetResource:
-      case resourceActionTypes.resetPristineResource:
-      case resourceActionTypes.resetPristineKeyResource:
-      case resourceActionTypes.startProcessResource:
-      case resourceActionTypes.doneProcessResource:
-      case resourceActionTypes.startFetchResource:
-      case resourceActionTypes.doneFetchResource:
-      case resourceActionTypes.failFetchResource:
-      case customResourceActionTypes[type]:
-        return updateResource(state, { type, ...payload });
-
-      default:
-        return state;
-    }
+  const reducerHandlers = {
+    [actionTypes.initialize]: (state, action) => init(action.values),
+    [actionTypes.update]: (state, action) =>
+      update(state, action.attr, action.value),
+    [actionTypes.updateBatch]: (state, action) =>
+      updateBatch(update, state, action.values),
+    [actionTypes.reset]: (state, action) => init(),
+    [actionTypes.startProcess]: (state, action) => ({
+      ...state,
+      processing: true
+    }),
+    [actionTypes.doneProcess]: (state, action) => ({
+      ...state,
+      processing: false
+    }),
+    [actionTypes.startFetch]: (state, action) => ({ ...state, loading: true }),
+    [actionTypes.doneFetch]: (state, action) => doneFetch(state, action.values),
+    [actionTypes.failFetch]: (state, action) => ({ ...state, loading: false }),
+    [actionTypes.removeResource]: (state, action) =>
+      removeResource(state, action.id),
+    ...Object.keys({
+      ...resourceActionTypes,
+      ...customResourceActionTypes
+    }).reduce(
+      (h, actionType) => ({
+        ...h,
+        [actionType]: updateResource
+      }),
+      {}
+    ),
+    ...customReducer
   };
+
+  const reducer = createReducer(initialState, reducerHandlers);
 
   return { reducer, init };
 };

@@ -9,16 +9,4 @@ export const doneFetch = "doneFetch";
 export const failFetch = "failFetch";
 export const startProcess = "startProcess";
 export const doneProcess = "doneProcess";
-
-export const initializeResource = "initializeResource";
-export const updateResource = "updateResource";
-export const updateBatchResource = "updateBatchResource";
 export const removeResource = "removeResource";
-export const resetResource = "resetResource";
-export const resetPristineResource = "resetPristineResource";
-export const resetPristineKeyResource = "resetPristineKeyResource";
-export const startFetchResource = "startFetchResource";
-export const doneFetchResource = "doneFetchResource";
-export const failFetchResource = "failFetchResource";
-export const startProcessResource = "startProcessResource";
-export const doneProcessResource = "doneProcessResource";
