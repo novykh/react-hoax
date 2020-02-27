@@ -2,6 +2,7 @@ import isNil from "lodash/isNil";
 import makePristine from "../../makePristine";
 import { updateBatch } from "../../reducerUtils";
 import * as actionTypes from "./actionTypes";
+import createReducer from "../../createReducer";
 
 export default (getInitialState, customReducer) => {
   const {
@@ -29,52 +30,44 @@ export default (getInitialState, customReducer) => {
     };
   };
 
-  const reducer = (state, { type, id, ...payload }) => {
-    if (customReducer === "function")
-      state = customReducer(state, { type, ...payload });
-
-    switch (type) {
-      case actionTypes.initializeResource:
-        return init(id, payload.values);
-
-      case actionTypes.updateResource:
-        return update(state, payload.attr, payload.value);
-
-      case actionTypes.updateBatchResource:
-        return updateBatch(update, state, payload.values);
-
-      case actionTypes.resetResource:
-        return init(id);
-
-      case actionTypes.resetPristineResource:
-        return removePristine(state);
-
-      case actionTypes.resetPristineKeyResource:
-        return removePristine(state, payload.attr);
-
-      case actionTypes.startProcessResource:
-        return { ...state, processing: true };
-
-      case actionTypes.doneProcessResource:
-        return { ...state, processing: false };
-
-      case actionTypes.startFetchResource:
-        return { ...state, loading: true };
-
-      case actionTypes.doneFetchResource:
-        return init(id, {
-          ...payload.values,
-          loading: false,
-          loaded: true
-        });
-
-      case actionTypes.failFetchResource:
-        return { ...state, loading: false };
-
-      default:
-        return state;
-    }
+  const reducerHandlers = {
+    [actionTypes.initializeResource]: (state, action) =>
+      init(id, action.values),
+    [actionTypes.updateResource]: (state, action) =>
+      update(state, action.attr, action.value),
+    [actionTypes.updateBatchResource]: (state, action) =>
+      updateBatch(update, state, action.values),
+    [actionTypes.resetResource]: (state, action) => init(action.id),
+    [actionTypes.resetPristineResource]: (state, action) =>
+      removePristine(state),
+    [actionTypes.resetPristineKeyResource]: (state, action) =>
+      removePristine(state, action.attr),
+    [actionTypes.startProcessResource]: (state, action) => ({
+      ...state,
+      processing: true
+    }),
+    [actionTypes.doneProcessResource]: (state, action) => ({
+      ...state,
+      processing: false
+    }),
+    [actionTypes.startFetchResource]: (state, action) => ({
+      ...state,
+      loading: true
+    }),
+    [actionTypes.doneFetchResource]: (state, action) =>
+      init(id, {
+        ...action.values,
+        loading: false,
+        loaded: true
+      }),
+    [actionTypes.failFetchResource]: (state, action) => ({
+      ...state,
+      loading: false
+    }),
+    ...customReducer
   };
+
+  const reducer = createReducer(initialState, reducerHandlers);
 
   return { reducer, init };
 };

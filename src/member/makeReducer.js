@@ -2,6 +2,7 @@ import isNil from "lodash/isNil";
 import makePristine from "../makePristine";
 import { updateBatch } from "../reducerUtils";
 import * as actionTypes from "../actionTypes";
+import createReducer from "../createReducer";
 
 /**
  * @typedef {Object} memberHoax.ReducerWithInit
@@ -42,52 +43,26 @@ export default (getInitialState, customReducer) => {
     };
   };
 
-  const reducer = (state, { type, ...payload }) => {
-    if (typeof customReducer === "function")
-      state = customReducer(state, { type, ...payload });
-
-    switch (type) {
-      case actionTypes.initialize:
-        return init(payload.values);
-
-      case actionTypes.update:
-        return update(state, payload.attr, payload.value);
-
-      case actionTypes.updateBatch:
-        return updateBatch(update, state, payload.values);
-
-      case actionTypes.reset:
-        return init();
-
-      case actionTypes.resetPristine:
-        return removePristine(state);
-
-      case actionTypes.resetPristineKey:
-        return removePristine(state, payload.attr);
-
-      case actionTypes.startProcess:
-        return { ...state, processing: true };
-
-      case actionTypes.doneProcess:
-        return { ...state, processing: false };
-
-      case actionTypes.startFetch:
-        return { ...state, loading: true };
-
-      case actionTypes.doneFetch:
-        return init({
-          ...payload.values,
-          loading: false,
-          loaded: true
-        });
-
-      case actionTypes.failFetch:
-        return { ...state, loading: false };
-
-      default:
-        return state;
-    }
+  const reducerHandlers = {
+    [actionTypes.initialize]: (state, action) => init(action.values),
+    [actionTypes.update]: (state, action) => update(state, action.attr, action.value),
+    [actionTypes.updateBatch]: (state, action) => updateBatch(update, state, action.values),
+    [actionTypes.reset]: (state, action) => init(),
+    [actionTypes.resetPristine]: (state, action) => removePristine(state),
+    [actionTypes.resetPristineKey]: (state, action) => removePristine(state, action.attr),
+    [actionTypes.startProcess]: (state, action) => ({ ...state, processing: true }),
+    [actionTypes.doneProcess]: (state, action) => ({ ...state, processing: false }),
+    [actionTypes.startFetch]: (state, action) => ({ ...state, loading: true }),
+    [actionTypes.doneFetch]: (state, action) => init({
+      ...action.values,
+      loading: false,
+      loaded: true
+    }),
+    [actionTypes.failFetch]: (state, action) => ({ ...state, loading: false }),
+    ...customReducer
   };
+
+  const reducer = createReducer(initialState, reducerHandlers);
 
   return { reducer, init };
 };
