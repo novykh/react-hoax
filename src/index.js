@@ -104,3 +104,9 @@ import * as resourceActions from "./collection/resource/actions";
 
 const hoaxActions = { ...actions, ...resourceActions };
 export { hoaxActions };
+
+import * as actionTypes from "./actionTypes";
+import * as resourceActionTypes from "./collection/resource/actionTypes";
+
+const hoaxActionTypes = { ...actionTypes, ...resourceActionTypes };
+export { hoaxActionTypes };
