@@ -135,7 +135,7 @@ export default ({
     ...customReducer
   };
 
-  const reducer = createReducer(initialState, reducerHandlers);
+  const reducer = createReducer(reducerHandlers);
 
   return { reducer, init };
 };

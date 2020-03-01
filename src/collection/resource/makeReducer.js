@@ -32,7 +32,7 @@ export default (getInitialState, customReducer) => {
 
   const reducerHandlers = {
     [actionTypes.initializeResource]: (state, action) =>
-      init(id, action.values),
+      init(action.id, action.values),
     [actionTypes.updateResource]: (state, action) =>
       update(state, action.attr, action.value),
     [actionTypes.updateBatchResource]: (state, action) =>
@@ -55,7 +55,7 @@ export default (getInitialState, customReducer) => {
       loading: true
     }),
     [actionTypes.doneFetchResource]: (state, action) =>
-      init(id, {
+      init(action.id, {
         ...action.values,
         loading: false,
         loaded: true
@@ -67,7 +67,7 @@ export default (getInitialState, customReducer) => {
     ...customReducer
   };
 
-  const reducer = createReducer(initialState, reducerHandlers);
+  const reducer = createReducer(reducerHandlers);
 
   return { reducer, init };
 };
