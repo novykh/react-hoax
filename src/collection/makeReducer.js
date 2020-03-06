@@ -34,19 +34,15 @@ export default ({
     return resourceReducer(prevResource, { id, ...payload });
   };
 
+  const getValidValue = (attr, value) =>
+    isNil(value) ? getInitialState()[attr] : value;
+
   const update = (state, attr, value) => {
-    const id = attr.toString();
-    const ids = state.byId.hasOwnProperty(id) ? state.ids : [...state.ids, id];
+    value = getValidValue(attr, value);
+
     return {
       ...state,
-      byId: {
-        ...state.byId,
-        [id]: updateOnlyResourceState(state, id, {
-          type: resourceActionTypes.updateBatchResource,
-          values: value
-        })
-      },
-      ids
+      [attr]: value
     };
   };
 
