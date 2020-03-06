@@ -2,6 +2,7 @@ import * as actionTypes from "../actionTypes";
 import * as resourceActionTypes from "./resource/actionTypes";
 import { updateBatch } from "../reducerUtils";
 import createReducer from "../createReducer"
+import isNil from "lodash/isNil";
 
 /**
  * @typedef {Object} collectionHoax.ReducerWithInit
