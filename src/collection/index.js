@@ -74,7 +74,9 @@ const makeCollectionProvider = (
   const Field = makeFields(useMember);
   const { useSelector, useAction, useResourceSelector } = makeUseSelector(
     StateCtx,
-    DispatchCtx
+    DispatchCtx,
+    initState,
+    getInitialResourceState,
   );
 
   const CollectionProvider = ({ children, initialState, extraArgument }) => {
@@ -101,7 +103,9 @@ const makeCollectionProvider = (
     useSelector,
     useAction,
     useResourceSelector,
-    Field
+    Field,
+    getInitialState: initState,
+    getInitialResourceState
   };
 };
 

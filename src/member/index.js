@@ -71,7 +71,8 @@ const makeMemberProvider = (
     useCollection,
     useSelector,
     useAction,
-    Field
+    Field,
+    getInitialState: initState
   };
 };
 
