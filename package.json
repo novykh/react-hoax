@@ -1,6 +1,6 @@
 {
   "name": "react-hoax",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Idiomatic resourceful context",
   "license": "MIT",
   "repository": "github:novykh/react-hoax",
@@ -76,7 +76,6 @@
   },
   "dependencies": {
     "lodash": "^4.17.15",
-    "use-context-selector": "^1.1.1",
-    "lodash": "^4.17.15"
+    "use-context-selector": "^1.1.1"
   }
 }
