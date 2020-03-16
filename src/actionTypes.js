@@ -9,4 +9,3 @@ export const doneFetch = "doneFetch";
 export const failFetch = "failFetch";
 export const startProcess = "startProcess";
 export const doneProcess = "doneProcess";
-export const removeResource = "removeResource";

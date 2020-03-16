@@ -117,8 +117,6 @@ export default ({
     [actionTypes.startFetch]: (state, action) => ({ ...state, loading: true }),
     [actionTypes.doneFetch]: (state, action) => doneFetch(state, action.values),
     [actionTypes.failFetch]: (state, action) => ({ ...state, loading: false }),
-    [actionTypes.removeResource]: (state, action) =>
-      removeResource(state, action.id),
     ...Object.keys({
       ...resourceActionTypes,
       ...customResourceActionTypes
@@ -129,6 +127,8 @@ export default ({
       }),
       {}
     ),
+    [resourceActionTypes.removeResource]: (state, action) =>
+      removeResource(state, action.id),
     ...customReducer
   };
 
