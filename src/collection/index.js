@@ -34,6 +34,7 @@ import makeResourceReducer from "./resource/makeReducer";
  * @param {object} options.resourceOptions - each nested resource's options
  * @param {object} options.resourceOptions.getInitialState - The returned value of `getInitialState` of the nested resource, will be merged with the default resource hoax initialState.
  * @param {function} options.resourceOptions.reducer - `reducer(state, action)` An extra reducer for the nested resource, should return nothing on actionType mismatch, after passing through the custom reducer, it will go through the default resource reducer.
+ * @param {string} [idKey='id'] - The identifier for resource scoping, the key to be used for `ids` and `byId`.
  * @return {CollectionHoax} CollectionHoax - what is needed for a collection resource
  */
 

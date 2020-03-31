@@ -44,11 +44,12 @@ const {
       industry: "",
       offer: ""
     }
-  }
+  },
+  idKey: 'title'
 });
 
-const MyCustomResourceName = ({id}) => {
-  const [name, setName, error, setError] = useMember({resourceId: id, fieldKey: 'name'});
+const MyCustomResourceName = ({title}) => {
+  const [name, setName, error, setError] = useMember({resourceId: title, fieldKey: 'name'});
 
   return (
     <Fragment>
@@ -61,8 +62,8 @@ const MyCustomResourceName = ({id}) => {
 const MyCustomResourcesEntry = ({ children }) => {
   const startFetch = useAction("startFetch");
   const doneFetch = useAction("doneFetch");
-  const [loaded, loading, ids] = useSelector(state => [state.loaded, state.loading])
-  const myFirstCustomResourceName = useResourceSelector('1', state => state.name)
+  const [loaded, loading, ids] = useSelector(state => [state.loaded, state.loading, state.ids])
+  const theDescriptionForGivenTitle = useResourceSelector('A title', state => state.description)
 
   useLayoutEffect(() => {
     if (!loaded) startFetch();
@@ -70,7 +71,7 @@ const MyCustomResourcesEntry = ({ children }) => {
 
   useEffect(() => {
     if (loading) {
-      promise.resolve([{id: '1', name: 'something'}])
+      promise.resolve([{title: 'A title', description: 'something'}])
         .then(data => doneFetch(data));
     }
   }, [loading])
@@ -78,7 +79,7 @@ const MyCustomResourcesEntry = ({ children }) => {
 
   if (loading) return "Loading...";
 
-  return <Fragment>{ids.map(id => <MyCustomResourceName key={id} id={id} />}</Fragment>;
+  return <Fragment>{ids.map(title => <MyCustomResourceName key={id} title={title} />}</Fragment>;
 };
 
 const MyCustomResourcesProvider = () => (

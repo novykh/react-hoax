@@ -102,11 +102,12 @@ const {
       industry: "",
       offer: ""
     }
-  }
+  },
+  idKey: 'title'
 });
 
-const MyCustomResourceName = ({id}) => {
-  const [name, setName, error, setError] = useMember({resourceId: id, fieldKey: 'name'});
+const MyCustomResourceName = ({title}) => {
+  const [name, setName, error, setError] = useMember({resourceId: title, fieldKey: 'name'});
 
   return (
     &lt;Fragment>
@@ -119,8 +120,8 @@ const MyCustomResourceName = ({id}) => {
 const MyCustomResourcesEntry = ({ children }) => {
   const startFetch = useAction("startFetch");
   const doneFetch = useAction("doneFetch");
-  const [loaded, loading, ids] = useSelector(state => [state.loaded, state.loading])
-  const myFirstCustomResourceName = useResourceSelector('1', state => state.name)
+  const [loaded, loading, ids] = useSelector(state => [state.loaded, state.loading, state.ids])
+  const theDescriptionForGivenTitle = useResourceSelector('A title', state => state.description)
 
   useLayoutEffect(() => {
     if (!loaded) startFetch();
@@ -128,7 +129,7 @@ const MyCustomResourcesEntry = ({ children }) => {
 
   useEffect(() => {
     if (loading) {
-      promise.resolve([{id: '1', name: 'something'}])
+      promise.resolve([{title: 'A title', description: 'something'}])
         .then(data => doneFetch(data));
     }
   }, [loading])
@@ -136,7 +137,7 @@ const MyCustomResourcesEntry = ({ children }) => {
 
   if (loading) return "Loading...";
 
-  return &lt;Fragment>{ids.map(id => &lt;MyCustomResourceName key={id} id={id} />}&lt;/Fragment>;
+  return &lt;Fragment>{ids.map(title => &lt;MyCustomResourceName key={id} title={title} />}&lt;/Fragment>;
 };
 
 const MyCustomResourcesProvider = () => (
@@ -160,8 +161,14 @@ export { default as makeCollectionHoax } from "./collection";
 import * as actions from "./actions";
 import * as resourceActions from "./collection/resource/actions";
 
-const hoaxActions = { ...hoaxActions, ...resourceActions };
+const hoaxActions = { ...actions, ...resourceActions };
 export { hoaxActions };
+
+import * as actionTypes from "./actionTypes";
+import * as resourceActionTypes from "./collection/resource/actionTypes";
+
+const hoaxActionTypes = { ...actionTypes, ...resourceActionTypes };
+export { hoaxActionTypes };
 </code></pre>
         </article>
     </section>
