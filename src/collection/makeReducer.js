@@ -23,7 +23,8 @@ export default ({
   customReducer = {},
   resourceReducer = {},
   initResource,
-  customResourceActionTypes = {}
+  customResourceActionTypes = {},
+  idKey
 }) => {
   const init = (state = {}) => ({
     ...getInitialState(),
@@ -32,7 +33,7 @@ export default ({
 
   const updateOnlyResourceState = (state, id, payload) => {
     const prevResource = state.byId[id] || initResource();
-    return resourceReducer(prevResource, { id, ...payload });
+    return resourceReducer(prevResource, { [idKey]: id, ...payload });
   };
 
   const getValidValue = (attr, value) =>
@@ -50,11 +51,11 @@ export default ({
   const doneFetch = (state, resources) => {
     const ids = [];
     const byId = resources.reduce((h, resource) => {
-      ids.push(resource.id);
+      ids.push(resource[idKey]);
 
       return {
         ...h,
-        [resource.id]: updateOnlyResourceState(state, resource.id, {
+        [resource[idKey]]: updateOnlyResourceState(state, resource[idKey], {
           type: resourceActionTypes.initializeResource,
           values: resource
         })

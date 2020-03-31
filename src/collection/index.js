@@ -43,7 +43,8 @@ const makeCollectionProvider = (
     getInitialState,
     reducer: customReducer,
     actions: customActions,
-    resourceOptions = {}
+    resourceOptions = {},
+    idKey = 'id'
   } = {}
 ) => {
   const initState = makeGetInitialState({
@@ -65,7 +66,8 @@ const makeCollectionProvider = (
     customReducer,
     resourceReducer,
     customResourceActionTypes: resourceOptions.actionTypes,
-    initResource
+    initResource,
+    idKey
   });
 
   const [StateCtx, DispatchCtx] = makeContext();

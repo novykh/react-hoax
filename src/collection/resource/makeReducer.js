@@ -4,7 +4,7 @@ import { updateBatch } from "../../reducerUtils";
 import * as actionTypes from "./actionTypes";
 import createReducer from "../../createReducer";
 
-export default (getInitialState, customReducer) => {
+export default (getInitialState, customReducer, idKey) => {
   const {
     getInitialPristineState,
     updatePristine,
@@ -12,7 +12,7 @@ export default (getInitialState, customReducer) => {
   } = makePristine("pristine");
 
   const init = (id, state = {}) => ({
-    id,
+    [idKey]: id,
     ...getInitialState(),
     ...state,
     ...getInitialPristineState()
