@@ -22,20 +22,17 @@ export default useMember => {
 
     const update = (...args) => setValue(onChange(...args));
 
-    return useMemo(
-      () => (
-        <Component
-          name={fieldKey}
-          data-testid={fieldKey}
-          onChange={update}
-          value={value}
-          error={error}
-          name={fieldKey}
-          {...rest}
-        />
-      ),
-      [value, error, rest.options]
-    );
+    return (
+      <Component
+        name={fieldKey}
+        data-testid={fieldKey}
+        onChange={update}
+        value={value}
+        error={error}
+        name={fieldKey}
+        {...rest}
+      />
+    )
   };
 
   const Select = ({
