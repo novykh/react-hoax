@@ -100,14 +100,10 @@ export default MyCustomResourcesProvider;
  */
 export { default as makeCollectionHoax } from "./collection";
 
-import * as actions from "./actions";
-import * as resourceActions from "./collection/resource/actions";
+import * as hoaxActions from "./actions";
+import * as hoaxResourceActions from "./collection/resource/actions";
+export { hoaxActions, hoaxResourceActions };
 
-const hoaxActions = { ...actions, ...resourceActions };
-export { hoaxActions };
-
-import * as actionTypes from "./actionTypes";
-import * as resourceActionTypes from "./collection/resource/actionTypes";
-
-const hoaxActionTypes = { ...actionTypes, ...resourceActionTypes };
-export { hoaxActionTypes };
+import * as hoaxActionTypes from "./actionTypes";
+import * as hoaxResourceActionTypes from "./collection/resource/actionTypes";
+export { hoaxActionTypes, hoaxResourceActionTypes };
