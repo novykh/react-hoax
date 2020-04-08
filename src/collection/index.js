@@ -60,7 +60,8 @@ const makeCollectionProvider = (
 
   const { reducer: resourceReducer, init: initResource } = makeResourceReducer(
     getInitialResourceState,
-    resourceOptions.reducer
+    resourceOptions.reducer,
+    idKey
   );
   const { reducer, init } = makeReducer({
     getInitialState: initState,

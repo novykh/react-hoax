@@ -33,7 +33,7 @@ export default ({
 
   const updateOnlyResourceState = (state, id, payload) => {
     const prevResource = state.byId[id] || initResource();
-    return resourceReducer(prevResource, { [idKey]: id, ...payload }, idKey);
+    return resourceReducer(prevResource, { [idKey]: id, ...payload });
   };
 
   const getValidValue = (attr, value) =>
