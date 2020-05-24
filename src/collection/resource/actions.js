@@ -1,10 +1,14 @@
 import * as actionTypes from "./actionTypes";
 
-export const initializeResource = (id, values) => ({
-  type: actionTypes.initializeResource,
-  id,
-  values
-});
+export const initializeResource = (id, values, {merge} = {}) => (dispatch, getState) => {
+  if (merge)
+    return dispatch({
+      type: actionTypes.initializeResource,
+      id,
+      values: { ...getState(), ...values }
+    });
+  return dispatch({ type: actionTypes.initializeResource, id, values });
+};
 
 export const updateResource = (id, attr, value) => ({
   type: actionTypes.updateResource,

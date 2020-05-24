@@ -8,11 +8,39 @@ it("removes resource", () =>
     expectedValues: { id: "1" }
   }));
 
-it("initializes resource", () =>
-  testFunctionAction(actions.initializeResource, "1", { foo: "bar" })({
-    expectedType: actionTypes.initializeResource,
-    expectedValues: { id: "1", values: { foo: "bar" } }
-  }));
+it("initializes resource", () => {
+  const dispatch = jest.fn().mockImplementation(args => args);
+  const getState = jest.fn();
+  const dispatched = actions.initializeResource("1", { foo: "bar" })(dispatch, getState);
+  expect(dispatch).toBeCalledWith({
+    type: actionTypes.initializeResource,
+    id: "1",
+    values: { foo: "bar" }
+  });
+  expect(getState).not.toBeCalled();
+  expect(dispatched).toEqual({
+    type: actionTypes.initializeResource,
+    id: "1",
+    values: { foo: "bar" }
+  });
+});
+
+it("initializes resource with merge", () => {
+  const dispatch = jest.fn().mockImplementation(args => args);
+  const getState = jest.fn().mockImplementation(() => ({old: "old"}));
+  const dispatched = actions.initializeResource("1", { foo: "bar" }, {merge: true})(dispatch, getState);
+  expect(dispatch).toBeCalledWith({
+    type: actionTypes.initializeResource,
+    id: "1",
+    values: { foo: "bar", old: "old" }
+  });
+  expect(getState).toBeCalled();
+  expect(dispatched).toEqual({
+    type: actionTypes.initializeResource,
+    id: "1",
+    values: { foo: "bar", old: "old" }
+  });
+});
 
 it("updates resource", () =>
   testFunctionAction(actions.updateResource, "1", "foo", "bar")({
