@@ -1,12 +1,15 @@
 import * as actionTypes from "./actionTypes";
 
 export const initializeResource = (id, values, {merge} = {}) => (dispatch, getState) => {
-  if (merge)
+  if (merge) {
+    const prevState = getState().byId[id] || {};
+
     return dispatch({
       type: actionTypes.initializeResource,
       id,
-      values: { ...getState(), ...values }
+      values: { ...prevState, ...values }
     });
+  }
   return dispatch({ type: actionTypes.initializeResource, id, values });
 };
 

@@ -27,7 +27,7 @@ it("initializes resource", () => {
 
 it("initializes resource with merge", () => {
   const dispatch = jest.fn().mockImplementation(args => args);
-  const getState = jest.fn().mockImplementation(() => ({old: "old"}));
+  const getState = jest.fn().mockImplementation(() => ({byId: {"1": {old: "old"}}}));
   const dispatched = actions.initializeResource("1", { foo: "bar" }, {merge: true})(dispatch, getState);
   expect(dispatch).toBeCalledWith({
     type: actionTypes.initializeResource,
@@ -39,6 +39,23 @@ it("initializes resource with merge", () => {
     type: actionTypes.initializeResource,
     id: "1",
     values: { foo: "bar", old: "old" }
+  });
+});
+
+it("initializes non previous existent resource with merge", () => {
+  const dispatch = jest.fn().mockImplementation(args => args);
+  const getState = jest.fn().mockImplementation(() => ({byId: {"2": {old: "old"}}}));
+  const dispatched = actions.initializeResource("1", { foo: "bar" }, {merge: true})(dispatch, getState);
+  expect(dispatch).toBeCalledWith({
+    type: actionTypes.initializeResource,
+    id: "1",
+    values: { foo: "bar" }
+  });
+  expect(getState).toBeCalled();
+  expect(dispatched).toEqual({
+    type: actionTypes.initializeResource,
+    id: "1",
+    values: { foo: "bar" }
   });
 });
 
