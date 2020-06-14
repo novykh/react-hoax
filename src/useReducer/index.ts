@@ -41,13 +41,7 @@ export default (
     (h, action) => ({
       ...h,
       [action]: (...args) =>
-        connect(
-          actions[action],
-          dispatch,
-          getState,
-          args,
-          extraArgument
-        ),
+        connect(actions[action], dispatch, getState, args, extraArgument),
     }),
     { dispatch }
   );
