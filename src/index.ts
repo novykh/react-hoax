@@ -10,11 +10,11 @@
  *  };
  *
  *  const UserHoax = makeMemberHoax("user", { initialState });
- *  const NameField = UserHoax.Field.Input({fieldKey: "name"});
+ *  const name = UserHoax.useSelector(s => s.name);
  *
  *  const UserForm = () => (
  *    <UserHoax.Provider>
- *      <NameField />
+ *      {name}
  *    </UserHoax.Provider>
  *  );
  */
