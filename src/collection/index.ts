@@ -45,17 +45,17 @@ const makeCollectionProvider = (
     reducer: customReducer,
     actions: customActions,
     resourceOptions = {},
-    idKey = 'id'
+    idKey = "id",
   } = {}
 ) => {
   const initState = makeGetInitialState({
     getInitialState,
-    defaultInitialState
+    defaultInitialState,
   });
 
   const getInitialResourceState = makeGetInitialState({
     getInitialState: resourceOptions.getInitialState,
-    defaultInitialState: defaultResourceInitialState
+    defaultInitialState: defaultResourceInitialState,
   });
 
   const { reducer: resourceReducer, init: initResource } = makeResourceReducer(
@@ -69,7 +69,7 @@ const makeCollectionProvider = (
     resourceReducer,
     customResourceActionTypes: resourceOptions.actionTypes,
     initResource,
-    idKey
+    idKey,
   });
 
   const [StateCtx, DispatchCtx] = makeContext();
@@ -80,7 +80,7 @@ const makeCollectionProvider = (
     StateCtx,
     DispatchCtx,
     initState,
-    getInitialResourceState,
+    getInitialResourceState
   );
 
   const CollectionProvider = ({ children, initialState, extraArgument }) => {
@@ -88,7 +88,7 @@ const makeCollectionProvider = (
       initialState,
       init,
       actions: { ...actions, ...resourceActions, ...customActions },
-      extraArgument
+      extraArgument,
     });
 
     return (
@@ -109,7 +109,7 @@ const makeCollectionProvider = (
     useResourceSelector,
     Field,
     getInitialState: initState,
-    getInitialResourceState
+    getInitialResourceState,
   };
 };
 

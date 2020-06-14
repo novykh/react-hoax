@@ -1,14 +1,9 @@
-import { makeMemberHoax } from "react-hoax";
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./app";
 
-const getInitialState = () => {
-  name: "";
+const render = () => {
+  ReactDOM.render(<App />, document.getElementById("root"));
 };
 
-const UserHoax = makeMemberHoax("user", { getInitialState });
-const NameField = UserHoax.makeField("name", "text");
-
-const UserForm = () => (
-  <UserHoax.Provider>
-    <NameField />
-  </UserHoax.Provider>
-);
+render();

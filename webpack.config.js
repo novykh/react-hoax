@@ -8,25 +8,35 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "react-hoax.js",
     library: "react-hoax",
-    libraryTarget: "umd"
+    libraryTarget: "umd",
   },
   externals: {
     react: {
       commonjs: "react",
       commonjs2: "react",
       amd: "React",
-      root: "React"
-    }
+      root: "React",
+    },
   },
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "ts-loader",
+          },
+        ],
+      },
+      {
+        enforce: "pre",
         test: /\.js$/,
-        exclude: /[\\/]node_modules[\\/]/,
-        use: {
-          loader: "babel-loader"
-        }
-      }
-    ]
-  }
+        loader: "source-map-loader",
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".ts", ".tsx"],
+  },
 };
