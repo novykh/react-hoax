@@ -58,7 +58,7 @@
         <article>
             <pre class="prettyprint source linenums"><code>import { useMemo } from "react";
 import useContextSelector from "../useContextSelector";
-import identity from "lodash/identity";
+import { identity } from "../helpers";
 
 /**
  * @typedef {Object} memberHoax.Selectors
@@ -76,13 +76,13 @@ import identity from "lodash/identity";
 
 export default (StateCtx, DispatchCtx) => ({
   useSelector: (selector = identity) => useContextSelector(StateCtx, selector),
-  useAction: actionKey => {
+  useAction: (actionKey) => {
     const selector = useMemo(
-      () => (actionKey ? actions => actions[actionKey] : identity),
+      () => (actionKey ? (actions) => actions[actionKey] : identity),
       [actionKey]
     );
     return useContextSelector(DispatchCtx, selector);
-  }
+  },
 });
 </code></pre>
         </article>

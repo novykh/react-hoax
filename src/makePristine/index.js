@@ -30,7 +30,7 @@
   }
 */
 
-import isEqual from "lodash/isEqual";
+import { isEqual } from "../helpers";
 
 const PRISTINE = "pristine";
 
@@ -44,8 +44,8 @@ export default (pristineKey = PRISTINE) => {
     ...state,
     [pristineKey]: {
       ...state[pristineKey],
-      [key]: state[key]
-    }
+      [key]: state[key],
+    },
   });
 
   const remove = (state, key) => {
@@ -56,8 +56,8 @@ export default (pristineKey = PRISTINE) => {
     return {
       ...state,
       [pristineKey]: {
-        ...state[pristineKey]
-      }
+        ...state[pristineKey],
+      },
     };
   };
 
@@ -73,6 +73,6 @@ export default (pristineKey = PRISTINE) => {
       return state;
     },
     removePristine: remove,
-    getInitialPristineState: getInitialState
+    getInitialPristineState: getInitialState,
   };
 };

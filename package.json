@@ -45,7 +45,6 @@
     "webpack-cli": "^3.3.11"
   },
   "peerDependencies": {
-    "lodash": "^4.0.0",
     "react": "^16.13.0"
   },
   "peerDependenciesMeta": {
@@ -75,7 +74,6 @@
     "docs": "jsdoc -c doc.conf.json"
   },
   "dependencies": {
-    "lodash": "^4.17.15",
     "use-context-selector": "^1.1.1"
   }
 }

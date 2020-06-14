@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from "react";
-import identity from "lodash/identity";
+import { identity } from "../helpers";
 
 const onValueChange = ({ target: { value: val } }) => val;
 const onToggle = ({ target: { checked } }) => checked;
@@ -17,7 +17,7 @@ export default useMember => {
     const [value, setValue, error] = useMember({
       fieldKey,
       select,
-      resourceId
+      resourceId,
     });
 
     const update = (...args) => setValue(onChange(...args));
@@ -32,7 +32,7 @@ export default useMember => {
         name={fieldKey}
         {...rest}
       />
-    )
+    );
   };
 
   const Select = ({
@@ -60,6 +60,6 @@ export default useMember => {
   return {
     Select,
     Checkbox,
-    Input
+    Input,
   };
 };

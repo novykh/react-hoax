@@ -1,6 +1,5 @@
 import { useRef } from "react";
-import identity from "lodash/identity";
-import isEqual from "lodash/isEqual";
+import { identity, isEqual } from "../helpers";
 import { useContextSelector } from "use-context-selector";
 
 export default (Context, select = identity) => {

@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import identity from "lodash/identity";
+import { identity } from "../helpers";
 import makeUseMember from "../makeUseMember";
 
 /**
@@ -29,7 +29,7 @@ export default (StateCtx, DispatchCtx) => {
       fieldKey,
       resourceId,
       getUpdate,
-      select
+      select,
     });
     const normalize = makeWithUniq(uniq);
 
@@ -40,7 +40,7 @@ export default (StateCtx, DispatchCtx) => {
         setCollection(
           normalize([
             ...collection.slice(0, index),
-            ...collection.slice(index + 1)
+            ...collection.slice(index + 1),
           ])
         );
       },
@@ -55,7 +55,7 @@ export default (StateCtx, DispatchCtx) => {
           normalize([
             ...collection.slice(0, index),
             value,
-            ...collection.slice(index + 1)
+            ...collection.slice(index + 1),
           ])
         );
       },
@@ -70,7 +70,7 @@ export default (StateCtx, DispatchCtx) => {
           normalize([
             ...collection.slice(0, index),
             value,
-            ...collection.slice(index)
+            ...collection.slice(index),
           ])
         );
       },
@@ -78,7 +78,7 @@ export default (StateCtx, DispatchCtx) => {
     );
 
     const push = useCallback(value => add(collection.length, value), [
-      collection
+      collection,
     ]);
 
     const reorder = useCallback(
@@ -103,7 +103,7 @@ export default (StateCtx, DispatchCtx) => {
       remove,
       reorder,
       error,
-      setError
+      setError,
     };
   };
 };

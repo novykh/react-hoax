@@ -57,7 +57,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { useCallback } from "react";
-import identity from "lodash/identity";
+import { identity } from "../helpers";
 import makeUseMember from "../makeUseMember";
 
 /**
@@ -76,7 +76,7 @@ import makeUseMember from "../makeUseMember";
 
 const makeWithUniq = (uniq = false) => {
   if (!uniq) return identity;
-  return collection => [...new Set(collection)];
+  return (collection) => [...new Set(collection)];
 };
 
 export default (StateCtx, DispatchCtx) => {
@@ -87,18 +87,18 @@ export default (StateCtx, DispatchCtx) => {
       fieldKey,
       resourceId,
       getUpdate,
-      select
+      select,
     });
     const normalize = makeWithUniq(uniq);
 
     const remove = useCallback(
-      index => {
+      (index) => {
         if (index &lt; 0 || index >= collection.length) return;
 
         setCollection(
           normalize([
             ...collection.slice(0, index),
-            ...collection.slice(index + 1)
+            ...collection.slice(index + 1),
           ])
         );
       },
@@ -113,7 +113,7 @@ export default (StateCtx, DispatchCtx) => {
           normalize([
             ...collection.slice(0, index),
             value,
-            ...collection.slice(index + 1)
+            ...collection.slice(index + 1),
           ])
         );
       },
@@ -128,15 +128,15 @@ export default (StateCtx, DispatchCtx) => {
           normalize([
             ...collection.slice(0, index),
             value,
-            ...collection.slice(index)
+            ...collection.slice(index),
           ])
         );
       },
       [collection]
     );
 
-    const push = useCallback(value => add(collection.length, value), [
-      collection
+    const push = useCallback((value) => add(collection.length, value), [
+      collection,
     ]);
 
     const reorder = useCallback(
@@ -161,7 +161,7 @@ export default (StateCtx, DispatchCtx) => {
       remove,
       reorder,
       error,
-      setError
+      setError,
     };
   };
 };

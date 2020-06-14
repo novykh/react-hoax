@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import useContextSelector from "../useContextSelector";
-import identity from "lodash/identity";
+import { identity } from "../helpers";
 import { makeByIdSelector } from "../collection/makeUseSelector";
 
 /**
@@ -20,7 +20,7 @@ export default (StateCtx, DispatchCtx) => ({
   fieldKey,
   resourceId,
   getUpdate = defaultGetUpdate,
-  select = resourceId ? makeByIdSelector : identity
+  select = resourceId ? makeByIdSelector : identity,
 }) => {
   const selector = useCallback(
     state => {

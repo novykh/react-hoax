@@ -1,4 +1,4 @@
-import isNil from "lodash/isNil";
+import { isNil } from "../../helpers";
 import makePristine from "../../makePristine";
 import { updateBatch } from "../../reducerUtils";
 import * as actionTypes from "./actionTypes";
@@ -8,14 +8,14 @@ export default (getInitialState, customReducer, idKey) => {
   const {
     getInitialPristineState,
     updatePristine,
-    removePristine
+    removePristine,
   } = makePristine("pristine");
 
   const init = (id, state = {}) => ({
     [idKey]: id,
     ...getInitialState(),
     ...state,
-    ...getInitialPristineState()
+    ...getInitialPristineState(),
   });
 
   const getValidValue = (attr, value) =>
@@ -26,7 +26,7 @@ export default (getInitialState, customReducer, idKey) => {
     state = updatePristine(state, attr, value);
     return {
       ...state,
-      [attr]: value
+      [attr]: value,
     };
   };
 
@@ -44,27 +44,27 @@ export default (getInitialState, customReducer, idKey) => {
       removePristine(state, action.attr),
     [actionTypes.startProcessResource]: (state, action) => ({
       ...state,
-      processing: true
+      processing: true,
     }),
     [actionTypes.doneProcessResource]: (state, action) => ({
       ...state,
-      processing: false
+      processing: false,
     }),
     [actionTypes.startFetchResource]: (state, action) => ({
       ...state,
-      loading: true
+      loading: true,
     }),
     [actionTypes.doneFetchResource]: (state, action) =>
       init(action.id, {
         ...action.values,
         loading: false,
-        loaded: true
+        loaded: true,
       }),
     [actionTypes.failFetchResource]: (state, action) => ({
       ...state,
-      loading: false
+      loading: false,
     }),
-    ...customReducer
+    ...customReducer,
   };
 
   const reducer = createReducer(reducerHandlers);

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import useContextSelector from "../useContextSelector";
-import identity from "lodash/identity";
+import { identity } from "../helpers";
 
 /**
  * @typedef {Object} memberHoax.Selectors
@@ -24,5 +24,5 @@ export default (StateCtx, DispatchCtx) => ({
       [actionKey]
     );
     return useContextSelector(DispatchCtx, selector);
-  }
+  },
 });
