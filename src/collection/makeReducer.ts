@@ -4,6 +4,19 @@ import { updateBatch } from "../reducerUtils";
 import createReducer from "../createReducer";
 import { isNil } from "../helpers";
 
+import { IfcAction } from "../interfaces";
+import type {
+  Attr,
+  LikeState,
+  LikeStateArray,
+  GetState,
+  Dispatch,
+  InputEvent,
+  ReducerHandlers,
+  Reducer,
+  Actions,
+} from "../types";
+
 /**
  * @typedef {Object} collectionHoax.ReducerWithInit
  * @property {function} reducer - the reducer to be used along with provider
@@ -18,28 +31,39 @@ import { isNil } from "../helpers";
  *  @return {collectionHoax.ReducerWithInit}
  */
 
+interface IfcMakeCollectionReducer {
+  getInitialState?: GetState;
+  customReducer?: ReducerHandlers;
+  resourceReducer: Reducer;
+  initResource: (id?: Attr, state?: LikeState) => LikeState;
+  idKey: Attr;
+}
+
 export default ({
   getInitialState,
   customReducer = {},
-  resourceReducer = {},
+  resourceReducer,
   initResource,
-  customResourceActionTypes = {},
   idKey,
-}) => {
-  const init = (state = {}) => ({
+}: IfcMakeCollectionReducer) => {
+  const init = (state: LikeState = {}) => ({
     ...getInitialState(),
     ...state,
   });
 
-  const updateOnlyResourceState = (state, id, payload) => {
+  const updateOnlyResourceState = (
+    state: LikeState,
+    id: Attr,
+    payload: IfcAction
+  ) => {
     const prevResource = state.byId[id] || initResource();
     return resourceReducer(prevResource, { [idKey]: id, ...payload });
   };
 
-  const getValidValue = (attr, value) =>
+  const getValidValue = (attr: Attr, value: any) =>
     isNil(value) ? getInitialState()[attr] : value;
 
-  const update = (state, attr, value) => {
+  const update = (state: LikeState, attr: Attr, value: any) => {
     value = getValidValue(attr, value);
 
     return {
@@ -48,9 +72,9 @@ export default ({
     };
   };
 
-  const doneFetch = (state, resources) => {
-    const ids = [];
-    const byId = resources.reduce((h, resource) => {
+  const doneFetch = (state: LikeState, resources: LikeState[]) => {
+    const ids: Attr[] = [];
+    const byId = resources.reduce((h: LikeState, resource: LikeState) => {
       ids.push(resource[idKey]);
 
       return {
@@ -74,10 +98,10 @@ export default ({
     };
   };
 
-  const removeResource = (state, resourceId) => {
+  const removeResource = (state: LikeState, resourceId: Attr) => {
     const byId = { ...state.byId };
     delete byId[resourceId];
-    const ids = state.ids.filter(id => id !== resourceId);
+    const ids = state.ids.filter((id: Attr) => id !== resourceId);
 
     return {
       ...state,
@@ -86,7 +110,7 @@ export default ({
     };
   };
 
-  const updateResource = (state, { id, ...rest }) => {
+  const updateResource = (state: LikeState, { id, ...rest }: IfcAction) => {
     const resource = updateOnlyResourceState(state, id, rest);
     const ids = state.byId.hasOwnProperty(id) ? state.ids : [...state.ids, id];
 
@@ -101,35 +125,42 @@ export default ({
   };
 
   const reducerHandlers = {
-    [actionTypes.initialize]: (state, action) => init(action.values),
-    [actionTypes.update]: (state, action) =>
+    [actionTypes.initialize]: (state: LikeState, action: IfcAction) =>
+      init(action.values),
+    [actionTypes.update]: (state: LikeState, action: IfcAction) =>
       update(state, action.attr, action.value),
-    [actionTypes.updateBatch]: (state, action) =>
+    [actionTypes.updateBatch]: (state: LikeState, action: IfcAction) =>
       updateBatch(update, state, action.values),
-    [actionTypes.reset]: (state, action) => init(),
-    [actionTypes.startProcess]: (state, action) => ({
+    [actionTypes.reset]: (state: LikeState, action: IfcAction) => init(),
+    [actionTypes.startProcess]: (state: LikeState, action: IfcAction) => ({
       ...state,
       processing: true,
     }),
-    [actionTypes.doneProcess]: (state, action) => ({
+    [actionTypes.doneProcess]: (state: LikeState, action: IfcAction) => ({
       ...state,
       processing: false,
     }),
-    [actionTypes.startFetch]: (state, action) => ({ ...state, loading: true }),
-    [actionTypes.doneFetch]: (state, action) => doneFetch(state, action.values),
-    [actionTypes.failFetch]: (state, action) => ({ ...state, loading: false }),
-    ...Object.keys({
-      ...resourceActionTypes,
-      ...customResourceActionTypes,
-    }).reduce(
+    [actionTypes.startFetch]: (state: LikeState, action: IfcAction) => ({
+      ...state,
+      loading: true,
+    }),
+    [actionTypes.doneFetch]: (state: LikeState, action: IfcAction) =>
+      doneFetch(state, action.values),
+    [actionTypes.failFetch]: (state: LikeState, action: IfcAction) => ({
+      ...state,
+      loading: false,
+    }),
+    ...Object.keys(resourceActionTypes).reduce(
       (h, actionType) => ({
         ...h,
         [actionType]: updateResource,
       }),
       {}
     ),
-    [resourceActionTypes.removeResource]: (state, action) =>
-      removeResource(state, action.id),
+    [resourceActionTypes.removeResource]: (
+      state: LikeState,
+      action: IfcAction
+    ) => removeResource(state, action.id),
     ...customReducer,
   };
 

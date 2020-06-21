@@ -1,6 +1,17 @@
-import { useMemo } from "react";
+import { Context, useMemo } from "react";
 import useContextSelector from "../useContextSelector";
 import { identity } from "../helpers";
+
+import { IfcAction } from "../interfaces";
+import type {
+  Attr,
+  LikeState,
+  LikeStateArray,
+  GetState,
+  Dispatch,
+  InputEvent,
+  Actions,
+} from "../types";
 
 /**
  * @typedef {Object} memberHoax.Selectors
@@ -16,11 +27,15 @@ import { identity } from "../helpers";
  *  @return {memberHoax.Selectors}
  */
 
-export default (StateCtx, DispatchCtx) => ({
-  useSelector: (selector = identity) => useContextSelector(StateCtx, selector),
-  useAction: actionKey => {
+export default (
+  StateCtx: Context<LikeState>,
+  DispatchCtx: Context<LikeState>
+) => ({
+  useSelector: (selector: (x: LikeState) => LikeState = identity) =>
+    useContextSelector(StateCtx, selector),
+  useAction: (actionKey: Attr) => {
     const selector = useMemo(
-      () => (actionKey ? actions => actions[actionKey] : identity),
+      () => (actionKey ? (actions: Actions) => actions[actionKey] : identity),
       [actionKey]
     );
     return useContextSelector(DispatchCtx, selector);

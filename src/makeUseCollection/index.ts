@@ -1,6 +1,18 @@
-import { useCallback } from "react";
+import { Context, useCallback } from "react";
 import { identity } from "../helpers";
 import makeUseMember from "../makeUseMember";
+
+import { IfcAction } from "../interfaces";
+import type {
+  Attr,
+  LikeState,
+  LikeStateArray,
+  GetState,
+  Dispatch,
+  InputEvent,
+  ReducerHandlers,
+  Actions,
+} from "../types";
 
 /**
  * @description A hook that handles the CRUD operations on a state's collection.
@@ -16,15 +28,32 @@ import makeUseMember from "../makeUseMember";
  * remove(2); // collection[hello, world]
  */
 
-const makeWithUniq = (uniq = false) => {
+const makeWithUniq = (uniq: boolean = false) => {
   if (!uniq) return identity;
-  return collection => [...new Set(collection)];
+  return (collection: any[]) => [...new Set(collection)];
 };
 
-export default (StateCtx, DispatchCtx) => {
+interface IfcUseCollection {
+  fieldKey: Attr;
+  resourceId?: Attr | undefined;
+  uniq: boolean;
+  getUpdate: (x: Attr) => (x: LikeState) => LikeState;
+  select: (x: Attr) => (x: LikeState) => LikeState;
+}
+
+export default (
+  StateCtx: Context<LikeState>,
+  DispatchCtx: Context<LikeState>
+) => {
   const useMember = makeUseMember(StateCtx, DispatchCtx);
 
-  return ({ fieldKey, resourceId, uniq, getUpdate, select }) => {
+  return ({
+    fieldKey,
+    resourceId,
+    uniq,
+    getUpdate,
+    select,
+  }: IfcUseCollection) => {
     const [collection, setCollection, error, setError] = useMember({
       fieldKey,
       resourceId,
@@ -34,7 +63,7 @@ export default (StateCtx, DispatchCtx) => {
     const normalize = makeWithUniq(uniq);
 
     const remove = useCallback(
-      index => {
+      (index: number) => {
         if (index < 0 || index >= collection.length) return;
 
         setCollection(
@@ -48,7 +77,7 @@ export default (StateCtx, DispatchCtx) => {
     );
 
     const edit = useCallback(
-      (index, value) => {
+      (index: number, value: any) => {
         if (index < 0 || index >= collection.length) return;
 
         setCollection(
@@ -63,7 +92,7 @@ export default (StateCtx, DispatchCtx) => {
     );
 
     const add = useCallback(
-      (index, value) => {
+      (index: number, value: any) => {
         if (index < 0) return;
 
         setCollection(
@@ -77,12 +106,12 @@ export default (StateCtx, DispatchCtx) => {
       [collection]
     );
 
-    const push = useCallback(value => add(collection.length, value), [
+    const push = useCallback((value: any) => add(collection.length, value), [
       collection,
     ]);
 
     const reorder = useCallback(
-      (startIndex, endIndex) => {
+      (startIndex: number, endIndex: number) => {
         if (startIndex < 0 || startIndex >= collection.length) return;
         if (endIndex < 0 || endIndex >= collection.length) return;
 

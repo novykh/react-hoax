@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import useReducer from "../useReducer";
 import * as actions from "../actions";
 import makeContext from "../makeContext";
@@ -8,6 +8,18 @@ import makeUseMember from "../makeUseMember";
 import makeUseCollection from "../makeUseCollection";
 import makeUseSelector from "./makeUseSelector";
 import defaultInitialState from "./initialState";
+
+import { IfcAction } from "../interfaces";
+import type {
+  Attr,
+  LikeState,
+  LikeStateArray,
+  GetState,
+  Dispatch,
+  InputEvent,
+  Actions,
+  ReducerHandlers,
+} from "../types";
 
 /** @module memberHoax.makeMemberProvider */
 
@@ -30,9 +42,22 @@ import defaultInitialState from "./initialState";
  * @return {MemberHoax} MemberHoax - what is needed for a member resource
  */
 
+interface IfcMemberProviderProps {
+  initialState: LikeState;
+  extraArgument: any;
+}
+
 const makeMemberProvider = (
-  name,
-  { getInitialState, reducer: customReducer, actions: customActions } = {}
+  name: string,
+  {
+    getInitialState,
+    reducer: customReducer,
+    actions: customActions,
+  }: {
+    getInitialState?: GetState;
+    reducer?: ReducerHandlers;
+    actions?: Actions;
+  } = {}
 ) => {
   const initState = makeGetInitialState({
     getInitialState,
@@ -45,7 +70,11 @@ const makeMemberProvider = (
   const useCollection = makeUseCollection(StateCtx, DispatchCtx);
   const { useSelector, useAction } = makeUseSelector(StateCtx, DispatchCtx);
 
-  const MemberProvider = ({ children, initialState, extraArgument }) => {
+  const MemberProvider: React.FunctionComponent<IfcMemberProviderProps> = ({
+    children,
+    initialState,
+    extraArgument,
+  }) => {
     const [state, dispatches] = useReducer(reducer, {
       initialState,
       init,

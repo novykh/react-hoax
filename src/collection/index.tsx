@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import useReducer from "../useReducer";
 import defaultInitialState from "./initialState";
 import defaultResourceInitialState from "./resource/initialState";
@@ -11,6 +11,18 @@ import makeUseCollection from "../makeUseCollection";
 import makeUseMember from "../makeUseMember";
 import makeUseSelector from "./makeUseSelector";
 import makeResourceReducer from "./resource/makeReducer";
+
+import { IfcAction } from "../interfaces";
+import type {
+  Attr,
+  LikeState,
+  LikeStateArray,
+  GetState,
+  Dispatch,
+  InputEvent,
+  ReducerHandlers,
+  Actions,
+} from "../types";
 
 /** @module collectionHoax.makeCollectionProvider */
 
@@ -36,14 +48,30 @@ import makeResourceReducer from "./resource/makeReducer";
  * @return {CollectionHoax} CollectionHoax - what is needed for a collection resource
  */
 
+interface IfcResourceOptions {
+  getInitialState?: GetState;
+  reducer?: ReducerHandlers;
+}
+
+interface IfcCollectionProviderProps {
+  initialState: LikeState;
+  extraArgument: any;
+}
+
 const makeCollectionProvider = (
-  name,
+  name: string,
   {
     getInitialState,
     reducer: customReducer,
     actions: customActions,
     resourceOptions = {},
     idKey = "id",
+  }: {
+    getInitialState?: GetState;
+    reducer?: ReducerHandlers;
+    actions?: Actions;
+    resourceOptions?: IfcResourceOptions;
+    idKey?: Attr;
   } = {}
 ) => {
   const initState = makeGetInitialState({
@@ -65,7 +93,6 @@ const makeCollectionProvider = (
     getInitialState: initState,
     customReducer,
     resourceReducer,
-    customResourceActionTypes: resourceOptions.actionTypes,
     initResource,
     idKey,
   });
@@ -75,12 +102,14 @@ const makeCollectionProvider = (
   const useMember = makeUseMember(StateCtx, DispatchCtx);
   const { useSelector, useAction, useResourceSelector } = makeUseSelector(
     StateCtx,
-    DispatchCtx,
-    initState,
-    getInitialResourceState
+    DispatchCtx
   );
 
-  const CollectionProvider = ({ children, initialState, extraArgument }) => {
+  const CollectionProvider: React.FunctionComponent<IfcCollectionProviderProps> = ({
+    children,
+    initialState,
+    extraArgument,
+  }) => {
     const [state, dispatches] = useReducer(reducer, {
       initialState,
       init,

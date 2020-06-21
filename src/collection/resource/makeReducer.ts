@@ -4,24 +4,39 @@ import { updateBatch } from "../../reducerUtils";
 import * as actionTypes from "./actionTypes";
 import createReducer from "../../createReducer";
 
-export default (getInitialState, customReducer, idKey) => {
+import { IfcAction } from "../../interfaces";
+import type {
+  Attr,
+  LikeState,
+  LikeStateArray,
+  GetState,
+  Dispatch,
+  InputEvent,
+  ReducerHandlers,
+} from "../../types";
+
+export default (
+  getInitialState: GetState,
+  customReducer: ReducerHandlers,
+  idKey: Attr
+) => {
   const {
     getInitialPristineState,
     updatePristine,
     removePristine,
   } = makePristine("pristine");
 
-  const init = (id, state = {}) => ({
+  const init = (id?: Attr, state: LikeState = {}) => ({
     [idKey]: id,
     ...getInitialState(),
     ...state,
     ...getInitialPristineState(),
   });
 
-  const getValidValue = (attr, value) =>
+  const getValidValue = (attr: Attr, value: any) =>
     isNil(value) ? getInitialState()[attr] : value;
 
-  const update = (state, attr, value) => {
+  const update = (state: LikeState, attr: Attr, value: any) => {
     value = getValidValue(attr, value);
     state = updatePristine(state, attr, value);
     return {
@@ -31,36 +46,50 @@ export default (getInitialState, customReducer, idKey) => {
   };
 
   const reducerHandlers = {
-    [actionTypes.initializeResource]: (state, action) =>
+    [actionTypes.initializeResource]: (state: LikeState, action: IfcAction) =>
       init(action.id, action.values),
-    [actionTypes.updateResource]: (state, action) =>
+    [actionTypes.updateResource]: (state: LikeState, action: IfcAction) =>
       update(state, action.attr, action.value),
-    [actionTypes.updateBatchResource]: (state, action) =>
+    [actionTypes.updateBatchResource]: (state: LikeState, action: IfcAction) =>
       updateBatch(update, state, action.values),
-    [actionTypes.resetResource]: (state, action) => init(action.id),
-    [actionTypes.resetPristineResource]: (state, action) =>
-      removePristine(state),
-    [actionTypes.resetPristineKeyResource]: (state, action) =>
-      removePristine(state, action.attr),
-    [actionTypes.startProcessResource]: (state, action) => ({
+    [actionTypes.resetResource]: (state: LikeState, action: IfcAction) =>
+      init(action.id),
+    [actionTypes.resetPristineResource]: (
+      state: LikeState,
+      action: IfcAction
+    ) => removePristine(state),
+    [actionTypes.resetPristineKeyResource]: (
+      state: LikeState,
+      action: IfcAction
+    ) => removePristine(state, action.attr),
+    [actionTypes.startProcessResource]: (
+      state: LikeState,
+      action: IfcAction
+    ) => ({
       ...state,
       processing: true,
     }),
-    [actionTypes.doneProcessResource]: (state, action) => ({
+    [actionTypes.doneProcessResource]: (
+      state: LikeState,
+      action: IfcAction
+    ) => ({
       ...state,
       processing: false,
     }),
-    [actionTypes.startFetchResource]: (state, action) => ({
+    [actionTypes.startFetchResource]: (
+      state: LikeState,
+      action: IfcAction
+    ) => ({
       ...state,
       loading: true,
     }),
-    [actionTypes.doneFetchResource]: (state, action) =>
+    [actionTypes.doneFetchResource]: (state: LikeState, action: IfcAction) =>
       init(action.id, {
         ...action.values,
         loading: false,
         loaded: true,
       }),
-    [actionTypes.failFetchResource]: (state, action) => ({
+    [actionTypes.failFetchResource]: (state: LikeState, action: IfcAction) => ({
       ...state,
       loading: false,
     }),

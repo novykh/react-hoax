@@ -1,7 +1,25 @@
 import { useReducer, useRef } from "react";
 import { identity } from "../helpers";
 
-const connect = (action, dispatch, getState, args, extraArgument) => {
+import { IfcAction } from "../interfaces";
+import type {
+  Attr,
+  LikeState,
+  LikeStateArray,
+  GetState,
+  InputEvent,
+  Dispatch,
+  Action,
+  Actions,
+} from "../types";
+
+const connect = (
+  action: Action,
+  dispatch: Dispatch,
+  getState: GetState,
+  args: any[],
+  extraArgument: any
+) => {
   if (typeof action !== "function") return dispatch(action);
 
   const next = action(...args);
@@ -25,22 +43,40 @@ const connect = (action, dispatch, getState, args, extraArgument) => {
  * }
  */
 
+interface IfcReducerOptions {
+  initialState: LikeState;
+  init: (x: LikeState) => LikeState;
+  actions: Actions | undefined;
+  extraArgument: any;
+}
+
+interface IfcDispatchRef {
+  [key: string]: Dispatch;
+}
+
+type Reducer = (state: LikeState, action: IfcAction) => LikeState;
+
 export default (
-  reducer,
-  { initialState, init = identity, actions = {}, extraArgument }
+  reducer: Reducer,
+  {
+    initialState,
+    init = identity,
+    actions = {},
+    extraArgument,
+  }: IfcReducerOptions
 ) => {
   const [state, dispatch] = useReducer(reducer, initialState, init);
-  const stateRef = useRef();
+  const stateRef = useRef<LikeState>();
   stateRef.current = state;
 
-  const dispatchRef = useRef();
+  const dispatchRef = useRef<IfcDispatchRef>();
   if (dispatchRef.current) return [state, dispatchRef.current];
 
   const getState = () => stateRef.current;
   dispatchRef.current = Object.keys(actions).reduce(
     (h, action) => ({
       ...h,
-      [action]: (...args) =>
+      [action]: (...args: any[]) =>
         connect(actions[action], dispatch, getState, args, extraArgument),
     }),
     { dispatch }

@@ -7,7 +7,9 @@
     "module": "commonjs",
     "target": "es6",
     "jsx": "react",
-    "declaration": false
+    "declaration": false,
+    "allowJs": true,
+    "moduleResolution": "node"
   },
   "include": ["src"],
   "exclude": ["node_modules", "docs", "jest", "**/*_test.*"]

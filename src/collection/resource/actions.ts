@@ -1,77 +1,97 @@
 import * as actionTypes from "./actionTypes";
 
-export const initializeResource = (id, values, {merge} = {}) => (dispatch, getState) => {
+import { IfcAction } from "../../interfaces";
+import type {
+  Attr,
+  LikeState,
+  LikeStateArray,
+  GetState,
+  Dispatch,
+  InputEvent,
+} from "../../types";
+
+export const initializeResource = (
+  id: Attr,
+  values: LikeState,
+  { merge }: { merge?: boolean } = {}
+) => (dispatch: Dispatch, getState: GetState) => {
   if (merge) {
     const prevState = getState().byId[id] || {};
 
     return dispatch({
       type: actionTypes.initializeResource,
       id,
-      values: { ...prevState, ...values }
+      values: { ...prevState, ...values },
     });
   }
   return dispatch({ type: actionTypes.initializeResource, id, values });
 };
 
-export const updateResource = (id, attr, value) => ({
+export const updateResource = (id: Attr, attr: Attr, value: any) => ({
   type: actionTypes.updateResource,
   id,
   attr,
-  value
+  value,
 });
 
-export const updateBatchResource = (id, values) => ({
+export const updateBatchResource = (
+  id: Attr,
+  values: LikeState | LikeStateArray
+) => ({
   type: actionTypes.updateBatchResource,
   id,
-  values
+  values,
 });
 
-export const updateOnChangeResource = (id, { target }) =>
+export const updateOnChangeResource = (id: Attr, { target }: InputEvent) =>
   updateResource(id, target.name, target.value);
 
-export const removeResource = id => ({
+export const removeResource = (id: Attr) => ({
   type: actionTypes.removeResource,
-  id
+  id,
 });
 
-export const resetResource = id => ({
+export const resetResource = (id: Attr) => ({
   type: actionTypes.resetResource,
-  id
+  id,
 });
 
-export const resetPristineResource = id => ({
+export const resetPristineResource = (id: Attr) => ({
   type: actionTypes.resetPristineResource,
-  id
+  id,
 });
 
-export const resetPristineKeyResource = (id, attr) => ({
+export const resetPristineKeyResource = (id: Attr, attr: Attr) => ({
   type: actionTypes.resetPristineKeyResource,
   id,
-  attr
+  attr,
 });
 
-export const startFetchResource = id => ({
+export const startFetchResource = (id: Attr) => ({
   type: actionTypes.startFetchResource,
-  id
+  id,
 });
 
-export const doneFetchResource = (id, payload) => ({
+export const doneFetchResource = (
+  id: Attr,
+  payload: LikeState | LikeStateArray
+) => ({
   type: actionTypes.doneFetchResource,
   id,
-  values: payload
+  values: payload,
 });
 
-export const failFetchResource = id => ({
+export const failFetchResource = (id: Attr) => ({
   type: actionTypes.failFetchResource,
-  id
+  id,
 });
 
-export const startProcessResource = id => ({
+export const startProcessResource = (id: Attr) => ({
   type: actionTypes.startProcessResource,
-  id
+  id,
 });
 
-export const doneProcessResource = id => ({
+export const doneProcessResource = (id: Attr) => ({
   type: actionTypes.doneProcessResource,
-  id
+  id,
 });

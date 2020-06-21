@@ -1,12 +1,18 @@
 import * as actionTypes from "./actionTypes";
 
-import { IfcAction } from "./interfaces";
-import type { Attr, LikeState, LikeStateArray, InputEvent } from "./types";
+import type {
+  Attr,
+  LikeState,
+  LikeStateArray,
+  GetState,
+  Dispatch,
+  InputEvent,
+} from "./types";
 
 export const initialize = (
   values: LikeState,
   { merge }: { merge?: boolean } = {}
-) => (dispatch: (key: IfcAction) => void, getState: () => LikeState) => {
+) => (dispatch: Dispatch, getState: GetState) => {
   if (merge)
     return dispatch({
       type: actionTypes.initialize,
@@ -40,7 +46,7 @@ export const resetPristineKey = (attr: Attr) => ({
 
 export const startFetch = { type: actionTypes.startFetch };
 
-export const doneFetch = (payload: object | any[]) => ({
+export const doneFetch = (payload: LikeState | LikeStateArray) => ({
   type: actionTypes.doneFetch,
   values: payload,
 });

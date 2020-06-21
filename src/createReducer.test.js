@@ -7,7 +7,7 @@ it("creates a reducer and accepts actions", () => {
   });
 
   const reducer = createReducer({
-    UPDATE: update
+    UPDATE: update,
   });
   expect(reducer(0, { type: "UPDATE", value: 4 })).toBe(4);
   expect(update).toHaveBeenCalled();

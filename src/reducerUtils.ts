@@ -6,7 +6,7 @@ const batchUpdateWithArray = (
   update: Update,
   state: LikeState,
   values: LikeStateArray
-) =>
+): LikeState =>
   values.reduce(
     (h, { attr, value }) => ({
       ...h,
@@ -19,7 +19,7 @@ const batchUpdateWithObject = (
   update: Update,
   state: LikeState,
   values: LikeState
-) =>
+): LikeState =>
   Object.keys(values).reduce(
     (h, attr) => ({
       ...h,
@@ -32,7 +32,7 @@ export const updateBatch = (
   update: Update,
   state: LikeState,
   values: LikeState | LikeStateArray
-) => {
+): LikeState => {
   if (Array.isArray(values)) return batchUpdateWithArray(update, state, values);
   return batchUpdateWithObject(update, state, values);
 };

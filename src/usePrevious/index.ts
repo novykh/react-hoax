@@ -15,7 +15,7 @@ import { useRef, useEffect } from "react";
  * }
  */
 
-const usePrevious = value => {
+const usePrevious = (value: any) => {
   const valueRef = useRef();
 
   useEffect(() => {
@@ -25,10 +25,10 @@ const usePrevious = value => {
   return valueRef.current;
 };
 
-export default (value, ...rest) => {
+export default (value: any, ...rest: any[]) => {
   if (rest.length)
     return rest.reduce((h, val) => [...h, usePrevious(val)], [
-      usePrevious(value)
+      usePrevious(value),
     ]);
   return usePrevious(value);
 };

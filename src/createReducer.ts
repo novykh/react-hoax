@@ -1,10 +1,8 @@
 import { IfcAction } from "./interfaces";
+import type { ReducerHandlers, LikeState } from "./types";
 
-type Handler = (state: object, action: IfcAction) => object;
-type Handlers = { [key: string]: Handler };
-
-export default (handlers: Handlers) => {
-  return (state: object, action: IfcAction) => {
+export default (handlers: ReducerHandlers) => {
+  return (state: LikeState, action: IfcAction) => {
     if (handlers.hasOwnProperty(action.type))
       return handlers[action.type](state, action);
 

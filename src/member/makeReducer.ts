@@ -4,6 +4,19 @@ import { updateBatch } from "../reducerUtils";
 import * as actionTypes from "../actionTypes";
 import createReducer from "../createReducer";
 
+import { IfcAction } from "../interfaces";
+import type {
+  Attr,
+  LikeState,
+  LikeStateArray,
+  GetState,
+  Dispatch,
+  InputEvent,
+  ReducerHandlers,
+  Reducer,
+  Actions,
+} from "../types";
+
 /**
  * @typedef {Object} memberHoax.ReducerWithInit
  * @property {function} reducer - the reducer to be used along with provider
@@ -18,23 +31,23 @@ import createReducer from "../createReducer";
  *  @return {memberHoax.ReducerWithInit}
  */
 
-export default (getInitialState, customReducer) => {
+export default (getInitialState: GetState, customReducer: ReducerHandlers) => {
   const {
     getInitialPristineState,
     updatePristine,
     removePristine,
   } = makePristine("pristine");
 
-  const init = (state = {}) => ({
+  const init = (state: LikeState = {}) => ({
     ...getInitialState(),
     ...state,
     ...getInitialPristineState(),
   });
 
-  const getValidValue = (attr, value) =>
+  const getValidValue = (attr: Attr, value: any) =>
     isNil(value) ? getInitialState()[attr] : value;
 
-  const update = (state, attr, value) => {
+  const update = (state: LikeState, attr: Attr, value: any) => {
     value = getValidValue(attr, value);
     state = updatePristine(state, attr, value);
     return {
@@ -44,31 +57,39 @@ export default (getInitialState, customReducer) => {
   };
 
   const reducerHandlers = {
-    [actionTypes.initialize]: (state, action) => init(action.values),
-    [actionTypes.update]: (state, action) =>
+    [actionTypes.initialize]: (state: LikeState, action: IfcAction) =>
+      init(action.values),
+    [actionTypes.update]: (state: LikeState, action: IfcAction) =>
       update(state, action.attr, action.value),
-    [actionTypes.updateBatch]: (state, action) =>
+    [actionTypes.updateBatch]: (state: LikeState, action: IfcAction) =>
       updateBatch(update, state, action.values),
-    [actionTypes.reset]: (state, action) => init(),
-    [actionTypes.resetPristine]: (state, action) => removePristine(state),
-    [actionTypes.resetPristineKey]: (state, action) =>
+    [actionTypes.reset]: (state: LikeState, action: IfcAction) => init(),
+    [actionTypes.resetPristine]: (state: LikeState, action: IfcAction) =>
+      removePristine(state),
+    [actionTypes.resetPristineKey]: (state: LikeState, action: IfcAction) =>
       removePristine(state, action.attr),
-    [actionTypes.startProcess]: (state, action) => ({
+    [actionTypes.startProcess]: (state: LikeState, action: IfcAction) => ({
       ...state,
       processing: true,
     }),
-    [actionTypes.doneProcess]: (state, action) => ({
+    [actionTypes.doneProcess]: (state: LikeState, action: IfcAction) => ({
       ...state,
       processing: false,
     }),
-    [actionTypes.startFetch]: (state, action) => ({ ...state, loading: true }),
-    [actionTypes.doneFetch]: (state, action) =>
+    [actionTypes.startFetch]: (state: LikeState, action: IfcAction) => ({
+      ...state,
+      loading: true,
+    }),
+    [actionTypes.doneFetch]: (state: LikeState, action: IfcAction) =>
       init({
         ...action.values,
         loading: false,
         loaded: true,
       }),
-    [actionTypes.failFetch]: (state, action) => ({ ...state, loading: false }),
+    [actionTypes.failFetch]: (state: LikeState, action: IfcAction) => ({
+      ...state,
+      loading: false,
+    }),
     ...customReducer,
   };
 

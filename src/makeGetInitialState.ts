@@ -1,10 +1,8 @@
-import type { LikeState } from "./types";
-
-type GetInitialState = () => LikeState;
+import type { LikeState, GetState } from "./types";
 
 interface IfcMakeInitialStates {
-  getInitialState: GetInitialState | undefined;
-  defaultInitialState: GetInitialState;
+  getInitialState: GetState | undefined;
+  defaultInitialState: LikeState;
 }
 
 export default ({
