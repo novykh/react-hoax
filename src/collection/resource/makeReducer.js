@@ -39,7 +39,7 @@ export default (getInitialState, customReducer, idKey) => {
     [actionTypes.updateBatchResource]: (state, action) =>
       updateBatch(update, state, action.values),
     [actionTypes.resetResource]: (state, action) =>
-      init(action.id, getPristineState()),
+      init(action.id, getPristineState(state)),
     [actionTypes.resetPristineResource]: (state, action) =>
       removePristine(state),
     [actionTypes.resetPristineKeyResource]: (state, action) =>
