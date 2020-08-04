@@ -73,6 +73,7 @@ export default (pristineKey = PRISTINE) => {
       return state;
     },
     removePristine: remove,
-    getInitialPristineState: getInitialState
+    getInitialPristineState: getInitialState,
+    getPristineState: state => state[pristineKey]
   };
 };

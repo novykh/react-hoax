@@ -8,7 +8,8 @@ export default (getInitialState, customReducer, idKey) => {
   const {
     getInitialPristineState,
     updatePristine,
-    removePristine
+    removePristine,
+    getPristineState
   } = makePristine("pristine");
 
   const init = (id, state = {}) => ({
@@ -37,7 +38,8 @@ export default (getInitialState, customReducer, idKey) => {
       update(state, action.attr, action.value),
     [actionTypes.updateBatchResource]: (state, action) =>
       updateBatch(update, state, action.values),
-    [actionTypes.resetResource]: (state, action) => init(action.id),
+    [actionTypes.resetResource]: (state, action) =>
+      init(action.id, getPristineState()),
     [actionTypes.resetPristineResource]: (state, action) =>
       removePristine(state),
     [actionTypes.resetPristineKeyResource]: (state, action) =>

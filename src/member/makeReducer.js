@@ -22,7 +22,8 @@ export default (getInitialState, customReducer) => {
   const {
     getInitialPristineState,
     updatePristine,
-    removePristine
+    removePristine,
+    getPristineState
   } = makePristine("pristine");
 
   const init = (state = {}) => ({
@@ -47,7 +48,7 @@ export default (getInitialState, customReducer) => {
     [actionTypes.initialize]: (state, action) => init(action.values),
     [actionTypes.update]: (state, action) => update(state, action.attr, action.value),
     [actionTypes.updateBatch]: (state, action) => updateBatch(update, state, action.values),
-    [actionTypes.reset]: (state, action) => init(),
+    [actionTypes.reset]: (state, action) => init(getPristineState()),
     [actionTypes.resetPristine]: (state, action) => removePristine(state),
     [actionTypes.resetPristineKey]: (state, action) => removePristine(state, action.attr),
     [actionTypes.startProcess]: (state, action) => ({ ...state, processing: true }),
