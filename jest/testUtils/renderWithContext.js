@@ -1,8 +1,8 @@
-import { render } from "@testing-library/react";
-import React from "react";
-import useContextSelector from "../../src/useContextSelector";
+import {render} from '@testing-library/react';
+import React from 'react';
+import useContextSelector from '../../src/useContextSelector';
 
-const WithContext = ({ ctx }) => (
+const WithContext = ({ctx}) => (
   <div>{JSON.stringify(useContextSelector(ctx))}</div>
 );
 

@@ -1,7 +1,7 @@
-import { useCallback } from "react";
-import useContextSelector from "../useContextSelector";
-import identity from "lodash/identity";
-import { makeByIdSelector } from "../collection/makeUseSelector";
+import {useCallback} from 'react';
+import useContextSelector from '../useContextSelector';
+import identity from 'lodash/identity';
+import {makeByIdSelector} from '../collection/makeUseSelector';
 
 /**
  * @description A hook that handles the mutate operations on a state's member.
@@ -20,14 +20,14 @@ export default (StateCtx, DispatchCtx) => ({
   fieldKey,
   resourceId,
   getUpdate = defaultGetUpdate,
-  select = resourceId ? makeByIdSelector : identity
+  select = resourceId ? makeByIdSelector : identity,
 }) => {
   const selector = useCallback(
     state => {
       const member = resourceId ? select(resourceId)(state) : select(state);
       return [member[fieldKey], member.errors];
     },
-    [resourceId, fieldKey]
+    [resourceId, fieldKey],
   );
   const [value, errors] = useContextSelector(StateCtx, selector);
 
@@ -35,12 +35,12 @@ export default (StateCtx, DispatchCtx) => ({
     state => {
       const update = getUpdate(resourceId)(state);
 
-      if (typeof update !== "function")
+      if (typeof update !== 'function')
         throw new Error("useMember expects an 'update' dispatch function");
 
       return resourceId ? (key, v) => update(resourceId, key, v) : update;
     },
-    [resourceId]
+    [resourceId],
   );
   const update = useContextSelector(DispatchCtx, updateSelector);
 
@@ -48,8 +48,8 @@ export default (StateCtx, DispatchCtx) => ({
 
   const error = errors[fieldKey];
   const setError = useCallback(
-    e => update("errors", { ...errors, [fieldKey]: e }),
-    [update, errors]
+    e => update('errors', {...errors, [fieldKey]: e}),
+    [update, errors],
   );
 
   return [value, setValue, error, setError];

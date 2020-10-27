@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import {useRef, useEffect} from 'react';
 
 /**
  * @description A hook for keeping the previous state of a value
@@ -28,7 +28,7 @@ const usePrevious = value => {
 export default (value, ...rest) => {
   if (rest.length)
     return rest.reduce((h, val) => [...h, usePrevious(val)], [
-      usePrevious(value)
+      usePrevious(value),
     ]);
   return usePrevious(value);
 };

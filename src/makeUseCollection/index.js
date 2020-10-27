@@ -1,6 +1,6 @@
-import { useCallback } from "react";
-import identity from "lodash/identity";
-import makeUseMember from "../makeUseMember";
+import {useCallback} from 'react';
+import identity from 'lodash/identity';
+import makeUseMember from '../makeUseMember';
 
 /**
  * @description A hook that handles the CRUD operations on a state's collection.
@@ -24,12 +24,12 @@ const makeWithUniq = (uniq = false) => {
 export default (StateCtx, DispatchCtx) => {
   const useMember = makeUseMember(StateCtx, DispatchCtx);
 
-  return ({ fieldKey, resourceId, uniq, getUpdate, select }) => {
+  return ({fieldKey, resourceId, uniq, getUpdate, select}) => {
     const [collection, setCollection, error, setError] = useMember({
       fieldKey,
       resourceId,
       getUpdate,
-      select
+      select,
     });
     const normalize = makeWithUniq(uniq);
 
@@ -40,11 +40,11 @@ export default (StateCtx, DispatchCtx) => {
         setCollection(
           normalize([
             ...collection.slice(0, index),
-            ...collection.slice(index + 1)
-          ])
+            ...collection.slice(index + 1),
+          ]),
         );
       },
-      [collection]
+      [collection],
     );
 
     const edit = useCallback(
@@ -55,11 +55,11 @@ export default (StateCtx, DispatchCtx) => {
           normalize([
             ...collection.slice(0, index),
             value,
-            ...collection.slice(index + 1)
-          ])
+            ...collection.slice(index + 1),
+          ]),
         );
       },
-      [collection]
+      [collection],
     );
 
     const add = useCallback(
@@ -70,15 +70,15 @@ export default (StateCtx, DispatchCtx) => {
           normalize([
             ...collection.slice(0, index),
             value,
-            ...collection.slice(index)
-          ])
+            ...collection.slice(index),
+          ]),
         );
       },
-      [collection]
+      [collection],
     );
 
     const push = useCallback(value => add(collection.length, value), [
-      collection
+      collection,
     ]);
 
     const reorder = useCallback(
@@ -91,7 +91,7 @@ export default (StateCtx, DispatchCtx) => {
         mutable.splice(endIndex, 0, removed);
         setCollection(normalize(mutable));
       },
-      [collection]
+      [collection],
     );
 
     return {
@@ -103,7 +103,7 @@ export default (StateCtx, DispatchCtx) => {
       remove,
       reorder,
       error,
-      setError
+      setError,
     };
   };
 };

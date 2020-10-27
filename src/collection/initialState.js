@@ -15,5 +15,5 @@ export default {
   loaded: false,
   processing: false,
   byId: {},
-  ids: []
+  ids: [],
 };

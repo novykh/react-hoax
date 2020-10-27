@@ -1,14 +1,14 @@
-import React from "react";
-import useReducer from "../useReducer";
-import * as actions from "../actions";
-import makeContext from "../makeContext";
-import makeGetInitialState from "../makeGetInitialState";
-import makeReducer from "./makeReducer";
-import makeUseMember from "../makeUseMember";
-import makeUseCollection from "../makeUseCollection";
-import makeFields from "../makeFields";
-import makeUseSelector from "./makeUseSelector";
-import defaultInitialState from "./initialState";
+import React from 'react';
+import useReducer from '../useReducer';
+import * as actions from '../actions';
+import makeContext from '../makeContext';
+import makeGetInitialState from '../makeGetInitialState';
+import makeReducer from './makeReducer';
+import makeUseMember from '../makeUseMember';
+import makeUseCollection from '../makeUseCollection';
+import makeFields from '../makeFields';
+import makeUseSelector from './makeUseSelector';
+import defaultInitialState from './initialState';
 
 /** @module memberHoax.makeMemberProvider */
 
@@ -34,26 +34,26 @@ import defaultInitialState from "./initialState";
 
 const makeMemberProvider = (
   name,
-  { getInitialState, reducer: customReducer, actions: customActions } = {}
+  {getInitialState, reducer: customReducer, actions: customActions} = {},
 ) => {
   const initState = makeGetInitialState({
     getInitialState,
-    defaultInitialState
+    defaultInitialState,
   });
-  const { reducer, init } = makeReducer(initState, customReducer);
+  const {reducer, init} = makeReducer(initState, customReducer);
 
   const [StateCtx, DispatchCtx] = makeContext();
   const useMember = makeUseMember(StateCtx, DispatchCtx);
   const useCollection = makeUseCollection(StateCtx, DispatchCtx);
   const Field = makeFields(useMember);
-  const { useSelector, useAction } = makeUseSelector(StateCtx, DispatchCtx);
+  const {useSelector, useAction} = makeUseSelector(StateCtx, DispatchCtx);
 
-  const MemberProvider = ({ children, initialState, extraArgument }) => {
+  const MemberProvider = ({children, initialState, extraArgument}) => {
     const [state, dispatches] = useReducer(reducer, {
       initialState,
       init,
-      actions: { ...actions, ...customActions },
-      extraArgument
+      actions: {...actions, ...customActions},
+      extraArgument,
     });
 
     return (
@@ -72,7 +72,7 @@ const makeMemberProvider = (
     useSelector,
     useAction,
     Field,
-    getInitialState: initState
+    getInitialState: initState,
   };
 };
 

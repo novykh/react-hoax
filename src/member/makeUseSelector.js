@@ -1,6 +1,6 @@
-import { useMemo } from "react";
-import useContextSelector from "../useContextSelector";
-import identity from "lodash/identity";
+import {useMemo} from 'react';
+import useContextSelector from '../useContextSelector';
+import identity from 'lodash/identity';
 
 /**
  * @typedef {Object} memberHoax.Selectors
@@ -21,8 +21,8 @@ export default (StateCtx, DispatchCtx) => ({
   useAction: actionKey => {
     const selector = useMemo(
       () => (actionKey ? actions => actions[actionKey] : identity),
-      [actionKey]
+      [actionKey],
     );
     return useContextSelector(DispatchCtx, selector);
-  }
+  },
 });

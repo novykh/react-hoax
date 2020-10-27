@@ -1,77 +1,80 @@
-import * as actionTypes from "./actionTypes";
+import * as actionTypes from './actionTypes';
 
-export const initializeResource = (id, values, {merge} = {}) => (dispatch, getState) => {
+export const initializeResource = (id, values, {merge} = {}) => (
+  dispatch,
+  getState,
+) => {
   if (merge) {
     const prevState = getState().byId[id] || {};
 
     return dispatch({
       type: actionTypes.initializeResource,
       id,
-      values: { ...prevState, ...values }
+      values: {...prevState, ...values},
     });
   }
-  return dispatch({ type: actionTypes.initializeResource, id, values });
+  return dispatch({type: actionTypes.initializeResource, id, values});
 };
 
 export const updateResource = (id, attr, value) => ({
   type: actionTypes.updateResource,
   id,
   attr,
-  value
+  value,
 });
 
 export const updateBatchResource = (id, values) => ({
   type: actionTypes.updateBatchResource,
   id,
-  values
+  values,
 });
 
-export const updateOnChangeResource = (id, { target }) =>
+export const updateOnChangeResource = (id, {target}) =>
   updateResource(id, target.name, target.value);
 
 export const removeResource = id => ({
   type: actionTypes.removeResource,
-  id
+  id,
 });
 
 export const resetResource = id => ({
   type: actionTypes.resetResource,
-  id
+  id,
 });
 
 export const resetPristineResource = id => ({
   type: actionTypes.resetPristineResource,
-  id
+  id,
 });
 
 export const resetPristineKeyResource = (id, attr) => ({
   type: actionTypes.resetPristineKeyResource,
   id,
-  attr
+  attr,
 });
 
 export const startFetchResource = id => ({
   type: actionTypes.startFetchResource,
-  id
+  id,
 });
 
 export const doneFetchResource = (id, payload) => ({
   type: actionTypes.doneFetchResource,
   id,
-  values: payload
+  values: payload,
 });
 
 export const failFetchResource = id => ({
   type: actionTypes.failFetchResource,
-  id
+  id,
 });
 
 export const startProcessResource = id => ({
   type: actionTypes.startProcessResource,
-  id
+  id,
 });
 
 export const doneProcessResource = id => ({
   type: actionTypes.doneProcessResource,
-  id
+  id,
 });

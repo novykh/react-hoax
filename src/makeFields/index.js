@@ -1,12 +1,12 @@
-import React, { useMemo, useCallback } from "react";
-import identity from "lodash/identity";
+import React, {useMemo, useCallback} from 'react';
+import identity from 'lodash/identity';
 
-const onValueChange = ({ target: { value: val } }) => val;
-const onToggle = ({ target: { checked } }) => checked;
+const onValueChange = ({target: {value: val}}) => val;
+const onToggle = ({target: {checked}}) => checked;
 
 export default useMember => {
   const BaseField = ({
-    Component = "input",
+    Component = 'input',
     fieldKey,
     select,
     resourceId,
@@ -17,7 +17,7 @@ export default useMember => {
     const [value, setValue, error] = useMember({
       fieldKey,
       select,
-      resourceId
+      resourceId,
     });
 
     const update = (...args) => setValue(onChange(...args));
@@ -32,11 +32,11 @@ export default useMember => {
         name={fieldKey}
         {...rest}
       />
-    )
+    );
   };
 
   const Select = ({
-    Component = "select",
+    Component = 'select',
     onChange = onValueChange,
     options = [],
     ...rest
@@ -49,17 +49,17 @@ export default useMember => {
     />
   );
 
-  const Input = ({ onChange = onValueChange, ...rest }) => (
+  const Input = ({onChange = onValueChange, ...rest}) => (
     <BaseField type="text" onChange={onChange} {...rest} />
   );
 
-  const Checkbox = ({ type = "checkbox", onChange = onToggle, ...rest }) => (
+  const Checkbox = ({type = 'checkbox', onChange = onToggle, ...rest}) => (
     <BaseField type={type} onChange={onChange} {...rest} />
   );
 
   return {
     Select,
     Checkbox,
-    Input
+    Input,
   };
 };

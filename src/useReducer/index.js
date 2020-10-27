@@ -1,11 +1,11 @@
-import { useReducer, useRef } from "react";
-import identity from "lodash/identity";
+import {useReducer, useRef} from 'react';
+import identity from 'lodash/identity';
 
 const connect = (action, dispatch, getState, args, extraArgument) => {
-  if (typeof action !== "function") return dispatch(action);
+  if (typeof action !== 'function') return dispatch(action);
 
   const next = action(...args);
-  if (typeof next === "function")
+  if (typeof next === 'function')
     return next(dispatch, getState, extraArgument);
   return dispatch(next);
 };
@@ -27,7 +27,7 @@ const connect = (action, dispatch, getState, args, extraArgument) => {
 
 export default (
   reducer,
-  { initialState, init = identity, actions = {}, extraArgument }
+  {initialState, init = identity, actions = {}, extraArgument},
 ) => {
   const [state, dispatch] = useReducer(reducer, initialState, init);
   const stateRef = useRef();
@@ -41,15 +41,9 @@ export default (
     (h, action) => ({
       ...h,
       [action]: (...args) =>
-        connect(
-          actions[action],
-          dispatch,
-          getState,
-          args,
-          extraArgument
-        )
+        connect(actions[action], dispatch, getState, args, extraArgument),
     }),
-    { dispatch }
+    {dispatch},
   );
 
   return [state, dispatchRef.current];

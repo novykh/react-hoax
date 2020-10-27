@@ -1,17 +1,17 @@
-import React from "react";
-import useReducer from "../useReducer";
-import defaultInitialState from "./initialState";
-import defaultResourceInitialState from "./resource/initialState";
-import * as actions from "../actions";
-import * as resourceActions from "./resource/actions";
-import makeContext from "../makeContext";
-import makeGetInitialState from "../makeGetInitialState";
-import makeReducer from "./makeReducer";
-import makeUseCollection from "../makeUseCollection";
-import makeUseMember from "../makeUseMember";
-import makeFields from "../makeFields";
-import makeUseSelector from "./makeUseSelector";
-import makeResourceReducer from "./resource/makeReducer";
+import React from 'react';
+import useReducer from '../useReducer';
+import defaultInitialState from './initialState';
+import defaultResourceInitialState from './resource/initialState';
+import * as actions from '../actions';
+import * as resourceActions from './resource/actions';
+import makeContext from '../makeContext';
+import makeGetInitialState from '../makeGetInitialState';
+import makeReducer from './makeReducer';
+import makeUseCollection from '../makeUseCollection';
+import makeUseMember from '../makeUseMember';
+import makeFields from '../makeFields';
+import makeUseSelector from './makeUseSelector';
+import makeResourceReducer from './resource/makeReducer';
 
 /** @module collectionHoax.makeCollectionProvider */
 
@@ -45,50 +45,50 @@ const makeCollectionProvider = (
     reducer: customReducer,
     actions: customActions,
     resourceOptions = {},
-    idKey = 'id'
-  } = {}
+    idKey = 'id',
+  } = {},
 ) => {
   const initState = makeGetInitialState({
     getInitialState,
-    defaultInitialState
+    defaultInitialState,
   });
 
   const getInitialResourceState = makeGetInitialState({
     getInitialState: resourceOptions.getInitialState,
-    defaultInitialState: defaultResourceInitialState
+    defaultInitialState: defaultResourceInitialState,
   });
 
-  const { reducer: resourceReducer, init: initResource } = makeResourceReducer(
+  const {reducer: resourceReducer, init: initResource} = makeResourceReducer(
     getInitialResourceState,
     resourceOptions.reducer,
-    idKey
+    idKey,
   );
-  const { reducer, init } = makeReducer({
+  const {reducer, init} = makeReducer({
     getInitialState: initState,
     customReducer,
     resourceReducer,
     customResourceActionTypes: resourceOptions.actionTypes,
     initResource,
-    idKey
+    idKey,
   });
 
   const [StateCtx, DispatchCtx] = makeContext();
   const useCollection = makeUseCollection(StateCtx, DispatchCtx);
   const useMember = makeUseMember(StateCtx, DispatchCtx);
   const Field = makeFields(useMember);
-  const { useSelector, useAction, useResourceSelector } = makeUseSelector(
+  const {useSelector, useAction, useResourceSelector} = makeUseSelector(
     StateCtx,
     DispatchCtx,
     initState,
     getInitialResourceState,
   );
 
-  const CollectionProvider = ({ children, initialState, extraArgument }) => {
+  const CollectionProvider = ({children, initialState, extraArgument}) => {
     const [state, dispatches] = useReducer(reducer, {
       initialState,
       init,
-      actions: { ...actions, ...resourceActions, ...customActions },
-      extraArgument
+      actions: {...actions, ...resourceActions, ...customActions},
+      extraArgument,
     });
 
     return (
@@ -109,7 +109,7 @@ const makeCollectionProvider = (
     useResourceSelector,
     Field,
     getInitialState: initState,
-    getInitialResourceState
+    getInitialResourceState,
   };
 };
 

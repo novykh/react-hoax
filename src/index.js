@@ -18,7 +18,7 @@ const UserForm = () => (
   </UserHoax.Provider>
 );
  */
-export { default as makeMemberHoax } from "./member";
+export {default as makeMemberHoax} from './member';
 
 /**
  * makeCollectionHoax factory.
@@ -98,12 +98,12 @@ export {
 export { queries };
 export default MyCustomResourcesProvider;
  */
-export { default as makeCollectionHoax } from "./collection";
+export {default as makeCollectionHoax} from './collection';
 
-import * as hoaxActions from "./actions";
-import * as hoaxResourceActions from "./collection/resource/actions";
-export { hoaxActions, hoaxResourceActions };
+import * as hoaxActions from './actions';
+import * as hoaxResourceActions from './collection/resource/actions';
+export {hoaxActions, hoaxResourceActions};
 
-import * as hoaxActionTypes from "./actionTypes";
-import * as hoaxResourceActionTypes from "./collection/resource/actionTypes";
-export { hoaxActionTypes, hoaxResourceActionTypes };
+import * as hoaxActionTypes from './actionTypes';
+import * as hoaxResourceActionTypes from './collection/resource/actionTypes';
+export {hoaxActionTypes, hoaxResourceActionTypes};

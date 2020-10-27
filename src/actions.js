@@ -1,45 +1,45 @@
-import * as actionTypes from "./actionTypes";
+import * as actionTypes from './actionTypes';
 
-export const initialize = (values, { merge } = {}) => (dispatch, getState) => {
+export const initialize = (values, {merge} = {}) => (dispatch, getState) => {
   if (merge)
     return dispatch({
       type: actionTypes.initialize,
-      values: { ...getState(), ...values }
+      values: {...getState(), ...values},
     });
-  return dispatch({ type: actionTypes.initialize, values });
+  return dispatch({type: actionTypes.initialize, values});
 };
 
 export const update = (attr, value) => ({
   type: actionTypes.update,
   attr,
-  value
+  value,
 });
 
 export const updateBatch = values => ({
   type: actionTypes.updateBatch,
-  values
+  values,
 });
 
-export const updateOnChange = ({ target }) => update(target.name, target.value);
+export const updateOnChange = ({target}) => update(target.name, target.value);
 
-export const reset = { type: actionTypes.reset };
+export const reset = {type: actionTypes.reset};
 
-export const resetPristine = { type: actionTypes.resetPristine };
+export const resetPristine = {type: actionTypes.resetPristine};
 
 export const resetPristineKey = attr => ({
   type: actionTypes.resetPristineKey,
-  attr
+  attr,
 });
 
-export const startFetch = { type: actionTypes.startFetch };
+export const startFetch = {type: actionTypes.startFetch};
 
 export const doneFetch = payload => ({
   type: actionTypes.doneFetch,
-  values: payload
+  values: payload,
 });
 
-export const failFetch = { type: actionTypes.failFetch };
+export const failFetch = {type: actionTypes.failFetch};
 
-export const startProcess = { type: actionTypes.startProcess };
+export const startProcess = {type: actionTypes.startProcess};
 
-export const doneProcess = { type: actionTypes.doneProcess };
+export const doneProcess = {type: actionTypes.doneProcess};

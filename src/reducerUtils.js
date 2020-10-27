@@ -1,19 +1,19 @@
 const batchUpdateWithArray = (update, state, values) =>
   values.reduce(
-    (h, { attr, value }) => ({
+    (h, {attr, value}) => ({
       ...h,
-      ...update(h, attr, value)
+      ...update(h, attr, value),
     }),
-    state
+    state,
   );
 
 const batchUpdateWithObject = (update, state, values) =>
   Object.keys(values).reduce(
     (h, attr) => ({
       ...h,
-      ...update(h, attr, values[attr])
+      ...update(h, attr, values[attr]),
     }),
-    state
+    state,
   );
 
 export const updateBatch = (update, state, values) => {

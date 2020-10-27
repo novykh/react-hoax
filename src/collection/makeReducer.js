@@ -1,8 +1,8 @@
-import * as actionTypes from "../actionTypes";
-import * as resourceActionTypes from "./resource/actionTypes";
-import { updateBatch } from "../reducerUtils";
-import createReducer from "../createReducer"
-import isNil from "lodash/isNil";
+import * as actionTypes from '../actionTypes';
+import * as resourceActionTypes from './resource/actionTypes';
+import {updateBatch} from '../reducerUtils';
+import createReducer from '../createReducer';
+import isNil from 'lodash/isNil';
 
 /**
  * @typedef {Object} collectionHoax.ReducerWithInit
@@ -24,16 +24,16 @@ export default ({
   resourceReducer = {},
   initResource,
   customResourceActionTypes = {},
-  idKey
+  idKey,
 }) => {
   const init = (state = {}) => ({
     ...getInitialState(),
-    ...state
+    ...state,
   });
 
   const updateOnlyResourceState = (state, id, payload) => {
     const prevResource = state.byId[id] || initResource();
-    return resourceReducer(prevResource, { [idKey]: id, ...payload });
+    return resourceReducer(prevResource, {[idKey]: id, ...payload});
   };
 
   const getValidValue = (attr, value) =>
@@ -44,7 +44,7 @@ export default ({
 
     return {
       ...state,
-      [attr]: value
+      [attr]: value,
     };
   };
 
@@ -57,8 +57,8 @@ export default ({
         ...h,
         [resource[idKey]]: updateOnlyResourceState(state, resource[idKey], {
           type: resourceActionTypes.initializeResource,
-          values: resource
-        })
+          values: resource,
+        }),
       };
     }, {});
 
@@ -66,27 +66,27 @@ export default ({
       ...state,
       byId: {
         ...state.byId,
-        ...byId
+        ...byId,
       },
       ids: [...new Set([...state.ids, ...ids])],
       loading: false,
-      loaded: true
+      loaded: true,
     };
   };
 
   const removeResource = (state, resourceId) => {
-    const byId = { ...state.byId };
+    const byId = {...state.byId};
     delete byId[resourceId];
     const ids = state.ids.filter(id => id !== resourceId);
 
     return {
       ...state,
       byId,
-      ids
+      ids,
     };
   };
 
-  const updateResource = (state, { id, ...rest }) => {
+  const updateResource = (state, {id, ...rest}) => {
     const resource = updateOnlyResourceState(state, id, rest);
     const ids = state.byId.hasOwnProperty(id) ? state.ids : [...state.ids, id];
 
@@ -94,9 +94,9 @@ export default ({
       ...state,
       byId: {
         ...state.byId,
-        [id]: resource
+        [id]: resource,
       },
-      ids
+      ids,
     };
   };
 
@@ -109,31 +109,31 @@ export default ({
     [actionTypes.reset]: (state, action) => init(),
     [actionTypes.startProcess]: (state, action) => ({
       ...state,
-      processing: true
+      processing: true,
     }),
     [actionTypes.doneProcess]: (state, action) => ({
       ...state,
-      processing: false
+      processing: false,
     }),
-    [actionTypes.startFetch]: (state, action) => ({ ...state, loading: true }),
+    [actionTypes.startFetch]: (state, action) => ({...state, loading: true}),
     [actionTypes.doneFetch]: (state, action) => doneFetch(state, action.values),
-    [actionTypes.failFetch]: (state, action) => ({ ...state, loading: false }),
+    [actionTypes.failFetch]: (state, action) => ({...state, loading: false}),
     ...Object.keys({
       ...resourceActionTypes,
-      ...customResourceActionTypes
+      ...customResourceActionTypes,
     }).reduce(
       (h, actionType) => ({
         ...h,
-        [actionType]: updateResource
+        [actionType]: updateResource,
       }),
-      {}
+      {},
     ),
     [resourceActionTypes.removeResource]: (state, action) =>
       removeResource(state, action.id),
-    ...customReducer
+    ...customReducer,
   };
 
   const reducer = createReducer(reducerHandlers);
 
-  return { reducer, init };
+  return {reducer, init};
 };

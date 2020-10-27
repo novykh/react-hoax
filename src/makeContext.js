@@ -1,3 +1,3 @@
-import { createContext } from "use-context-selector";
+import {createContext} from 'use-context-selector';
 
 export default () => [createContext({}), createContext({})];
