@@ -15,8 +15,8 @@ export default (getInitialState, customReducer, idKey) => {
   const init = (id, state = {}) => ({
     [idKey]: id,
     ...getInitialState(),
-    ...state,
     ...getInitialPristineState(),
+    ...state,
   });
 
   const getValidValue = (attr, value) =>

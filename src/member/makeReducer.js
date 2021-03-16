@@ -28,8 +28,8 @@ export default (getInitialState, customReducer) => {
 
   const init = (state = {}) => ({
     ...getInitialState(),
-    ...state,
     ...getInitialPristineState(),
+    ...state,
   });
 
   const getValidValue = (attr, value) =>
