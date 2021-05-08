@@ -66,6 +66,7 @@ export default (getInitialState, customReducer) => {
     [actionTypes.startFetch]: (state, action) => ({...state, loading: true}),
     [actionTypes.doneFetch]: (state, action) =>
       init({
+        ...state,
         ...action.values,
         loading: false,
         loaded: true,
