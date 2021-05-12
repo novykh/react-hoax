@@ -51,8 +51,8 @@ export default (getInitialState, customReducer) => {
     [actionTypes.updateBatch]: (state, action) =>
       updateBatch(update, state, action.values),
     [actionTypes.reset]: (state, action) => {
-      init({...state, ...getPristineState(state)});
-      removePristine(state);
+      state = init({...state, ...getPristineState(state)});
+      return removePristine(state);
     },
     [actionTypes.resetPristine]: (state, action) => removePristine(state),
     [actionTypes.resetPristineKey]: (state, action) =>
