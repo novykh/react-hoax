@@ -19,4 +19,5 @@ module.exports = {
     },
   },
   globals: {},
+  testEnvironment: 'jsdom',
 };
