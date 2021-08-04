@@ -54,7 +54,7 @@ export default (StateCtx, DispatchCtx) => {
         setCollection(
           normalize([
             ...collection.slice(0, index),
-            value,
+            ...(Array.isArray(value) ? value : [value]),
             ...collection.slice(index + 1),
           ]),
         );
@@ -69,7 +69,7 @@ export default (StateCtx, DispatchCtx) => {
         setCollection(
           normalize([
             ...collection.slice(0, index),
-            value,
+            ...(Array.isArray(value) ? value : [value]),
             ...collection.slice(index),
           ]),
         );
