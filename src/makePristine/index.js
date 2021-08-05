@@ -29,7 +29,10 @@
     }
   }
 */
-
+import set from 'lodash/set';
+import get from 'lodash/get';
+import has from 'lodash/has';
+import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 
 const PRISTINE = 'pristine';
@@ -37,34 +40,25 @@ const PRISTINE = 'pristine';
 export default (pristineKey = PRISTINE) => {
   const getInitialState = () => ({[pristineKey]: {}});
 
-  const hasKey = (state, key) =>
-    !!state[pristineKey] && state[pristineKey].hasOwnProperty(key);
+  const hasKey = (state, key) => has(state[pristineKey], key);
 
-  const add = (state, key) => ({
-    ...state,
-    [pristineKey]: {
-      ...state[pristineKey],
-      [key]: state[key],
-    },
-  });
+  const add = (state, key) =>
+    set(state, `${pristineKey}.${key}`, get(state, key));
 
   const remove = (state, key) => {
     if (!key) return {...state, ...getInitialState()};
     if (!hasKey(state, key)) return state;
 
-    delete state[pristineKey][key];
     return {
       ...state,
-      [pristineKey]: {
-        ...state[pristineKey],
-      },
+      [pristineKey]: omit(state[pristineKey], [key]),
     };
   };
 
   return {
     updatePristine: (state, key, newValue) => {
       const hasPristineState = hasKey(state, key);
-      if (!hasPristineState && !isEqual(newValue, state[key]))
+      if (!hasPristineState && !isEqual(newValue, get(state, key)))
         return add(state, key);
 
       if (hasPristineState && isEqual(newValue, state[pristineKey][key]))

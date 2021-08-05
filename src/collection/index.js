@@ -9,7 +9,6 @@ import makeGetInitialState from '../makeGetInitialState';
 import makeReducer from './makeReducer';
 import makeUseCollection from '../makeUseCollection';
 import makeUseMember from '../makeUseMember';
-import makeFields from '../makeFields';
 import makeUseSelector from './makeUseSelector';
 import makeResourceReducer from './resource/makeReducer';
 
@@ -21,7 +20,6 @@ import makeResourceReducer from './resource/makeReducer';
  * @property {function} useMember - A react hook for
  * @property {function} useCollection - A react hook for
  * @property {collectionHoax.Selectors}
- * @property {object} Field
  */
 
 /**
@@ -75,7 +73,6 @@ const makeCollectionProvider = (
   const [StateCtx, DispatchCtx] = makeContext();
   const useCollection = makeUseCollection(StateCtx, DispatchCtx);
   const useMember = makeUseMember(StateCtx, DispatchCtx);
-  const Field = makeFields(useMember);
   const {useSelector, useAction, useResourceSelector} = makeUseSelector(
     StateCtx,
     DispatchCtx,
@@ -107,7 +104,6 @@ const makeCollectionProvider = (
     useSelector,
     useAction,
     useResourceSelector,
-    Field,
     getInitialState: initState,
     getInitialResourceState,
   };

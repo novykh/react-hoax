@@ -103,6 +103,21 @@ const test = (expectedKey, pristineKey) => {
       expect(removePristine({}, 'attr2', 'newValue2')).toEqual({});
     });
   });
+
+  describe('#getPristineState', () => {
+    it('gets pristine state', () => {
+      const dummyState = {
+        pristine: {
+          pristine: 'test success',
+        },
+        pKey: {
+          pKey: 'test success',
+        },
+      };
+      const {getPristineState} = makePristine(pristineKey);
+      expect(getPristineState(dummyState)).toEqual(dummyState[expectedKey]);
+    });
+  });
 };
 
 describe('default', () => test('pristine'));

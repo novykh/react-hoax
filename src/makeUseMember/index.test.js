@@ -83,7 +83,7 @@ describe('root level member', () => {
       toProps(result.current).setError('myError');
     });
 
-    expect(update).toHaveBeenCalledWith('errors', {myKey: 'myError'});
+    expect(update).toHaveBeenCalledWith('errors.myKey', 'myError');
   });
 });
 
@@ -93,7 +93,6 @@ describe('nested byId member', () => {
       dispatcher: {updateResource: jest.fn()},
       state: {byId: {nestedResourceId: {myKey: 'myValue', errors: {}}}},
       resourceId: 'nestedResourceId',
-      select: id => state => state.byId[id],
     });
     expect(toProps(result.current).value).toEqual('myValue');
   });
@@ -154,8 +153,10 @@ describe('nested byId member', () => {
       toProps(result.current).setError('myError');
     });
 
-    expect(updateResource).toHaveBeenCalledWith('nestedResourceId', 'errors', {
-      myKey: 'myError',
-    });
+    expect(updateResource).toHaveBeenCalledWith(
+      'nestedResourceId',
+      'errors.myKey',
+      'myError',
+    );
   });
 });

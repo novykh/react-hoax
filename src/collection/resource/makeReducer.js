@@ -1,3 +1,5 @@
+import set from 'lodash/set';
+import get from 'lodash/get';
 import isNil from 'lodash/isNil';
 import makePristine from '../../makePristine';
 import {updateBatch} from '../../reducerUtils';
@@ -20,15 +22,12 @@ export default (getInitialState, customReducer, idKey) => {
   });
 
   const getValidValue = (attr, value) =>
-    isNil(value) ? getInitialState()[attr] : value;
+    isNil(value) ? get(getInitialState(), attr) : value;
 
   const update = (state, attr, value) => {
     value = getValidValue(attr, value);
     state = updatePristine(state, attr, value);
-    return {
-      ...state,
-      [attr]: value,
-    };
+    return set(state, attr, value);
   };
 
   const reducerHandlers = {

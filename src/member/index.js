@@ -6,7 +6,6 @@ import makeGetInitialState from '../makeGetInitialState';
 import makeReducer from './makeReducer';
 import makeUseMember from '../makeUseMember';
 import makeUseCollection from '../makeUseCollection';
-import makeFields from '../makeFields';
 import makeUseSelector from './makeUseSelector';
 import defaultInitialState from './initialState';
 
@@ -19,7 +18,6 @@ import defaultInitialState from './initialState';
  * @property {function} useCollection - A react hook for
  * @property {function} useSelector - A react hook for
  * @property {function} useAction - A react hook for
- * @property {object} Field
  */
 
 /**
@@ -45,7 +43,6 @@ const makeMemberProvider = (
   const [StateCtx, DispatchCtx] = makeContext();
   const useMember = makeUseMember(StateCtx, DispatchCtx);
   const useCollection = makeUseCollection(StateCtx, DispatchCtx);
-  const Field = makeFields(useMember);
   const {useSelector, useAction} = makeUseSelector(StateCtx, DispatchCtx);
 
   const MemberProvider = ({children, initialState, extraArgument}) => {
@@ -71,7 +68,6 @@ const makeMemberProvider = (
     useCollection,
     useSelector,
     useAction,
-    Field,
     getInitialState: initState,
   };
 };

@@ -1,4 +1,5 @@
 import {useCallback} from 'react';
+import get from 'lodash/get';
 import useContextSelector from '../useContextSelector';
 import identity from 'lodash/identity';
 import {makeByIdSelector} from '../collection/makeUseSelector';
@@ -25,11 +26,11 @@ export default (StateCtx, DispatchCtx) => ({
   const selector = useCallback(
     state => {
       const member = resourceId ? select(resourceId)(state) : select(state);
-      return [member[fieldKey], member.errors];
+      return [get(member, fieldKey), get(member, `errors.${fieldKey}`)];
     },
     [resourceId, fieldKey],
   );
-  const [value, errors] = useContextSelector(StateCtx, selector);
+  const [value, error] = useContextSelector(StateCtx, selector);
 
   const updateSelector = useCallback(
     state => {
@@ -46,11 +47,10 @@ export default (StateCtx, DispatchCtx) => ({
 
   const setValue = useCallback(v => update(fieldKey, v), [update, fieldKey]);
 
-  const error = errors[fieldKey];
-  const setError = useCallback(
-    e => update('errors', {...errors, [fieldKey]: e}),
-    [update, errors],
-  );
+  const setError = useCallback(e => update(`errors.${fieldKey}`, e), [
+    update,
+    fieldKey,
+  ]);
 
   return [value, setValue, error, setError];
 };

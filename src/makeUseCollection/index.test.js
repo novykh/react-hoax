@@ -85,6 +85,17 @@ describe('add', () => {
       result.current.add(100000, 'hello');
     });
     expect(update).toHaveBeenCalledWith('myKey', ['a', 'b', 'c', 'hello']);
+
+    act(() => {
+      result.current.add(1, ['hello', 'hi']);
+    });
+    expect(update).toHaveBeenCalledWith('myKey', [
+      'a',
+      'hello',
+      'hi',
+      'b',
+      'c',
+    ]);
   });
 
   it("doesn't add on invalid index", () => {
@@ -124,6 +135,11 @@ describe('edit', () => {
       result.current.edit(1, 'hello');
     });
     expect(update).toHaveBeenCalledWith('myKey', ['a', 'hello', 'c']);
+
+    act(() => {
+      result.current.edit(1, ['hello', 'hi']);
+    });
+    expect(update).toHaveBeenCalledWith('myKey', ['a', 'hello', 'hi', 'c']);
   });
 
   it("doesn't update on negative index", () => {
