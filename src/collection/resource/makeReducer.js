@@ -1,5 +1,6 @@
 import set from 'lodash/set';
 import get from 'lodash/get';
+import cloneDeep from 'lodash/cloneDeep';
 import isNil from 'lodash/isNil';
 import makePristine from '../../makePristine';
 import {updateBatch} from '../../reducerUtils';
@@ -27,7 +28,7 @@ export default (getInitialState, customReducer, idKey) => {
   const update = (state, attr, value) => {
     value = getValidValue(attr, value);
     state = updatePristine(state, attr, value);
-    return set(state, attr, value);
+    return set(cloneDeep(state), attr, value);
   };
 
   const reducerHandlers = {

@@ -1,5 +1,6 @@
 import set from 'lodash/set';
 import get from 'lodash/get';
+import cloneDeep from 'lodash/cloneDeep';
 import * as actionTypes from '../actionTypes';
 import * as resourceActionTypes from './resource/actionTypes';
 import {updateBatch} from '../reducerUtils';
@@ -44,7 +45,7 @@ export default ({
   const update = (state, attr, value) => {
     value = getValidValue(attr, value);
 
-    return set(state, attr, value);
+    return set(cloneDeep(state), attr, value);
   };
 
   const doneFetch = (state, resources) => {
