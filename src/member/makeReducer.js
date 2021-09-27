@@ -31,8 +31,8 @@ export default (getInitialState, customReducer) => {
 
   const init = (state = {}) => ({
     ...getInitialState(),
-    ...getInitialPristineState(),
     ...state,
+    ...getInitialPristineState(),
   });
 
   const getValidValue = (attr, value) =>
