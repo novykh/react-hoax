@@ -47,9 +47,9 @@ export default (getInitialState, customReducer) => {
   const reducerHandlers = {
     [actionTypes.initialize]: (state, action) => init(action.values),
     [actionTypes.update]: (state, action) =>
-      update(state, action.attr, action.value),
+      update(state, action.attr, action.value, action),
     [actionTypes.updateBatch]: (state, action) =>
-      updateBatch(update, state, action.values),
+      updateBatch(update, state, action.values, action),
     [actionTypes.reset]: (state, action) => {
       state = init({...state, ...getPristineState(state)});
       return removePristine(state);
