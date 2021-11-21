@@ -38,9 +38,9 @@ export default (getInitialState, customReducer) => {
   const getValidValue = (attr, value) =>
     isNil(value) ? get(getInitialState(), attr) : value;
 
-  const update = (state, attr, value) => {
+  const update = (state, attr, value, {checkPristine = true}) => {
     value = getValidValue(attr, value);
-    state = updatePristine(state, attr, value);
+    if (checkPristine) state = updatePristine(state, attr, value);
     return set(cloneDeep(state), attr, value);
   };
 

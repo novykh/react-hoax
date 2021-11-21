@@ -16,21 +16,23 @@ export const initializeResource = (id, values, {merge} = {}) => (
   return dispatch({type: actionTypes.initializeResource, id, values});
 };
 
-export const updateResource = (id, attr, value) => ({
+export const updateResource = (id, attr, value, options = {}) => ({
   type: actionTypes.updateResource,
   id,
   attr,
   value,
+  ...options,
 });
 
-export const updateBatchResource = (id, values) => ({
+export const updateBatchResource = (id, values, options = {}) => ({
   type: actionTypes.updateBatchResource,
   id,
   values,
+  ...options,
 });
 
-export const updateOnChangeResource = (id, {target}) =>
-  updateResource(id, target.name, target.value);
+export const updateOnChangeResource = (id, {target}, options) =>
+  updateResource(id, target.name, target.value, options);
 
 export const removeResource = id => ({
   type: actionTypes.removeResource,

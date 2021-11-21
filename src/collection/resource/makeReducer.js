@@ -25,9 +25,9 @@ export default (getInitialState, customReducer, idKey) => {
   const getValidValue = (attr, value) =>
     isNil(value) ? get(getInitialState(), attr) : value;
 
-  const update = (state, attr, value) => {
+  const update = (state, attr, value, {checkPristine = true} = {}) => {
     value = getValidValue(attr, value);
-    state = updatePristine(state, attr, value);
+    if (checkPristine) state = updatePristine(state, attr, value);
     return set(cloneDeep(state), attr, value);
   };
 
@@ -35,9 +35,9 @@ export default (getInitialState, customReducer, idKey) => {
     [actionTypes.initializeResource]: (state, action) =>
       init(action.id, action.values),
     [actionTypes.updateResource]: (state, action) =>
-      update(state, action.attr, action.value),
+      update(state, action.attr, action.value, action),
     [actionTypes.updateBatchResource]: (state, action) =>
-      updateBatch(update, state, action.values),
+      updateBatch(update, state, action.values, action),
     [actionTypes.resetResource]: (state, action) => {
       state = init(action.id, {...state, ...getPristineState(state)});
       return removePristine(state);

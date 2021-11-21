@@ -9,15 +9,17 @@ export const initialize = (values, {merge} = {}) => (dispatch, getState) => {
   return dispatch({type: actionTypes.initialize, values});
 };
 
-export const update = (attr, value) => ({
+export const update = (attr, value, options = {}) => ({
   type: actionTypes.update,
   attr,
   value,
+  ...options,
 });
 
-export const updateBatch = values => ({
+export const updateBatch = (values, options = {}) => ({
   type: actionTypes.updateBatch,
   values,
+  ...options,
 });
 
 export const updateOnChange = ({target}) => update(target.name, target.value);
