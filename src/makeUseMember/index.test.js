@@ -1,5 +1,5 @@
 import React from 'react';
-import {createContext} from 'use-context-selector';
+import {createContext} from '../makeContext';
 import {renderHook, act} from 'testUtils';
 import makeUseMember from './index';
 

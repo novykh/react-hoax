@@ -1,23 +1,26 @@
 import React, {useState, memo} from 'react';
-import {createContext} from 'use-context-selector';
+import {createContext} from '../makeContext';
 import {render, fireEvent} from 'testUtils';
-import useContextSelector from './index';
-import {useContextSelector as useContextSelectorExternal} from 'use-context-selector';
+import useContextSelector from '.';
 
 const Context = createContext();
 
-const Component = memo(({setState, onRender, useSelector, selector}) => {
-  const state = useSelector(Context, selector);
-  onRender();
-  return (
-    <button
-      data-testid="toggle"
-      onClick={() => setState(s => ({...s, counter: s.counter + 1}))}
-    >
-      {state.title}
-    </button>
-  );
-});
+const Component = memo(
+  ({setState, onRender, useSelector, selector}) => {
+    const state = useSelector(Context, selector);
+    onRender();
+
+    return (
+      <button
+        data-testid="toggle"
+        onClick={() => setState(s => ({...s, counter: s.counter + 1}))}
+      >
+        {state.title}
+      </button>
+    );
+  },
+  () => true,
+);
 
 const Provider = ({onRender, useSelector, selector}) => {
   const [state, setState] = useState({title: 'myTitle', counter: 0});

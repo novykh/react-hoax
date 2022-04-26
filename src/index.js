@@ -107,3 +107,6 @@ export {hoaxActions, hoaxResourceActions};
 import * as hoaxActionTypes from './actionTypes';
 import * as hoaxResourceActionTypes from './collection/resource/actionTypes';
 export {hoaxActionTypes, hoaxResourceActionTypes};
+
+export {createContext} from './makeContext';
+export {default as useContextSelector} from './useContextSelector';

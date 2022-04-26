@@ -21,7 +21,7 @@ it('array', () => {
   expect(
     updateBatch(update, {}, [{attr: 'title', value: 'developer'}]),
   ).toEqual({title: 'developer'});
-  expect(update).toHaveBeenCalledWith({}, 'title', 'developer');
+  expect(update).toHaveBeenCalledWith({}, 'title', 'developer', undefined);
 });
 
 it('object', () => {
@@ -31,5 +31,5 @@ it('object', () => {
   expect(updateBatch(update, {}, {title: 'developer'})).toEqual({
     title: 'developer',
   });
-  expect(update).toHaveBeenCalledWith({}, 'title', 'developer');
+  expect(update).toHaveBeenCalledWith({}, 'title', 'developer', undefined);
 });
