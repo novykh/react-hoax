@@ -21,7 +21,6 @@ const runWithNormalPriority = runWithPriority
   ? thunk => runWithPriority(NormalPriority, thunk)
   : thunk => thunk();
 
-export const contextSymbol = Symbol();
 export const providerSymbol = Symbol();
 
 const createProvider = ProviderOrig => {
@@ -51,7 +50,7 @@ const createProvider = ProviderOrig => {
       });
     }, [value]);
 
-    return createElement(ProviderOrig, {value: contextValue}, children);
+    return createElement(ProviderOrig, {value: contextValue.current}, children);
   };
   return ContextProvider;
 };

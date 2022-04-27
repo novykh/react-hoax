@@ -1,6 +1,6 @@
 import {
-  useCallback,
   useContext as useReactContext,
+  useCallback,
   useState,
   useRef,
 } from 'react';
@@ -9,9 +9,8 @@ import isObjectEqual from 'lodash/isEqual';
 import {useIsomorphicLayoutEffect} from '../makeContext';
 
 const isEqual = (prev, next) => {
-  if (typeof prev === 'function' && typeof next === 'function') {
+  if (typeof prev === 'function' && typeof next === 'function')
     return prev.toString() === next.toString();
-  }
 
   if (Object.is(prev, next)) return true;
 
@@ -19,64 +18,51 @@ const isEqual = (prev, next) => {
 };
 
 export default (context, selector = identity) => {
-  const contextValue = useReactContext(context).current;
+  const contextValue = useReactContext(context);
 
-  if (typeof process === 'object' && process.env.NODE_ENV !== 'production') {
-    if (!contextValue) {
-      throw new Error('useContextSelector requires special context');
-    }
-  }
-  const {
-    value: {current: value},
-    version: {current: version},
-    listeners: listeners,
-  } = contextValue;
+  const {value, version, listeners: listeners} = contextValue;
 
-  const selected = selector(value);
+  const [state, setState] = useState(() => [
+    value.current,
+    selector(value.current),
+  ]);
 
-  const [state, setState] = useState(() => [version, selector(value)]);
+  const selectorRef = useRef(selector);
+  selectorRef.current = selector;
 
-  const dispatchRef = useRef(() => {});
-  dispatchRef.current = useCallback(
-    next =>
-      setState(prev => {
-        if (!next) {
-          return [value, selected];
-        }
-        if (next[0] === version) {
-          if (isEqual(prev[1], selected)) {
-            return prev; // no update
-          }
-          return [value, selected];
-        }
-        try {
-          if (next.length === 2) {
-            if (isEqual(prev[0], next[1])) {
-              return prev; // no update
-            }
-            const nextSelected = selector(next[1]);
-            if (isEqual(prev[1], nextSelected)) {
-              return prev; // no update
-            }
-            return [next[1], nextSelected];
-          }
-        } catch (e) {
-          // ignored
-        }
-        return [...prev]; // update
-      }),
-    [selected],
-  );
+  const dispatch = useCallback(next => {
+    setState(prev => {
+      if (version.current === next[0]) {
+        const selected = selectorRef.current(next[1]);
+        if (isEqual(prev[1], selected)) return prev; // no update
 
-  if (!isEqual(state[1], selected)) {
-    // should update
-    dispatchRef.current();
-  }
+        return [next[1], selected];
+      }
+
+      if (next.length === 2) {
+        if (isEqual(prev[0], next[1])) return prev; // no update
+
+        const nextSelected = selectorRef.current(next[1]);
+        if (isEqual(prev[1], nextSelected)) return prev; // no update
+
+        return [next[1], nextSelected];
+      }
+
+      return [...prev]; // update
+    });
+  }, []);
 
   useIsomorphicLayoutEffect(() => {
-    listeners.add(dispatchRef.current);
-    return () => listeners.delete(dispatchRef.current);
+    listeners.add(dispatch);
+    return () => listeners.delete(dispatch);
   }, [listeners]);
+
+  const selected = selector(value.current);
+  if (!isEqual(state[1], selected)) {
+    // should update
+    setState([value.current, selected]);
+    return selected;
+  }
 
   return state[1];
 };
