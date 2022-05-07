@@ -1,4 +1,4 @@
-import {testFunctionAction, testObjectAction} from 'testHelpers';
+import {testFunctionAction} from 'testHelpers';
 import * as actions from './actions';
 import * as actionTypes from './actionTypes';
 

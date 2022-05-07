@@ -42,29 +42,29 @@ export default (getInitialState, customReducer, idKey) => {
       state = init(action.id, {...state, ...getPristineState(state)});
       return removePristine(state);
     },
-    [actionTypes.resetPristineResource]: (state, action) =>
-      removePristine(state),
+    [actionTypes.resetPristineResource]: state => removePristine(state),
     [actionTypes.resetPristineKeyResource]: (state, action) =>
       removePristine(state, action.attr),
-    [actionTypes.startProcessResource]: (state, action) => ({
+    [actionTypes.startProcessResource]: state => ({
       ...state,
       processing: true,
     }),
-    [actionTypes.doneProcessResource]: (state, action) => ({
+    [actionTypes.doneProcessResource]: state => ({
       ...state,
       processing: false,
     }),
-    [actionTypes.startFetchResource]: (state, action) => ({
+    [actionTypes.startFetchResource]: state => ({
       ...state,
       loading: true,
     }),
     [actionTypes.doneFetchResource]: (state, action) =>
       init(action.id, {
+        ...state,
         ...action.values,
         loading: false,
         loaded: true,
       }),
-    [actionTypes.failFetchResource]: (state, action) => ({
+    [actionTypes.failFetchResource]: state => ({
       ...state,
       loading: false,
     }),

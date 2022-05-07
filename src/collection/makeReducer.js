@@ -106,18 +106,18 @@ export default ({
       update(state, action.attr, action.value),
     [actionTypes.updateBatch]: (state, action) =>
       updateBatch(update, state, action.values),
-    [actionTypes.reset]: (state, action) => init(),
-    [actionTypes.startProcess]: (state, action) => ({
+    [actionTypes.reset]: () => init(),
+    [actionTypes.startProcess]: state => ({
       ...state,
       processing: true,
     }),
-    [actionTypes.doneProcess]: (state, action) => ({
+    [actionTypes.doneProcess]: state => ({
       ...state,
       processing: false,
     }),
-    [actionTypes.startFetch]: (state, action) => ({...state, loading: true}),
+    [actionTypes.startFetch]: state => ({...state, loading: true}),
     [actionTypes.doneFetch]: (state, action) => doneFetch(state, action.values),
-    [actionTypes.failFetch]: (state, action) => ({...state, loading: false}),
+    [actionTypes.failFetch]: state => ({...state, loading: false}),
     ...Object.keys({
       ...resourceActionTypes,
       ...customResourceActionTypes,
