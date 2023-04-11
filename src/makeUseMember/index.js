@@ -27,7 +27,7 @@ export default (StateCtx, DispatchCtx) =>
     const selector = useCallback(
       state => {
         const member = resourceId ? select(resourceId)(state) : select(state);
-        return [get(member, fieldKey), get(member, [errors, fieldKey])];
+        return [get(member, fieldKey), get(member, ['errors', fieldKey])];
       },
       [resourceId, fieldKey],
     );
@@ -49,7 +49,7 @@ export default (StateCtx, DispatchCtx) =>
     const setValue = useCallback(v => update(fieldKey, v), [update, fieldKey]);
 
     const setError = useCallback(
-      e => update(`errors.${fieldKey}`, e),
+      e => update(['errors', fieldKey], e),
       [update, fieldKey],
     );
 

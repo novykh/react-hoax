@@ -42,8 +42,7 @@ export default (pristineKey = PRISTINE) => {
 
   const hasKey = (state, key) => has(state[pristineKey], key);
 
-  const add = (state, key) =>
-    set(state, `${pristineKey}.${key}`, get(state, key));
+  const add = (state, key) => set(state, [pristineKey, key], get(state, key));
 
   const remove = (state, key) => {
     if (!key) return {...state, ...getInitialState()};
