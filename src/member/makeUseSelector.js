@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
 import useContextSelector from '../useContextSelector';
-import identity from 'lodash/identity';
+import identity from '../helpers/identity';
 
 /**
  * @typedef {Object} memberHoax.Selectors

@@ -4,17 +4,15 @@ import {
   useState,
   useRef,
 } from 'react';
-import identity from 'lodash/identity';
-import isObjectEqual from 'lodash/isEqual';
+import identity from '../helpers/identity';
+import deepEqual from '../helpers/deepEqual';
 import {useIsomorphicLayoutEffect} from '../makeContext';
 
 const isEqual = (prev, next) => {
   if (typeof prev === 'function' && typeof next === 'function')
     return prev.toString() === next.toString();
 
-  if (Object.is(prev, next)) return true;
-
-  return isObjectEqual(prev, next);
+  return deepEqual(prev, next);
 };
 
 export default (context, selector = identity) => {

@@ -26,6 +26,7 @@
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
     <script src="scripts/nav.js" defer></script>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -41,7 +42,9 @@
     
     <input type="text" id="nav-search" placeholder="Search" />
     
-    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/novykh/react-hoax" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2><a href="https://github.com/novykh/react-hoax/issues" target="_blank" class="menu-item" id="issues" >Github issues</a></h2><h3>Namespaces</h3><ul><li><a href="collectionHoax.html">collectionHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="collectionHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li><li><a href="memberHoax.html">memberHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="memberHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="collectionHoax.module_makeCollectionProvider.html">collectionHoax.makeCollectionProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.module_makeCollectionProvider.html#~makeCollectionProvider">makeCollectionProvider</a></li></ul></li><li><a href="memberHoax.module_makeMemberProvider.html">memberHoax.makeMemberProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.module_makeMemberProvider.html#~makeMemberProvider">makeMemberProvider</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#defaultGetUpdate">defaultGetUpdate</a></li><li><a href="global.html#makeWithUniq">makeWithUniq</a></li><li><a href="global.html#usePrevious">usePrevious</a></li></ul>
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/novykh/react-hoax" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2><a href="https://github.com/novykh/react-hoax/issues" target="_blank" class="menu-item" id="issues" >Github issues</a></h2><h3>Namespaces</h3><ul><li><a href="collectionHoax.html">collectionHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="collectionHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li><li><a href="memberHoax.html">memberHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="memberHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="collectionHoax.module_makeCollectionProvider.html">collectionHoax.makeCollectionProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.module_makeCollectionProvider.html#~makeCollectionProvider">makeCollectionProvider</a></li></ul></li><li><a href="memberHoax.module_makeMemberProvider.html">memberHoax.makeMemberProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.module_makeMemberProvider.html#~makeMemberProvider">makeMemberProvider</a></li></ul></li></ul>
+    
 </nav>
 
 <div id="main">
@@ -76,7 +79,7 @@ const UserForm = () => (
   &lt;/UserHoax.Provider>
 );
  */
-export { default as makeMemberHoax } from "./member";
+export {default as makeMemberHoax} from './member';
 
 /**
  * makeCollectionHoax factory.
@@ -156,19 +159,18 @@ export {
 export { queries };
 export default MyCustomResourcesProvider;
  */
-export { default as makeCollectionHoax } from "./collection";
+export {default as makeCollectionHoax} from './collection';
 
-import * as actions from "./actions";
-import * as resourceActions from "./collection/resource/actions";
+import * as hoaxActions from './actions';
+import * as hoaxResourceActions from './collection/resource/actions';
+export {hoaxActions, hoaxResourceActions};
 
-const hoaxActions = { ...actions, ...resourceActions };
-export { hoaxActions };
+import * as hoaxActionTypes from './actionTypes';
+import * as hoaxResourceActionTypes from './collection/resource/actionTypes';
+export {hoaxActionTypes, hoaxResourceActionTypes};
 
-import * as actionTypes from "./actionTypes";
-import * as resourceActionTypes from "./collection/resource/actionTypes";
-
-const hoaxActionTypes = { ...actionTypes, ...resourceActionTypes };
-export { hoaxActionTypes };
+export {createContext} from './makeContext';
+export {default as useContextSelector} from './useContextSelector';
 </code></pre>
         </article>
     </section>
@@ -183,7 +185,7 @@ export { hoaxActionTypes };
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

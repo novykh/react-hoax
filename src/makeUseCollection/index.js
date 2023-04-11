@@ -1,5 +1,5 @@
 import {useCallback} from 'react';
-import identity from 'lodash/identity';
+import identity from '../helpers/identity';
 import makeUseMember from '../makeUseMember';
 
 /**
@@ -77,9 +77,10 @@ export default (StateCtx, DispatchCtx) => {
       [collection],
     );
 
-    const push = useCallback(value => add(collection.length, value), [
-      collection,
-    ]);
+    const push = useCallback(
+      value => add(collection.length, value),
+      [collection],
+    );
 
     const reorder = useCallback(
       (startIndex, endIndex) => {

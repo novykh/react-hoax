@@ -26,6 +26,7 @@
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
     <script src="scripts/nav.js" defer></script>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -41,7 +42,9 @@
     
     <input type="text" id="nav-search" placeholder="Search" />
     
-    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/novykh/react-hoax" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2><a href="https://github.com/novykh/react-hoax/issues" target="_blank" class="menu-item" id="issues" >Github issues</a></h2><h3>Namespaces</h3><ul><li><a href="collectionHoax.html">collectionHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="collectionHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li><li><a href="memberHoax.html">memberHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="memberHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="collectionHoax.module_makeCollectionProvider.html">collectionHoax.makeCollectionProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.module_makeCollectionProvider.html#~makeCollectionProvider">makeCollectionProvider</a></li></ul></li><li><a href="memberHoax.module_makeMemberProvider.html">memberHoax.makeMemberProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.module_makeMemberProvider.html#~makeMemberProvider">makeMemberProvider</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#defaultGetUpdate">defaultGetUpdate</a></li><li><a href="global.html#makeWithUniq">makeWithUniq</a></li><li><a href="global.html#usePrevious">usePrevious</a></li></ul>
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/novykh/react-hoax" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2><a href="https://github.com/novykh/react-hoax/issues" target="_blank" class="menu-item" id="issues" >Github issues</a></h2><h3>Namespaces</h3><ul><li><a href="collectionHoax.html">collectionHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="collectionHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li><li><a href="memberHoax.html">memberHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="memberHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="collectionHoax.module_makeCollectionProvider.html">collectionHoax.makeCollectionProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.module_makeCollectionProvider.html#~makeCollectionProvider">makeCollectionProvider</a></li></ul></li><li><a href="memberHoax.module_makeMemberProvider.html">memberHoax.makeMemberProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.module_makeMemberProvider.html#~makeMemberProvider">makeMemberProvider</a></li></ul></li></ul>
+    
 </nav>
 
 <div id="main">
@@ -59,7 +62,9 @@
 <header>
     
         <h2>
-        collectionHoax
+        
+            Namespace
+        
         </h2>
         
     
@@ -71,7 +76,21 @@
         
             
 
+
+    
+
+    <h4 class="name" id="collectionHoax">collectionHoax</h4>
+
+    
+
+
+
+
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>makeCollectionHoax factory.</p></li></ul></dd>
+    
 
     
     <dt class="tag-source">Source:</dt>
@@ -121,13 +140,15 @@
 
 
 
-            
-                <div class="description usertext"><p>makeCollectionHoax factory.</p></div>
-            
 
-            
-                <h3>Example</h3>
-                
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
     <pre class="prettyprint"><code>import React, { useLayoutEffect, useEffect, Fragment } from "react";
 import { makeCollectionHoax } from "react-hoax";
 
@@ -201,7 +222,26 @@ export {
 export { queries };
 export default MyCustomResourcesProvider;</code></pre>
 
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
         </div>
     
@@ -223,13 +263,14 @@ export default MyCustomResourcesProvider;</code></pre>
 
         
             
-<h4 class="name" id=".initialState"><span class="type-signature">(private, static, constant) </span>initialState<span class="type-signature"></span></h4>
+<h4 class="name" id=".initialState"><span class="type-signature type-signature-private, static, constant">(private, static, constant) </span>initialState<span class="type-signature"></span></h4>
 
 
 
 
 
 <dl class="details">
+    
 
     
     <dt class="tag-source">Source:</dt>
@@ -302,7 +343,7 @@ export default MyCustomResourcesProvider;</code></pre>
 
     
 
-    <h4 class="name" id=".makeReducer"><span class="type-signature">(private, static) </span>makeReducer<span class="signature">(getInitialState, customReducer)</span><span class="type-signature"> &rarr; {<a href="collectionHoax.html#.ReducerWithInit">collectionHoax.ReducerWithInit</a>}</span></h4>
+    <h4 class="name" id=".makeReducer"><span class="type-signature type-signature-private, static">(private, static) </span>makeReducer<span class="signature">(getInitialState, customReducer)</span><span class="type-signature"> &rarr; {<a href="collectionHoax.html#.ReducerWithInit">collectionHoax.ReducerWithInit</a>}</span></h4>
 
     
 
@@ -310,11 +351,12 @@ export default MyCustomResourcesProvider;</code></pre>
 
 
 <dl class="details">
+    
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="collection_makeReducer.js.html">collection/makeReducer.js</a>, <a href="collection_makeReducer.js.html#line13">line 13</a>
+        <a href="collection_makeReducer.js.html">collection/makeReducer.js</a>, <a href="collection_makeReducer.js.html#line14">line 14</a>
     </li></ul></dd>
     
 
@@ -361,9 +403,7 @@ export default MyCustomResourcesProvider;</code></pre>
 
 
 
-
-
-    <h5>Parameters:</h5>
+    <h5 class="h5-parameters">Parameters:</h5>
     
 
 <table class="params">
@@ -397,6 +437,7 @@ export default MyCustomResourcesProvider;</code></pre>
 <span class="param-type">function</span>
 
 
+
             
             </td>
 
@@ -418,6 +459,7 @@ export default MyCustomResourcesProvider;</code></pre>
             
                 
 <span class="param-type">function</span>
+
 
 
             
@@ -449,7 +491,7 @@ export default MyCustomResourcesProvider;</code></pre>
 
 
 
-<h5>Returns:</h5>
+<h5 class="h5-returns">Returns:</h5>
 
         
 
@@ -461,6 +503,7 @@ export default MyCustomResourcesProvider;</code></pre>
     <dd>
         
 <span class="param-type"><a href="collectionHoax.html#.ReducerWithInit">collectionHoax.ReducerWithInit</a></span>
+
 
 
     </dd>
@@ -475,7 +518,7 @@ export default MyCustomResourcesProvider;</code></pre>
 
     
 
-    <h4 class="name" id=".makeUseSelector"><span class="type-signature">(private, static) </span>makeUseSelector<span class="signature">(StateCtx, DispatchCtx)</span><span class="type-signature"> &rarr; {<a href="collectionHoax.html#.Selectors">collectionHoax.Selectors</a>}</span></h4>
+    <h4 class="name" id=".makeUseSelector"><span class="type-signature type-signature-private, static">(private, static) </span>makeUseSelector<span class="signature">(StateCtx, DispatchCtx)</span><span class="type-signature"> &rarr; {<a href="collectionHoax.html#.Selectors">collectionHoax.Selectors</a>}</span></h4>
 
     
 
@@ -483,11 +526,12 @@ export default MyCustomResourcesProvider;</code></pre>
 
 
 <dl class="details">
+    
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="collection_makeUseSelector.js.html">collection/makeUseSelector.js</a>, <a href="collection_makeUseSelector.js.html#line14">line 14</a>
+        <a href="collection_makeUseSelector.js.html">collection/makeUseSelector.js</a>, <a href="collection_makeUseSelector.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -534,9 +578,7 @@ export default MyCustomResourcesProvider;</code></pre>
 
 
 
-
-
-    <h5>Parameters:</h5>
+    <h5 class="h5-parameters">Parameters:</h5>
     
 
 <table class="params">
@@ -570,6 +612,7 @@ export default MyCustomResourcesProvider;</code></pre>
 <span class="param-type">object</span>
 
 
+
             
             </td>
 
@@ -591,6 +634,7 @@ export default MyCustomResourcesProvider;</code></pre>
             
                 
 <span class="param-type">object</span>
+
 
 
             
@@ -622,7 +666,7 @@ export default MyCustomResourcesProvider;</code></pre>
 
 
 
-<h5>Returns:</h5>
+<h5 class="h5-returns">Returns:</h5>
 
         
 
@@ -634,6 +678,7 @@ export default MyCustomResourcesProvider;</code></pre>
     <dd>
         
 <span class="param-type"><a href="collectionHoax.html#.Selectors">collectionHoax.Selectors</a></span>
+
 
 
     </dd>
@@ -658,11 +703,12 @@ export default MyCustomResourcesProvider;</code></pre>
 
 
 <dl class="details">
+    
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="collection_makeReducer.js.html">collection/makeReducer.js</a>, <a href="collection_makeReducer.js.html#line7">line 7</a>
+        <a href="collection_makeReducer.js.html">collection/makeReducer.js</a>, <a href="collection_makeReducer.js.html#line8">line 8</a>
     </li></ul></dd>
     
 
@@ -734,6 +780,7 @@ export default MyCustomResourcesProvider;</code></pre>
 <span class="param-type">function</span>
 
 
+
             
             </td>
 
@@ -757,6 +804,7 @@ export default MyCustomResourcesProvider;</code></pre>
 <span class="param-type">function</span>
 
 
+
             
             </td>
 
@@ -778,11 +826,12 @@ export default MyCustomResourcesProvider;</code></pre>
 
 
 
-    <h5>Type:</h5>
+    <h5 class="h5-types">Type:</h5>
     <ul>
         <li>
             
 <span class="param-type">Object</span>
+
 
 
         </li>
@@ -802,11 +851,12 @@ export default MyCustomResourcesProvider;</code></pre>
 
 
 <dl class="details">
+    
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="collection_makeUseSelector.js.html">collection/makeUseSelector.js</a>, <a href="collection_makeUseSelector.js.html#line7">line 7</a>
+        <a href="collection_makeUseSelector.js.html">collection/makeUseSelector.js</a>, <a href="collection_makeUseSelector.js.html#line8">line 8</a>
     </li></ul></dd>
     
 
@@ -878,6 +928,7 @@ export default MyCustomResourcesProvider;</code></pre>
 <span class="param-type">function</span>
 
 
+
             
             </td>
 
@@ -899,6 +950,7 @@ export default MyCustomResourcesProvider;</code></pre>
             
                 
 <span class="param-type">function</span>
+
 
 
             
@@ -924,6 +976,7 @@ export default MyCustomResourcesProvider;</code></pre>
 <span class="param-type">function</span>
 
 
+
             
             </td>
 
@@ -945,11 +998,12 @@ export default MyCustomResourcesProvider;</code></pre>
 
 
 
-    <h5>Type:</h5>
+    <h5 class="h5-types">Type:</h5>
     <ul>
         <li>
             
 <span class="param-type">Object</span>
+
 
 
         </li>
@@ -978,7 +1032,7 @@ export default MyCustomResourcesProvider;</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

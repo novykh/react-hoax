@@ -1,7 +1,7 @@
 import {useMemo, useCallback} from 'react';
-import get from 'lodash/get';
+import get from '../helpers/get';
 import useContextSelector from '../useContextSelector';
-import identity from 'lodash/identity';
+import identity from '../helpers/identity';
 
 export const byIdSelector = id => state => get(state, ['byId', id]);
 
@@ -23,9 +23,10 @@ export const byIdSelector = id => state => get(state, ['byId', id]);
 export default (StateCtx, DispatchCtx) => ({
   useSelector: (selector = identity) => useContextSelector(StateCtx, selector),
   useResourceSelector: (id, select = identity) => {
-    const selector = useCallback(state => select(byIdSelector(id)(state)), [
-      id,
-    ]);
+    const selector = useCallback(
+      state => select(byIdSelector(id)(state)),
+      [id],
+    );
 
     return useContextSelector(StateCtx, selector);
   },

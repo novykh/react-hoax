@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
-import get from 'lodash/get';
+import get from '../helpers/get';
 import useContextSelector from '../useContextSelector';
-import identity from 'lodash/identity';
+import identity from '../helpers/identity';
 import {byIdSelector} from '../collection/makeUseSelector';
 
 /**
@@ -17,40 +17,41 @@ import {byIdSelector} from '../collection/makeUseSelector';
 const defaultGetUpdate = resourceId => state =>
   resourceId ? state.updateResource : state.update;
 
-export default (StateCtx, DispatchCtx) => ({
-  fieldKey,
-  resourceId,
-  getUpdate = defaultGetUpdate,
-  select = resourceId ? byIdSelector : identity,
-}) => {
-  const selector = useCallback(
-    state => {
-      const member = resourceId ? select(resourceId)(state) : select(state);
-      return [get(member, fieldKey), get(member, `errors.${fieldKey}`)];
-    },
-    [resourceId, fieldKey],
-  );
-  const [value, error] = useContextSelector(StateCtx, selector);
-
-  const updateSelector = useCallback(
-    state => {
-      const update = getUpdate(resourceId)(state);
-
-      if (typeof update !== 'function')
-        throw new Error("useMember expects an 'update' dispatch function");
-
-      return resourceId ? (key, v) => update(resourceId, key, v) : update;
-    },
-    [resourceId],
-  );
-  const update = useContextSelector(DispatchCtx, updateSelector);
-
-  const setValue = useCallback(v => update(fieldKey, v), [update, fieldKey]);
-
-  const setError = useCallback(e => update(`errors.${fieldKey}`, e), [
-    update,
+export default (StateCtx, DispatchCtx) =>
+  ({
     fieldKey,
-  ]);
+    resourceId,
+    getUpdate = defaultGetUpdate,
+    select = resourceId ? byIdSelector : identity,
+  }) => {
+    const selector = useCallback(
+      state => {
+        const member = resourceId ? select(resourceId)(state) : select(state);
+        return [get(member, fieldKey), get(member, [errors, fieldKey])];
+      },
+      [resourceId, fieldKey],
+    );
+    const [value, error] = useContextSelector(StateCtx, selector);
 
-  return [value, setValue, error, setError];
-};
+    const updateSelector = useCallback(
+      state => {
+        const update = getUpdate(resourceId)(state);
+
+        if (typeof update !== 'function')
+          throw new Error("useMember expects an 'update' dispatch function");
+
+        return resourceId ? (key, v) => update(resourceId, key, v) : update;
+      },
+      [resourceId],
+    );
+    const update = useContextSelector(DispatchCtx, updateSelector);
+
+    const setValue = useCallback(v => update(fieldKey, v), [update, fieldKey]);
+
+    const setError = useCallback(
+      e => update(`errors.${fieldKey}`, e),
+      [update, fieldKey],
+    );
+
+    return [value, setValue, error, setError];
+  };

@@ -29,12 +29,11 @@
     }
   }
 */
-import set from 'lodash/set';
-import get from 'lodash/get';
-import has from 'lodash/has';
-import omit from 'lodash/omit';
-import cloneDeep from 'lodash/cloneDeep';
-import isEqual from 'lodash/isEqual';
+import set from '../helpers/set';
+import get from '../helpers/get';
+import has from '../helpers/has';
+import omit from '../helpers/omit';
+import deepEqual from '../helpers/deepEqual';
 
 const PRISTINE = 'pristine';
 
@@ -44,7 +43,7 @@ export default (pristineKey = PRISTINE) => {
   const hasKey = (state, key) => has(state[pristineKey], key);
 
   const add = (state, key) =>
-    set(cloneDeep(state), `${pristineKey}.${key}`, get(state, key));
+    set(state, `${pristineKey}.${key}`, get(state, key));
 
   const remove = (state, key) => {
     if (!key) return {...state, ...getInitialState()};
@@ -59,10 +58,10 @@ export default (pristineKey = PRISTINE) => {
   return {
     updatePristine: (state, key, newValue) => {
       const hasPristineState = hasKey(state, key);
-      if (!hasPristineState && !isEqual(newValue, get(state, key)))
+      if (!hasPristineState && !deepEqual(newValue, get(state, key)))
         return add(state, key);
 
-      if (hasPristineState && isEqual(newValue, state[pristineKey][key]))
+      if (hasPristineState && deepEqual(newValue, state[pristineKey][key]))
         return remove(state, key);
 
       return state;

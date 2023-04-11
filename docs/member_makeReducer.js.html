@@ -26,6 +26,7 @@
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
     <script src="scripts/nav.js" defer></script>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -41,7 +42,9 @@
     
     <input type="text" id="nav-search" placeholder="Search" />
     
-    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/novykh/react-hoax" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2><a href="https://github.com/novykh/react-hoax/issues" target="_blank" class="menu-item" id="issues" >Github issues</a></h2><h3>Namespaces</h3><ul><li><a href="collectionHoax.html">collectionHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="collectionHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li><li><a href="memberHoax.html">memberHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="memberHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="collectionHoax.module_makeCollectionProvider.html">collectionHoax.makeCollectionProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.module_makeCollectionProvider.html#~makeCollectionProvider">makeCollectionProvider</a></li></ul></li><li><a href="memberHoax.module_makeMemberProvider.html">memberHoax.makeMemberProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.module_makeMemberProvider.html#~makeMemberProvider">makeMemberProvider</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#defaultGetUpdate">defaultGetUpdate</a></li><li><a href="global.html#makeWithUniq">makeWithUniq</a></li><li><a href="global.html#usePrevious">usePrevious</a></li></ul>
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/novykh/react-hoax" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2><a href="https://github.com/novykh/react-hoax/issues" target="_blank" class="menu-item" id="issues" >Github issues</a></h2><h3>Namespaces</h3><ul><li><a href="collectionHoax.html">collectionHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="collectionHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li><li><a href="memberHoax.html">memberHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="memberHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="collectionHoax.module_makeCollectionProvider.html">collectionHoax.makeCollectionProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.module_makeCollectionProvider.html#~makeCollectionProvider">makeCollectionProvider</a></li></ul></li><li><a href="memberHoax.module_makeMemberProvider.html">memberHoax.makeMemberProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.module_makeMemberProvider.html#~makeMemberProvider">makeMemberProvider</a></li></ul></li></ul>
+    
 </nav>
 
 <div id="main">
@@ -56,11 +59,12 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import isNil from "lodash/isNil";
-import makePristine from "../makePristine";
-import { updateBatch } from "../reducerUtils";
-import * as actionTypes from "../actionTypes";
-import createReducer from "../createReducer";
+            <pre class="prettyprint source linenums"><code>import set from '../helpers/set';
+import get from '../helpers/get';
+import makePristine from '../makePristine';
+import {updateBatch} from '../reducerUtils';
+import * as actionTypes from '../actionTypes';
+import createReducer from '../createReducer';
 
 /**
  * @typedef {Object} memberHoax.ReducerWithInit
@@ -80,49 +84,61 @@ export default (getInitialState, customReducer) => {
   const {
     getInitialPristineState,
     updatePristine,
-    removePristine
-  } = makePristine("pristine");
+    removePristine,
+    getPristineState,
+  } = makePristine('pristine');
 
   const init = (state = {}) => ({
     ...getInitialState(),
     ...state,
-    ...getInitialPristineState()
+    ...getInitialPristineState(),
   });
 
   const getValidValue = (attr, value) =>
-    isNil(value) ? getInitialState()[attr] : value;
+    value === null ? get(getInitialState(), attr) : value;
 
-  const update = (state, attr, value) => {
+  const update = (state, attr, value, {checkPristine = true}) => {
     value = getValidValue(attr, value);
-    state = updatePristine(state, attr, value);
-    return {
-      ...state,
-      [attr]: value
-    };
+    if (checkPristine) state = updatePristine(state, attr, value);
+    return set(state, attr, value);
   };
 
   const reducerHandlers = {
     [actionTypes.initialize]: (state, action) => init(action.values),
-    [actionTypes.update]: (state, action) => update(state, action.attr, action.value),
-    [actionTypes.updateBatch]: (state, action) => updateBatch(update, state, action.values),
-    [actionTypes.reset]: (state, action) => init(),
+    [actionTypes.update]: (state, action) =>
+      update(state, action.attr, action.value, action),
+    [actionTypes.updateBatch]: (state, action) =>
+      updateBatch(update, state, action.values, action),
+    [actionTypes.reset]: (state, action) => {
+      state = init({...state, ...getPristineState(state)});
+      return removePristine(state);
+    },
     [actionTypes.resetPristine]: (state, action) => removePristine(state),
-    [actionTypes.resetPristineKey]: (state, action) => removePristine(state, action.attr),
-    [actionTypes.startProcess]: (state, action) => ({ ...state, processing: true }),
-    [actionTypes.doneProcess]: (state, action) => ({ ...state, processing: false }),
-    [actionTypes.startFetch]: (state, action) => ({ ...state, loading: true }),
-    [actionTypes.doneFetch]: (state, action) => init({
-      ...action.values,
-      loading: false,
-      loaded: true
+    [actionTypes.resetPristineKey]: (state, action) =>
+      removePristine(state, action.attr),
+    [actionTypes.startProcess]: (state, action) => ({
+      ...state,
+      processing: true,
     }),
-    [actionTypes.failFetch]: (state, action) => ({ ...state, loading: false }),
-    ...customReducer
+    [actionTypes.doneProcess]: (state, action) => ({
+      ...state,
+      processing: false,
+    }),
+    [actionTypes.startFetch]: (state, action) => ({...state, loading: true}),
+    [actionTypes.doneFetch]: (state, action) =>
+      init({
+        ...state,
+        ...action.values,
+        loading: false,
+        loaded: true,
+      }),
+    [actionTypes.failFetch]: (state, action) => ({...state, loading: false}),
+    ...customReducer,
   };
 
   const reducer = createReducer(reducerHandlers);
 
-  return { reducer, init };
+  return {reducer, init};
 };
 </code></pre>
         </article>
@@ -138,7 +154,7 @@ export default (getInitialState, customReducer) => {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

@@ -26,6 +26,7 @@
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
     <script src="scripts/nav.js" defer></script>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -41,7 +42,9 @@
     
     <input type="text" id="nav-search" placeholder="Search" />
     
-    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/novykh/react-hoax" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2><a href="https://github.com/novykh/react-hoax/issues" target="_blank" class="menu-item" id="issues" >Github issues</a></h2><h3>Namespaces</h3><ul><li><a href="collectionHoax.html">collectionHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="collectionHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li><li><a href="memberHoax.html">memberHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="memberHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="collectionHoax.module_makeCollectionProvider.html">collectionHoax.makeCollectionProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.module_makeCollectionProvider.html#~makeCollectionProvider">makeCollectionProvider</a></li></ul></li><li><a href="memberHoax.module_makeMemberProvider.html">memberHoax.makeMemberProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.module_makeMemberProvider.html#~makeMemberProvider">makeMemberProvider</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#defaultGetUpdate">defaultGetUpdate</a></li><li><a href="global.html#makeWithUniq">makeWithUniq</a></li><li><a href="global.html#usePrevious">usePrevious</a></li></ul>
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/novykh/react-hoax" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2><a href="https://github.com/novykh/react-hoax/issues" target="_blank" class="menu-item" id="issues" >Github issues</a></h2><h3>Namespaces</h3><ul><li><a href="collectionHoax.html">collectionHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="collectionHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li><li><a href="memberHoax.html">memberHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="memberHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="collectionHoax.module_makeCollectionProvider.html">collectionHoax.makeCollectionProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.module_makeCollectionProvider.html#~makeCollectionProvider">makeCollectionProvider</a></li></ul></li><li><a href="memberHoax.module_makeMemberProvider.html">memberHoax.makeMemberProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.module_makeMemberProvider.html#~makeMemberProvider">makeMemberProvider</a></li></ul></li></ul>
+    
 </nav>
 
 <div id="main">
@@ -56,20 +59,19 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import useReducer from "../useReducer";
-import defaultInitialState from "./initialState";
-import defaultResourceInitialState from "./resource/initialState";
-import * as actions from "../actions";
-import * as resourceActions from "./resource/actions";
-import makeContext from "../makeContext";
-import makeGetInitialState from "../makeGetInitialState";
-import makeReducer from "./makeReducer";
-import makeUseCollection from "../makeUseCollection";
-import makeUseMember from "../makeUseMember";
-import makeFields from "../makeFields";
-import makeUseSelector from "./makeUseSelector";
-import makeResourceReducer from "./resource/makeReducer";
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import useReducer from '../useReducer';
+import defaultInitialState from './initialState';
+import defaultResourceInitialState from './resource/initialState';
+import * as actions from '../actions';
+import * as resourceActions from './resource/actions';
+import makeContext from '../makeContext';
+import makeGetInitialState from '../makeGetInitialState';
+import makeReducer from './makeReducer';
+import makeUseCollection from '../makeUseCollection';
+import makeUseMember from '../makeUseMember';
+import makeUseSelector from './makeUseSelector';
+import makeResourceReducer from './resource/makeReducer';
 
 /** @module collectionHoax.makeCollectionProvider */
 
@@ -79,7 +81,6 @@ import makeResourceReducer from "./resource/makeReducer";
  * @property {function} useMember - A react hook for
  * @property {function} useCollection - A react hook for
  * @property {collectionHoax.Selectors}
- * @property {object} Field
  */
 
 /**
@@ -103,49 +104,49 @@ const makeCollectionProvider = (
     reducer: customReducer,
     actions: customActions,
     resourceOptions = {},
-    idKey = 'id'
-  } = {}
+    idKey = 'id',
+  } = {},
 ) => {
   const initState = makeGetInitialState({
     getInitialState,
-    defaultInitialState
+    defaultInitialState,
   });
 
   const getInitialResourceState = makeGetInitialState({
     getInitialState: resourceOptions.getInitialState,
-    defaultInitialState: defaultResourceInitialState
+    defaultInitialState: defaultResourceInitialState,
   });
 
-  const { reducer: resourceReducer, init: initResource } = makeResourceReducer(
+  const {reducer: resourceReducer, init: initResource} = makeResourceReducer(
     getInitialResourceState,
-    resourceOptions.reducer
+    resourceOptions.reducer,
+    idKey,
   );
-  const { reducer, init } = makeReducer({
+  const {reducer, init} = makeReducer({
     getInitialState: initState,
     customReducer,
     resourceReducer,
     customResourceActionTypes: resourceOptions.actionTypes,
     initResource,
-    idKey
+    idKey,
   });
 
   const [StateCtx, DispatchCtx] = makeContext();
   const useCollection = makeUseCollection(StateCtx, DispatchCtx);
   const useMember = makeUseMember(StateCtx, DispatchCtx);
-  const Field = makeFields(useMember);
-  const { useSelector, useAction, useResourceSelector } = makeUseSelector(
+  const {useSelector, useAction, useResourceSelector} = makeUseSelector(
     StateCtx,
     DispatchCtx,
     initState,
     getInitialResourceState,
   );
 
-  const CollectionProvider = ({ children, initialState, extraArgument }) => {
+  const CollectionProvider = ({children, initialState, extraArgument}) => {
     const [state, dispatches] = useReducer(reducer, {
       initialState,
       init,
-      actions: { ...actions, ...resourceActions, ...customActions },
-      extraArgument
+      actions: {...actions, ...resourceActions, ...customActions},
+      extraArgument,
     });
 
     return (
@@ -164,9 +165,8 @@ const makeCollectionProvider = (
     useSelector,
     useAction,
     useResourceSelector,
-    Field,
     getInitialState: initState,
-    getInitialResourceState
+    getInitialResourceState,
   };
 };
 
@@ -185,7 +185,7 @@ export default makeCollectionProvider;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

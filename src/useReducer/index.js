@@ -1,5 +1,5 @@
 import {useReducer, useRef} from 'react';
-import identity from 'lodash/identity';
+import identity from '../helpers/identity';
 
 const connect = (action, dispatch, getState, args, extraArgument) => {
   if (typeof action !== 'function') return dispatch(action);

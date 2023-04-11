@@ -26,6 +26,7 @@
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
     <script src="scripts/nav.js" defer></script>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -41,7 +42,9 @@
     
     <input type="text" id="nav-search" placeholder="Search" />
     
-    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/novykh/react-hoax" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2><a href="https://github.com/novykh/react-hoax/issues" target="_blank" class="menu-item" id="issues" >Github issues</a></h2><h3>Namespaces</h3><ul><li><a href="collectionHoax.html">collectionHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="collectionHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li><li><a href="memberHoax.html">memberHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="memberHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="collectionHoax.module_makeCollectionProvider.html">collectionHoax.makeCollectionProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.module_makeCollectionProvider.html#~makeCollectionProvider">makeCollectionProvider</a></li></ul></li><li><a href="memberHoax.module_makeMemberProvider.html">memberHoax.makeMemberProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.module_makeMemberProvider.html#~makeMemberProvider">makeMemberProvider</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#defaultGetUpdate">defaultGetUpdate</a></li><li><a href="global.html#makeWithUniq">makeWithUniq</a></li><li><a href="global.html#usePrevious">usePrevious</a></li></ul>
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/novykh/react-hoax" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2><a href="https://github.com/novykh/react-hoax/issues" target="_blank" class="menu-item" id="issues" >Github issues</a></h2><h3>Namespaces</h3><ul><li><a href="collectionHoax.html">collectionHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="collectionHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="collectionHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li><li><a href="memberHoax.html">memberHoax</a><ul class='members'><li data-type='member' style='display: none;'><a href="memberHoax.html#.initialState">initialState</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeReducer">makeReducer</a></li><li data-type='method' style='display: none;'><a href="memberHoax.html#.makeUseSelector">makeUseSelector</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="collectionHoax.module_makeCollectionProvider.html">collectionHoax.makeCollectionProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="collectionHoax.module_makeCollectionProvider.html#~makeCollectionProvider">makeCollectionProvider</a></li></ul></li><li><a href="memberHoax.module_makeMemberProvider.html">memberHoax.makeMemberProvider</a><ul class='methods'><li data-type='method' style='display: none;'><a href="memberHoax.module_makeMemberProvider.html#~makeMemberProvider">makeMemberProvider</a></li></ul></li></ul>
+    
 </nav>
 
 <div id="main">
@@ -56,11 +59,12 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import * as actionTypes from "../actionTypes";
-import * as resourceActionTypes from "./resource/actionTypes";
-import { updateBatch } from "../reducerUtils";
-import createReducer from "../createReducer"
-import isNil from "lodash/isNil";
+            <pre class="prettyprint source linenums"><code>import set from '../helpers/set';
+import get from '../helpers/get';
+import * as actionTypes from '../actionTypes';
+import * as resourceActionTypes from './resource/actionTypes';
+import {updateBatch} from '../reducerUtils';
+import createReducer from '../createReducer';
 
 /**
  * @typedef {Object} collectionHoax.ReducerWithInit
@@ -82,28 +86,25 @@ export default ({
   resourceReducer = {},
   initResource,
   customResourceActionTypes = {},
-  idKey
+  idKey,
 }) => {
   const init = (state = {}) => ({
     ...getInitialState(),
-    ...state
+    ...state,
   });
 
   const updateOnlyResourceState = (state, id, payload) => {
     const prevResource = state.byId[id] || initResource();
-    return resourceReducer(prevResource, { [idKey]: id, ...payload });
+    return resourceReducer(prevResource, {[idKey]: id, ...payload});
   };
 
   const getValidValue = (attr, value) =>
-    isNil(value) ? getInitialState()[attr] : value;
+    value === null ? get(getInitialState(), attr) : value;
 
   const update = (state, attr, value) => {
     value = getValidValue(attr, value);
 
-    return {
-      ...state,
-      [attr]: value
-    };
+    return set(state, attr, value);
   };
 
   const doneFetch = (state, resources) => {
@@ -115,8 +116,8 @@ export default ({
         ...h,
         [resource[idKey]]: updateOnlyResourceState(state, resource[idKey], {
           type: resourceActionTypes.initializeResource,
-          values: resource
-        })
+          values: resource,
+        }),
       };
     }, {});
 
@@ -124,27 +125,27 @@ export default ({
       ...state,
       byId: {
         ...state.byId,
-        ...byId
+        ...byId,
       },
       ids: [...new Set([...state.ids, ...ids])],
       loading: false,
-      loaded: true
+      loaded: true,
     };
   };
 
   const removeResource = (state, resourceId) => {
-    const byId = { ...state.byId };
+    const byId = {...state.byId};
     delete byId[resourceId];
     const ids = state.ids.filter(id => id !== resourceId);
 
     return {
       ...state,
       byId,
-      ids
+      ids,
     };
   };
 
-  const updateResource = (state, { id, ...rest }) => {
+  const updateResource = (state, {id, ...rest}) => {
     const resource = updateOnlyResourceState(state, id, rest);
     const ids = state.byId.hasOwnProperty(id) ? state.ids : [...state.ids, id];
 
@@ -152,9 +153,9 @@ export default ({
       ...state,
       byId: {
         ...state.byId,
-        [id]: resource
+        [id]: resource,
       },
-      ids
+      ids,
     };
   };
 
@@ -164,36 +165,36 @@ export default ({
       update(state, action.attr, action.value),
     [actionTypes.updateBatch]: (state, action) =>
       updateBatch(update, state, action.values),
-    [actionTypes.reset]: (state, action) => init(),
-    [actionTypes.startProcess]: (state, action) => ({
+    [actionTypes.reset]: () => init(),
+    [actionTypes.startProcess]: state => ({
       ...state,
-      processing: true
+      processing: true,
     }),
-    [actionTypes.doneProcess]: (state, action) => ({
+    [actionTypes.doneProcess]: state => ({
       ...state,
-      processing: false
+      processing: false,
     }),
-    [actionTypes.startFetch]: (state, action) => ({ ...state, loading: true }),
+    [actionTypes.startFetch]: state => ({...state, loading: true}),
     [actionTypes.doneFetch]: (state, action) => doneFetch(state, action.values),
-    [actionTypes.failFetch]: (state, action) => ({ ...state, loading: false }),
+    [actionTypes.failFetch]: state => ({...state, loading: false}),
     ...Object.keys({
       ...resourceActionTypes,
-      ...customResourceActionTypes
+      ...customResourceActionTypes,
     }).reduce(
       (h, actionType) => ({
         ...h,
-        [actionType]: updateResource
+        [actionType]: updateResource,
       }),
-      {}
+      {},
     ),
     [resourceActionTypes.removeResource]: (state, action) =>
       removeResource(state, action.id),
-    ...customReducer
+    ...customReducer,
   };
 
   const reducer = createReducer(reducerHandlers);
 
-  return { reducer, init };
+  return {reducer, init};
 };
 </code></pre>
         </article>
@@ -209,7 +210,7 @@ export default ({
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

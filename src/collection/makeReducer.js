@@ -1,11 +1,9 @@
-import set from 'lodash/set';
-import get from 'lodash/get';
-import cloneDeep from 'lodash/cloneDeep';
+import set from '../helpers/set';
+import get from '../helpers/get';
 import * as actionTypes from '../actionTypes';
 import * as resourceActionTypes from './resource/actionTypes';
 import {updateBatch} from '../reducerUtils';
 import createReducer from '../createReducer';
-import isNil from 'lodash/isNil';
 
 /**
  * @typedef {Object} collectionHoax.ReducerWithInit
@@ -40,12 +38,12 @@ export default ({
   };
 
   const getValidValue = (attr, value) =>
-    isNil(value) ? get(getInitialState(), attr) : value;
+    value === null ? get(getInitialState(), attr) : value;
 
   const update = (state, attr, value) => {
     value = getValidValue(attr, value);
 
-    return set(cloneDeep(state), attr, value);
+    return set(state, attr, value);
   };
 
   const doneFetch = (state, resources) => {
