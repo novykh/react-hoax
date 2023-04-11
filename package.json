@@ -1,6 +1,6 @@
 {
   "name": "react-hoax",
-  "version": "2.0.2",
+  "version": "2.0.3-dev",
   "description": "Idiomatic resourceful context",
   "license": "MIT",
   "repository": "github:novykh/react-hoax",
